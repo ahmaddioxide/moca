@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1084451587591",
+    "project_id": "moca-fmc",
+    "storage_bucket": "moca-fmc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1084451587591:android:ea4a3908cc7e3167948ca2",
+        "android_client_info": {
+          "package_name": "com.atinty.moca"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1084451587591-7gc2qfsg8v3s95qjhbpmo3818vuemgt3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2fesJZPwNO5IXaRAXUsK0tre_jD861DY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1084451587591-7gc2qfsg8v3s95qjhbpmo3818vuemgt3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
