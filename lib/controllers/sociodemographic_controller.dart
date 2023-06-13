@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
-
 class DemographicController extends GetxController {
   String name = '';
   String gender = '';
@@ -16,37 +15,36 @@ class DemographicController extends GetxController {
     debugPrint('submitForm() called');
     final User? user = FirebaseAuth.instance.currentUser;
 
-      final DocumentReference userRef = FirebaseFirestore.instance
-          .collection('users')
-          .doc('test_user')
-          .collection('socio_demographic')
-          .doc();
+    final DocumentReference userRef = FirebaseFirestore.instance
+        .collection('users')
+        .doc('test_user')
+        .collection('socio_demographic')
+        .doc();
 
-      final Map<String, dynamic> formData = {
-        'name': name,
-        'gender': gender,
-        'age': age,
-        'residence': residence,
-        'education': education,
-        'profession': profession,
-      };
+    final Map<String, dynamic> formData = {
+      'name': name,
+      'gender': gender,
+      'age': age,
+      'residence': residence,
+      'education': education,
+      'profession': profession,
+    };
 
-      await userRef.set(formData);
+    await userRef.set(formData);
 
-      Get.dialog(
-        AlertDialog(
-          title: Text('Form Submitted'),
-          content: Text('Your socio-demographic data has been submitted.'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Get.back();
-              },
-              child: Text('OK'),
-            ),
-          ],
-        ),
-      );
-
+    Get.dialog(
+      AlertDialog(
+        title: const Text('Form Submitted'),
+        content: const Text('Your socio-demographic data has been submitted.'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Get.back();
+            },
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
   }
 }

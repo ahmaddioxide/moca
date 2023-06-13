@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
-
 import '../controllers/sociodemographic_controller.dart';
 
 class SocioDemographicScreen extends StatefulWidget {
+  const SocioDemographicScreen({super.key});
   @override
   _SocioDemographicScreenState createState() => _SocioDemographicScreenState();
 }
@@ -20,7 +18,7 @@ class _SocioDemographicScreenState extends State<SocioDemographicScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Socio-Demographic Data'),
+        title: const Text('Socio-Demographic Data'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -30,7 +28,7 @@ class _SocioDemographicScreenState extends State<SocioDemographicScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   '1. Name',
                   style: TextStyle(fontSize: 18),
                 ),
@@ -47,8 +45,8 @@ class _SocioDemographicScreenState extends State<SocioDemographicScreen> {
                     return null;
                   },
                 ),
-                SizedBox(height: 16),
-                Text(
+                const SizedBox(height: 16),
+                const Text(
                   '2. Gender',
                   style: TextStyle(fontSize: 18),
                 ),
@@ -63,7 +61,7 @@ class _SocioDemographicScreenState extends State<SocioDemographicScreen> {
                         });
                       },
                     ),
-                    Text('Male'),
+                    const Text('Male'),
                     Radio(
                       value: 'Female',
                       groupValue: _controller.gender,
@@ -73,11 +71,11 @@ class _SocioDemographicScreenState extends State<SocioDemographicScreen> {
                         });
                       },
                     ),
-                    Text('Female'),
+                    const Text('Female'),
                   ],
                 ),
-                SizedBox(height: 16),
-                Text(
+                const SizedBox(height: 16),
+                const Text(
                   '3. Age',
                   style: TextStyle(fontSize: 18),
                 ),
@@ -88,7 +86,7 @@ class _SocioDemographicScreenState extends State<SocioDemographicScreen> {
                       _controller.age = value!;
                     });
                   },
-                  items: [
+                  items: const [
                     DropdownMenuItem(
                       value: '18-20 years',
                       child: Text('18-20 years'),
@@ -115,8 +113,8 @@ class _SocioDemographicScreenState extends State<SocioDemographicScreen> {
                     ),
                   ],
                 ),
-                SizedBox(height: 16),
-                Text(
+                const SizedBox(height: 16),
+                const Text(
                   '4. Residence',
                   style: TextStyle(fontSize: 18),
                 ),
@@ -131,7 +129,7 @@ class _SocioDemographicScreenState extends State<SocioDemographicScreen> {
                         });
                       },
                     ),
-                    Text('Rural'),
+                    const Text('Rural'),
                     Radio(
                       value: 'Semi-urban',
                       groupValue: _controller.residence,
@@ -141,7 +139,7 @@ class _SocioDemographicScreenState extends State<SocioDemographicScreen> {
                         });
                       },
                     ),
-                    Text('Semi-urban'),
+                    const Text('Semi-urban'),
                     Radio(
                       value: 'Urban',
                       groupValue: _controller.residence,
@@ -151,11 +149,11 @@ class _SocioDemographicScreenState extends State<SocioDemographicScreen> {
                         });
                       },
                     ),
-                    Text('Urban'),
+                    const Text('Urban'),
                   ],
                 ),
-                SizedBox(height: 16),
-                Text(
+                const SizedBox(height: 16),
+                const Text(
                   '5. Education',
                   style: TextStyle(fontSize: 18),
                 ),
@@ -166,7 +164,7 @@ class _SocioDemographicScreenState extends State<SocioDemographicScreen> {
                       _controller.education = value as String;
                     });
                   },
-                  items: [
+                  items: const [
                     DropdownMenuItem(
                       value: 'Matriculation (grade 9 and 10)',
                       child: Text('Matriculation (grade 9 and 10)'),
@@ -191,8 +189,8 @@ class _SocioDemographicScreenState extends State<SocioDemographicScreen> {
                     return null;
                   },
                 ),
-                SizedBox(height: 16),
-                Text(
+                const SizedBox(height: 16),
+                const Text(
                   '6. Profession',
                   style: TextStyle(fontSize: 18),
                 ),
@@ -209,14 +207,14 @@ class _SocioDemographicScreenState extends State<SocioDemographicScreen> {
                     return null;
                   },
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       _controller.submitForm();
                     }
                   },
-                  child: Text('Submit'),
+                  child: const Text('Submit'),
                 ),
               ],
             ),

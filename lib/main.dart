@@ -1,9 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:moca/views/cognitive_failure.dart';
 import 'package:moca/views/sociodemographic_sceen.dart';
 import 'firebase_options.dart';
-import 'views/home_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,8 +23,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: SurveyScreen(),
+      home: const SocioDemographicScreen(),
     );
   }
 }
-
