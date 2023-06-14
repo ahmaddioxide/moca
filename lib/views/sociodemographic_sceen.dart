@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:moca/views/medicalhistory_sceen.dart';
 import '../controllers/sociodemographic_controller.dart';
 
 class SocioDemographicScreen extends StatefulWidget {
@@ -28,6 +29,7 @@ class _SocioDemographicScreenState extends State<SocioDemographicScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                /////Name
                 const Text(
                   '1. Name',
                   style: TextStyle(fontSize: 18),
@@ -45,6 +47,45 @@ class _SocioDemographicScreenState extends State<SocioDemographicScreen> {
                     return null;
                   },
                 ),
+                ///////Email
+                const SizedBox(height: 16),
+                const Text(
+                  '2. Enter Email',
+                  style: TextStyle(fontSize: 18),
+                ),
+                TextFormField(
+                  onChanged: (value) {
+                    setState(() {
+                      _controller.email = value;
+                    });
+                  },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter Email';
+                    }
+                    return null;
+                  },
+                ),
+                /////password
+                const SizedBox(height: 16),
+                const Text(
+                  '3. Choose Password',
+                  style: TextStyle(fontSize: 18),
+                ),
+                TextFormField(
+                  onChanged: (value) {
+                    setState(() {
+                      _controller.password = value;
+                    });
+                  },
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter password';
+                    }
+                    return null;
+                  },
+                ),
+                //////
                 const SizedBox(height: 16),
                 const Text(
                   '2. Gender',
@@ -209,10 +250,27 @@ class _SocioDemographicScreenState extends State<SocioDemographicScreen> {
                 ),
                 const SizedBox(height: 16),
                 ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      _controller.submitForm();
+                      _controller
+                          .loginMethod(
+                        password: _controller.password,
+                        email: _controller.email,
+                      )
+                          .then((value) {
+                        return _controller.submitForm(
+                          name: _controller.name,
+                          gender: _controller.gender,
+                          age: _controller.age,
+                          residence: _controller.residence,
+                          education: _controller.education,
+                          profession: _controller.profession,
+                          password: _controller.password,
+                          email: _controller.email,
+                        );
+                      });
                     }
+                    Get.to(() => const MedicalHistoryScreen());
                   },
                   child: const Text('Submit'),
                 ),
