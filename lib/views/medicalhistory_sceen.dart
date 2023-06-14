@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:moca/views/covidexperience_sceen.dart';
 import '../controllers/medicalhistory_controller.dart';
 
 class MedicalHistoryScreen extends StatefulWidget {
@@ -361,6 +362,7 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                           smoke: _controller.smoke,
                           medicalCondition: _controller.medicalCondition);
                     }
+                    Get.to(() => const CovidExperienceScreen());
                   },
                   child: const Text('Submit'),
                 ),
