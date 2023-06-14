@@ -359,7 +359,15 @@ class _CovidExperienceScreenState extends State<CovidExperienceScreen> {
                 ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      _controller.submitForm();
+                      _controller.submitForm(
+                        pcrTest: _controller.pcrTest,
+                        covid: _controller.covid,
+                        result: _controller.result,
+                        duration: _controller.duration,
+                        first4weeks: _controller.first4weeks,
+                        week4Experience: _controller.week4Experience,
+                        pcrTestDetails: _controller.pcrTestDetails,
+                      );
                     }
                   },
                   child: const Text('Submit'),
