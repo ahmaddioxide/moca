@@ -353,9 +353,13 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                 ),
                 const SizedBox(height: 16),
                 ElevatedButton(
-                  onPressed: () {
+                  onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-                      _controller.submitForm();
+                      _controller.submitForm(
+                          diet: _controller.diet,
+                          physicalActivity: _controller.physicalActivity,
+                          smoke: _controller.smoke,
+                          medicalCondition: _controller.medicalCondition);
                     }
                   },
                   child: const Text('Submit'),
