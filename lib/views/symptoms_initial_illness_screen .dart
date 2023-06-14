@@ -21,52 +21,388 @@ class _SymptomsInitialIllnessScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Socio-Demographic Data'),
+        title: const Text('COVID-19 SYMPTOMS'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
           child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 16),
                 const Text(
-                  '3. Age',
+                  'Symptoms during the initial illness (first 4 weeks) ',
                   style: TextStyle(fontSize: 18),
                 ),
-                DropdownButton<String>(
-                  value: _controller.age,
-                  onChanged: (value) {
-                    setState(() {
-                      _controller.age = value!;
-                    });
-                  },
-                  items: const [
-                    DropdownMenuItem(
-                      value: '18-20 years',
-                      child: Text('18-20 years'),
+                ////fever
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    const Text(
+                      'Fever',
+                      style: TextStyle(fontSize: 18),
                     ),
-                    DropdownMenuItem(
-                      value: '21-30 years',
-                      child: Text('21-30 years'),
+                    const SizedBox(width: 23),
+                    DropdownButton<String>(
+                      value: _controller.fever,
+                      onChanged: (value) {
+                        setState(() {
+                          _controller.fever = value!;
+                        });
+                      },
+                      items: const [
+                        DropdownMenuItem(
+                          value: 'None',
+                          child: Text('None'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'Mild',
+                          child: Text('Mild'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'Moderate',
+                          child: Text('Moderate'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'Severe',
+                          child: Text('Severe'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'Very Severe',
+                          child: Text('Very Severe'),
+                        ),
+                      ],
                     ),
-                    DropdownMenuItem(
-                      value: '31-40 years',
-                      child: Text('31-40 years'),
+                  ],
+                ),
+
+                ///cough
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    const Text(
+                      'Cough',
+                      style: TextStyle(fontSize: 18),
                     ),
-                    DropdownMenuItem(
-                      value: '41-50 years',
-                      child: Text('41-50 years'),
+                    const SizedBox(width: 23),
+                    DropdownButton<String>(
+                      value: _controller.cough,
+                      onChanged: (value) {
+                        setState(() {
+                          _controller.cough = value!;
+                        });
+                      },
+                      items: const [
+                        DropdownMenuItem(
+                          value: 'None',
+                          child: Text('None'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'Mild',
+                          child: Text('Mild'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'Moderate',
+                          child: Text('Moderate'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'Severe',
+                          child: Text('Severe'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'Very Severe',
+                          child: Text('Very Severe'),
+                        ),
+                      ],
                     ),
-                    DropdownMenuItem(
-                      value: '51-60 years',
-                      child: Text('51-60 years'),
+                  ],
+                ),
+                ////stuffyNose
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    const Text(
+                      'Stuffy Nose',
+                      style: TextStyle(fontSize: 18),
                     ),
-                    DropdownMenuItem(
-                      value: '61-65 years',
-                      child: Text('61-65 years'),
+                    const SizedBox(width: 23),
+                    DropdownButton<String>(
+                      value: _controller.stuffyNose,
+                      onChanged: (value) {
+                        setState(() {
+                          _controller.stuffyNose = value!;
+                        });
+                      },
+                      items: const [
+                        DropdownMenuItem(
+                          value: 'None',
+                          child: Text('None'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'Mild',
+                          child: Text('Mild'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'Moderate',
+                          child: Text('Moderate'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'Severe',
+                          child: Text('Severe'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'Very Severe',
+                          child: Text('Very Severe'),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                ////soreThroat
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    const Text(
+                      'Sore Throat',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    const SizedBox(width: 23),
+                    DropdownButton<String>(
+                      value: _controller.soreThroat,
+                      onChanged: (value) {
+                        setState(() {
+                          _controller.soreThroat = value!;
+                        });
+                      },
+                      items: const [
+                        DropdownMenuItem(
+                          value: 'None',
+                          child: Text('None'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'Mild',
+                          child: Text('Mild'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'Moderate',
+                          child: Text('Moderate'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'Severe',
+                          child: Text('Severe'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'Very Severe',
+                          child: Text('Very Severe'),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                ////breathingIssues
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    const Text(
+                      'Breathing Issues',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    const SizedBox(width: 23),
+                    DropdownButton<String>(
+                      value: _controller.breathingIssues,
+                      onChanged: (value) {
+                        setState(() {
+                          _controller.breathingIssues = value!;
+                        });
+                      },
+                      items: const [
+                        DropdownMenuItem(
+                          value: 'None',
+                          child: Text('None'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'Mild',
+                          child: Text('Mild'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'Moderate',
+                          child: Text('Moderate'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'Severe',
+                          child: Text('Severe'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'Very Severe',
+                          child: Text('Very Severe'),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                ////chestPain
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    const Text(
+                      'Chest Pain',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    const SizedBox(width: 23),
+                    DropdownButton<String>(
+                      value: _controller.chestPain,
+                      onChanged: (value) {
+                        setState(() {
+                          _controller.chestPain = value!;
+                        });
+                      },
+                      items: const [
+                        DropdownMenuItem(
+                          value: 'None',
+                          child: Text('None'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'Mild',
+                          child: Text('Mild'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'Moderate',
+                          child: Text('Moderate'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'Severe',
+                          child: Text('Severe'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'Very Severe',
+                          child: Text('Very Severe'),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                ////irregularPulse
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    const Text(
+                      'Irregular Pulse',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    const SizedBox(width: 23),
+                    DropdownButton<String>(
+                      value: _controller.irregularPulse,
+                      onChanged: (value) {
+                        setState(() {
+                          _controller.irregularPulse = value!;
+                        });
+                      },
+                      items: const [
+                        DropdownMenuItem(
+                          value: 'None',
+                          child: Text('None'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'Mild',
+                          child: Text('Mild'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'Moderate',
+                          child: Text('Moderate'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'Severe',
+                          child: Text('Severe'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'Very Severe',
+                          child: Text('Very Severe'),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                ////itchyRedDryEyes
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    const Text(
+                      'Itchy/Red/Dry Eyes',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    const SizedBox(width: 23),
+                    DropdownButton<String>(
+                      value: _controller.itchyRedDryEyes,
+                      onChanged: (value) {
+                        setState(() {
+                          _controller.itchyRedDryEyes = value!;
+                        });
+                      },
+                      items: const [
+                        DropdownMenuItem(
+                          value: 'None',
+                          child: Text('None'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'Mild',
+                          child: Text('Mild'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'Moderate',
+                          child: Text('Moderate'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'Severe',
+                          child: Text('Severe'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'Very Severe',
+                          child: Text('Very Severe'),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                ////headAches
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    const Text(
+                      'Head Aches',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    const SizedBox(width: 23),
+                    DropdownButton<String>(
+                      value: _controller.headAches,
+                      onChanged: (value) {
+                        setState(() {
+                          _controller.headAches = value!;
+                        });
+                      },
+                      items: const [
+                        DropdownMenuItem(
+                          value: 'None',
+                          child: Text('None'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'Mild',
+                          child: Text('Mild'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'Moderate',
+                          child: Text('Moderate'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'Severe',
+                          child: Text('Severe'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'Very Severe',
+                          child: Text('Very Severe'),
+                        ),
+                      ],
                     ),
                   ],
                 ),
