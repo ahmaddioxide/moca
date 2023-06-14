@@ -56,19 +56,17 @@ class DemographicController extends GetxController {
       'id': currentUser!.uid,
     });
 
-    // Get.dialog(
-    //   AlertDialog(
-    //     title: const Text('Form Submitted'),
-    //     content: const Text('Your socio-demographic data has been submitted.'),
-    //     actions: [
-    //       TextButton(
-    //         onPressed: () {
-    //           Get.back();
-    //         },
-    //         child: const Text('OK'),
-    //       ),
-    //     ],
-    //   ),
+    // AlertDialog(
+    //   title: const Text('Form Submitted'),
+    //   content: const Text('Your socio-demographic data has been submitted.'),
+    //   actions: [
+    //     TextButton(
+    //       onPressed: () {
+    //         Get.back();
+    //       },
+    //       child: const Text('OK'),
+    //     ),
+    //   ],
     // );
   }
 }
