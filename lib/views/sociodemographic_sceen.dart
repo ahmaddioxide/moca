@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:moca/views/medicalhistory_sceen.dart';
 import '../controllers/sociodemographic_controller.dart';
 
 class SocioDemographicScreen extends StatefulWidget {
@@ -253,20 +254,23 @@ class _SocioDemographicScreenState extends State<SocioDemographicScreen> {
                     if (_formKey.currentState!.validate()) {
                       _controller
                           .loginMethod(
-                            password: _controller.password,
-                            email: _controller.email,
-                          )
-                          .then((value) => _controller.submitForm(
-                                name: _controller.name,
-                                gender: _controller.gender,
-                                age: _controller.age,
-                                residence: _controller.residence,
-                                education: _controller.education,
-                                profession: _controller.profession,
-                                password: _controller.password,
-                                email: _controller.email,
-                              ));
+                        password: _controller.password,
+                        email: _controller.email,
+                      )
+                          .then((value) {
+                        return _controller.submitForm(
+                          name: _controller.name,
+                          gender: _controller.gender,
+                          age: _controller.age,
+                          residence: _controller.residence,
+                          education: _controller.education,
+                          profession: _controller.profession,
+                          password: _controller.password,
+                          email: _controller.email,
+                        );
+                      });
                     }
+                    Get.to(() => const MedicalHistoryScreen());
                   },
                   child: const Text('Submit'),
                 ),
