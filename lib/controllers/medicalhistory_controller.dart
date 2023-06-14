@@ -9,7 +9,7 @@ class MedicalHistoryController extends GetxController {
   String smoke = '';
   String medicalCondition = '';
 
-  void submitForm() async {
+  void submitForm({diet, physicalActivity, smoke, medicalCondition}) async {
     debugPrint('submitForm() called');
     final User? user = FirebaseAuth.instance.currentUser;
 
@@ -17,12 +17,12 @@ class MedicalHistoryController extends GetxController {
         .collection('users')
         .doc('test_user')
         .collection('medical_history')
-        .doc();
+        .doc(user!.uid);
 
     final Map<String, dynamic> formData = {
       'diet': diet,
       'physicalActivity': physicalActivity,
-      'smoke': diet,
+      'smoke': smoke,
       'medicalCondition': medicalCondition,
     };
 
@@ -31,7 +31,7 @@ class MedicalHistoryController extends GetxController {
     Get.dialog(
       AlertDialog(
         title: const Text('Form Submitted'),
-        content: const Text('Your socio-demographic data has been submitted.'),
+        content: const Text('Your medical history data has been submitted.'),
         actions: [
           TextButton(
             onPressed: () {
