@@ -5,8 +5,6 @@ import 'package:get/get.dart';
 import 'package:moca/controllers/firebase_const.dart';
 
 class DemographicController extends GetxController {
-  String email = '';
-  String password = '';
   String name = '';
   String gender = '';
   String age = '18-20 years';
@@ -43,7 +41,7 @@ class DemographicController extends GetxController {
         .collection('users')
         .doc('test_user')
         .collection('socio_demographic')
-        .doc(currentUser!.uid)
+        .doc(currentUser!.uid) //test result (do it)
         .set({
       'name': name,
       'gender': gender,
@@ -55,18 +53,5 @@ class DemographicController extends GetxController {
       'email': email,
       'id': currentUser!.uid,
     });
-
-    // AlertDialog(
-    //   title: const Text('Form Submitted'),
-    //   content: const Text('Your socio-demographic data has been submitted.'),
-    //   actions: [
-    //     TextButton(
-    //       onPressed: () {
-    //         Get.back();
-    //       },
-    //       child: const Text('OK'),
-    //     ),
-    //   ],
-    // );
   }
 }
