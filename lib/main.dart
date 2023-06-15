@@ -2,7 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:moca/views/abstraction_screen.dart';
-import 'package:moca/views/cognitive_failure.dart';
+import 'package:moca/views/cognitive_failure_screen.dart';
 import 'package:moca/views/orientation_screen.dart';
 import 'package:moca/views/sociodemographic_sceen.dart';
 import 'firebase_options.dart';
@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:  DateVerificationScreen(),
+      home:  Oreientation(),
     );
   }
 }

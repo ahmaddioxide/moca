@@ -3,8 +3,10 @@ import 'package:get/get.dart';
 
 import '../controllers/cognitive_failure_controller.dart';
 
-class SurveyScreen extends StatelessWidget {
-  final SurveyController _surveyController = Get.put(SurveyController());
+class CognitiveFailure extends StatelessWidget {
+  final CognitiveFailureController _cognitiveFailureController = Get.put(CognitiveFailureController());
+
+  CognitiveFailure({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +15,7 @@ class SurveyScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cognitive Failure Questionnaire'),
+        title: const Text('Cognitive Failure Questionnaire'),
       ),
       body: Padding(
         padding: EdgeInsets.all(screenWidth * 0.05),
@@ -69,12 +71,12 @@ class SurveyScreen extends StatelessWidget {
                       for (int i = 0; i < 25; i++) ...[
                         SizedBox(height: screenHeight * 0.02),
                         Text(
-                          '${i + 1}. ${_surveyController.getQuestion(i)}',
+                          '${i + 1}. ${_cognitiveFailureController.getQuestion(i)}',
                           style: TextStyle(fontSize: screenWidth * 0.04),
                         ),
                         SizedBox(height: screenHeight * 0.01),
                         Obx(
-                              () => Row(
+                          () => Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               for (int rating = 0; rating <= 4; rating++) ...[
@@ -82,26 +84,26 @@ class SurveyScreen extends StatelessWidget {
                                   children: [
                                     Radio<int>(
                                       value: rating,
-                                      groupValue: _surveyController.ratings[i],
+                                      groupValue: _cognitiveFailureController.ratings[i],
                                       onChanged: (value) {
-                                        _surveyController.setRating(i, value!);
+                                        _cognitiveFailureController.setRating(i, value!);
                                       },
                                     ),
-                                    Text(_surveyController.getRatingLabel(rating)),
+                                    Text(_cognitiveFailureController
+                                        .getRatingLabel(rating)),
                                   ],
                                 ),
                               ],
                             ],
                           ),
                         )
-
                       ],
                       SizedBox(height: screenHeight * 0.02),
                       ElevatedButton(
                         onPressed: () {
-                          _surveyController.submitSurvey();
+                          _cognitiveFailureController.submitSurvey();
                         },
-                        child: Text('Submit'),
+                        child: const Text('Submit'),
                       ),
                     ],
                   ),
@@ -114,5 +116,3 @@ class SurveyScreen extends StatelessWidget {
     );
   }
 }
-
-

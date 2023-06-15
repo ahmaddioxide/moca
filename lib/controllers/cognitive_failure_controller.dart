@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
-class SurveyController extends GetxController {
+class CognitiveFailureController extends GetxController {
   RxList<int> ratings = List<int>.filled(25, 0).obs;
 
   void setRating(int index, int rating) {
