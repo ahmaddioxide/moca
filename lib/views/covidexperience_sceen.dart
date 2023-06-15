@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:moca/views/symptoms_initial_illness_screen.dart';
 import '../controllers/covidexperience_controller.dart';
 
 class CovidExperienceScreen extends StatefulWidget {
@@ -368,6 +369,7 @@ class _CovidExperienceScreenState extends State<CovidExperienceScreen> {
                         week4Experience: _controller.week4Experience,
                         pcrTestDetails: _controller.pcrTestDetails,
                       );
+                      Get.to(() => const SymptomsInitialIllnessScreen());
                     }
                   },
                   child: const Text('Submit'),
