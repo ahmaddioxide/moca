@@ -19,7 +19,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('SignUP'),
+        title: const Text('Sign Up'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -110,25 +110,34 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   },
                 ),
                 const SizedBox(height: 16),
-                ElevatedButton(
-                  onPressed: () async {
-                    if (_formKey.currentState!.validate()) {
-                      _controller
-                          .loginMethod(
-                        password: _controller.password,
-                        email: _controller.email,
-                      )
-                          .then((value) {
-                        return _controller.submitForm(
-                          name: _controller.name,
-                          password: _controller.password,
-                          email: _controller.email,
-                        );
-                      }).then((value) =>
-                              Get.to(() => const SocioDemographicScreen()));
-                    }
-                  },
-                  child: const Text('Sign Up'),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () async {
+                        if (_formKey.currentState!.validate()) {
+                          _controller
+                              .loginMethod(
+                            password: _controller.password,
+                            email: _controller.email,
+                          )
+                              .then((value) {
+                            return _controller.submitForm(
+                              name: _controller.name,
+                              password: _controller.password,
+                              email: _controller.email,
+                            );
+                          }).then((value) =>
+                                  Get.to(() => const SocioDemographicScreen()));
+                        }
+                      },
+                      child: const Text('Sign Up'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {},
+                      child: const Text('Log In'),
+                    ),
+                  ],
                 ),
               ],
             ),
