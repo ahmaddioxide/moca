@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
+import 'package:moca/controllers/firebase_const.dart';
 
 class SymptomsInitialIllnessController extends GetxController {
   String fever = 'None';
@@ -32,15 +32,13 @@ class SymptomsInitialIllnessController extends GetxController {
 
   void submitForm() async {
     debugPrint('submitForm() called');
-    final User? user = FirebaseAuth.instance.currentUser;
 
-    final DocumentReference userRef = FirebaseFirestore.instance
+    await FirebaseFirestore.instance
         .collection('users')
         .doc('test_user')
         .collection('socio_demographic')
-        .doc();
-
-    final Map<String, dynamic> formData = {
+        .doc(currentUser!.uid)
+        .set({
       'fever': fever,
       'cough': cough,
       'stuffyNose': stuffyNose,
@@ -66,23 +64,21 @@ class SymptomsInitialIllnessController extends GetxController {
       'lossOfAppetite': lossOfAppetite,
       'hotFlashes': hotFlashes,
       'rash': rash,
-    };
+    });
 
-    await userRef.set(formData);
-
-    Get.dialog(
-      AlertDialog(
-        title: const Text('Form Submitted'),
-        content: const Text('Your socio-demographic data has been submitted.'),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Get.back();
-            },
-            child: const Text('OK'),
-          ),
-        ],
-      ),
-    );
+    // Get.dialog(
+    //   AlertDialog(
+    //     title: const Text('Form Submitted'),
+    //     content: const Text('Your socio-demographic data has been submitted.'),
+    //     actions: [
+    //       TextButton(
+    //         onPressed: () {
+    //           Get.back();
+    //         },
+    //         child: const Text('OK'),
+    //       ),
+    //     ],
+    //   ),
+    // );
   }
 }
