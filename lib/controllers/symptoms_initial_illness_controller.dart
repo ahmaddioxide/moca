@@ -30,13 +30,39 @@ class SymptomsInitialIllnessController extends GetxController {
   String hotFlashes = 'None';
   String rash = 'None';
 
-  void submitForm() async {
+  void submitForm({
+    fever,
+    cough,
+    stuffyNose,
+    soreThroat,
+    breathingIssues,
+    chestPain,
+    irregularPulse,
+    itchyRedDryEyes,
+    headAches,
+    lossOfSmelltaste,
+    blurredVision,
+    hallucinations,
+    confusion,
+    difficultSleepy,
+    depressionAnxiety,
+    numbness,
+    fatigue,
+    bodyPain,
+    nausea,
+    vomiting,
+    diarrhea,
+    abdominalPain,
+    lossOfAppetite,
+    hotFlashes,
+    rash,
+  }) async {
     debugPrint('submitForm() called');
 
     await FirebaseFirestore.instance
         .collection('users')
-        .doc('test_user')
-        .collection('socio_demographic')
+        .doc(currentUser!.uid)
+        .collection('symptoms_initial_illness')
         .doc(currentUser!.uid)
         .set({
       'fever': fever,
