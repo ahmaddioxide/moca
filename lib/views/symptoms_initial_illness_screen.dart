@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:moca/views/symptoms_ongoing_illness_screen.dart';
 import '../controllers/symptoms_initial_illness_controller.dart';
 
 class SymptomsInitialIllnessScreen extends StatefulWidget {
@@ -1082,6 +1083,7 @@ class _SymptomsInitialIllnessScreenState
                         hotFlashes: _controller.hotFlashes,
                         rash: _controller.rash,
                       );
+                      Get.to(() => const SymptomsOnGoingIllnessScreen());
                     }
                   },
                   child: const Text('Submit'),
