@@ -4,13 +4,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:moca/controllers/firebase_const.dart';
 
-class DemographicController extends GetxController {
+class SignUpController extends GetxController {
+  String email = '';
+  String password = '';
+  String repassword = '';
   String name = '';
-  String gender = '';
-  String age = '18-20 years';
-  String residence = '';
-  String education = 'Matriculation (grade 9 and 10)';
-  String profession = '';
 
   /////signup
   Future<UserCredential?> loginMethod({email, password}) async {
@@ -26,29 +24,16 @@ class DemographicController extends GetxController {
     return userCredential;
   }
 
-  void submitForm(
-      {name,
-      gender,
-      age,
-      residence,
-      education,
-      profession,
-      password,
-      email}) async {
+  void submitForm({name, password, email}) async {
     debugPrint('submitForm() called');
 
     await FirebaseFirestore.instance
         .collection('users')
-        .doc('test_user')
-        .collection('socio_demographic')
-        .doc(currentUser!.uid) //test result (do it)
+        .doc(currentUser!.uid)
+        .collection('user_info')
+        .doc('data') //test result (do it)
         .set({
       'name': name,
-      'gender': gender,
-      'age': age,
-      'residence': residence,
-      'education': education,
-      'profession': profession,
       'password': password,
       'email': email,
       'id': currentUser!.uid,

@@ -3,59 +3,53 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:moca/controllers/firebase_const.dart';
 
-class SymptomsInitialIllnessController extends GetxController {
-  String fever = 'None';
+class SymptomsOnGoingIllnessController extends GetxController {
   String cough = 'None';
-  String stuffyNose = 'None';
-  String soreThroat = 'None';
   String breathingIssues = 'None';
   String chestPain = 'None';
   String irregularPulse = 'None';
   String itchyRedDryEyes = 'None';
-  String headAches = 'None';
+  String headAche = 'None';
   String lossOfSmelltaste = 'None';
   String blurredVision = 'None';
   String hallucinations = 'None';
   String confusion = 'None';
-  String difficultSleepy = 'None';
+  String forgetfulness = 'None';
+  String delayedThinking = 'None';
+  String poorConcentration = 'None';
+  String difficultSpeaking = 'None';
+  String difficultSleeping = 'None';
   String depressionAnxiety = 'None';
   String numbness = 'None';
   String fatigue = 'None';
   String bodyPain = 'None';
   String nausea = 'None';
-  String vomiting = 'None';
-  String diarrhea = 'None';
   String abdominalPain = 'None';
   String lossOfAppetite = 'None';
-  String hotFlashes = 'None';
-  String rash = 'None';
 
   void submitForm({
-    fever,
+    headAche,
     cough,
-    stuffyNose,
-    soreThroat,
     breathingIssues,
     chestPain,
     irregularPulse,
     itchyRedDryEyes,
-    headAches,
     lossOfSmelltaste,
     blurredVision,
     hallucinations,
     confusion,
-    difficultSleepy,
+    forgetfulness,
+    delayedThinking,
+    poorConcentration,
+    difficultSpeaking,
+    difficultSleeping,
     depressionAnxiety,
     numbness,
     fatigue,
     bodyPain,
     nausea,
-    vomiting,
-    diarrhea,
     abdominalPain,
     lossOfAppetite,
-    hotFlashes,
-    rash,
   }) async {
     debugPrint('submitForm() called');
 
@@ -65,46 +59,28 @@ class SymptomsInitialIllnessController extends GetxController {
         .collection('symptoms_initial_illness')
         .doc(currentUser!.uid)
         .set({
-      'fever': fever,
       'cough': cough,
-      'stuffyNose': stuffyNose,
-      'soreThroat': soreThroat,
       'breathingIssues': breathingIssues,
       'chestPain': chestPain,
       'irregularPulse': irregularPulse,
       'itchyRedDryEyes': itchyRedDryEyes,
-      'headAches': headAches,
       'lossOfSmelltaste': lossOfSmelltaste,
       'blurredVision': blurredVision,
       'hallucinations': hallucinations,
       'confusion': confusion,
-      'difficultSleepy': difficultSleepy,
+      'forgetfulness': forgetfulness,
+      'delayedThinking': delayedThinking,
+      'poorConcentration': poorConcentration,
+      'difficultSpeaking': difficultSpeaking,
+      'difficultSleeping': difficultSleeping,
       'depressionAnxiety': depressionAnxiety,
       'numbness': numbness,
       'fatigue': fatigue,
       'bodyPain': bodyPain,
       'nausea': nausea,
-      'vomiting': vomiting,
-      'diarrhea': diarrhea,
       'abdominalPain': abdominalPain,
       'lossOfAppetite': lossOfAppetite,
-      'hotFlashes': hotFlashes,
-      'rash': rash,
+      'headAche': headAche
     });
-
-    // Get.dialog(
-    //   AlertDialog(
-    //     title: const Text('Form Submitted'),
-    //     content: const Text('Your socio-demographic data has been submitted.'),
-    //     actions: [
-    //       TextButton(
-    //         onPressed: () {
-    //           Get.back();
-    //         },
-    //         child: const Text('OK'),
-    //       ),
-    //     ],
-    //   ),
-    // );
   }
 }

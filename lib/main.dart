@@ -1,6 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:moca/views/signup_screen.dart';
+import 'package:moca/views/symptoms_ongoing_illness_screen.dart';
+
 import 'package:moca/views/abstraction_screen.dart';
 import 'package:moca/views/cognitive_failure_screen.dart';
 import 'package:moca/views/orientation_screen.dart';
@@ -27,7 +30,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:  Oreientation(),
+      home: const SignUpScreen(),
     );
   }
 }
