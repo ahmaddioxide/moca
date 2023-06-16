@@ -60,9 +60,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                         ),
                         onChanged: (value) {
-                          setState(() {
-                            _controller.name = value;
-                          },);
+                          setState(
+                            () {
+                              _controller.name = value;
+                            },
+                          );
                         },
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -121,9 +123,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               color: Colors.deepPurple,
                             ),
                             onPressed: () {
-                              setState(() {
-                                _isPasswordVisible = !_isPasswordVisible;
-                              },);
+                              setState(
+                                () {
+                                  _isPasswordVisible = !_isPasswordVisible;
+                                },
+                              );
                             },
                           ),
                           labelText: 'Enter Your Password',
@@ -210,18 +214,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
                               _controller
-                                  .loginMethod(
+                                  .authSignup(
                                 password: _controller.password,
                                 email: _controller.email,
-                              )
-                                  .then((value) {
-                                return _controller.submitForm(
-                                  name: _controller.name,
-                                  password: _controller.password,
-                                  email: _controller.email,
-                                );
-                              },).then((value) => Get.to(
-                                      () => const SocioDemographicScreen(),),);
+                              ).then(
+                                (value) {
+                                  if(value == true){
+                                    Get.to(
+                                          () => const SocioDemographicScreen(),
+                                    );
+                                  }
+                                }
+                              );
                             }
                           },
                           child: const Text(
@@ -247,6 +251,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             child: const Text(
                               "Log in",
                               style: TextStyle(
+                                fontSize: 18,
                                 color: Colors.deepPurple,
                                 fontWeight: FontWeight.bold,
                               ),

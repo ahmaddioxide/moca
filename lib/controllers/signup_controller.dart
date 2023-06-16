@@ -10,8 +10,7 @@ class SignUpController extends GetxController {
   String repassword = '';
   String name = '';
 
-  /////signup
-  Future<UserCredential?> loginMethod({email, password}) async {
+  Future<UserCredential?> authSignup({email, password}) async {
     UserCredential? userCredential;
     try {
       userCredential = await auth.createUserWithEmailAndPassword(
@@ -20,23 +19,70 @@ class SignUpController extends GetxController {
       );
     } on FirebaseAuthException catch (e) {
       debugPrint('LoginCalled() called Error "$e"');
+      if (e.code == 'weak-password') {
+        Get.snackbar(
+          'Weak Password',
+          'The password provided is too weak.',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      } else if (e.code == 'email-already-in-use') {
+        Get.snackbar(
+          'Email Already in Use',
+          'The account already exists for that email.',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      } else if (e.code == 'operation-not-allowed') {
+        Get.snackbar(
+          'Operation Not Allowed',
+          'Email/password accounts are not enabled.',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      } else {
+        Get.snackbar(
+          'Unknown Error',
+          'An unknown error occurred.',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
     }
     return userCredential;
   }
 
-  void submitForm({name, password, email}) async {
-    debugPrint('submitForm() called');
-
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(currentUser!.uid)
-        .collection('user_info')
-        .doc('data') //test result (do it)
-        .set({
-      'name': name,
-      'password': password,
-      'email': email,
-      'id': currentUser!.uid,
-    });
+  Future<bool> signup({name, password, email}) async {
+    UserCredential? userCredential =
+        await authSignup(email: email, password: password);
+    if (userCredential == null) {
+      return false;
+    }
+    try {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(currentUser!.uid)
+          .collection('user_info')
+          .doc('data')
+          .set(
+        {
+          'name': name,
+          'email': email,
+        },
+      );
+    } catch (e) {
+      debugPrint('Error: $e');
+      Get.snackbar(
+        'Error',
+        'Error: $e',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      return false;
+    }
+    return true;
   }
 }
