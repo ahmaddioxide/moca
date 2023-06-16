@@ -80,6 +80,8 @@ class SignUpController extends GetxController {
         'Error',
         'Error: $e',
         snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
       );
       return false;
     }
