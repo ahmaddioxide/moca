@@ -214,9 +214,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
                               _controller
-                                  .authSignup(
-                                password: _controller.password,
-                                email: _controller.email,
+                                  .signup(
+                                name: _controller.name.trim(),
+                                password: _controller.password.trim(),
+                                email: _controller.email.trim(),
                               ).then(
                                 (value) {
                                   if(value == true){

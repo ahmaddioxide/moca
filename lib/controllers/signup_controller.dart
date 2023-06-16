@@ -11,12 +11,18 @@ class SignUpController extends GetxController {
   String name = '';
 
   Future<UserCredential?> authSignup({email, password}) async {
+    debugPrint('authSignup() called');
     UserCredential? userCredential;
     try {
       userCredential = await auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
-      );
+      ).then((value) {
+        debugPrint('auth.createUserWithEmailAndPassword() called');
+        currentUser = value.user;
+        debugPrint('currentUser: $currentUser');
+        return value;
+      });
     } on FirebaseAuthException catch (e) {
       debugPrint('LoginCalled() called Error "$e"');
       if (e.code == 'weak-password') {
@@ -57,9 +63,11 @@ class SignUpController extends GetxController {
   }
 
   Future<bool> signup({name, password, email}) async {
+    debugPrint('signup() called');
     UserCredential? userCredential =
         await authSignup(email: email, password: password);
     if (userCredential == null) {
+      debugPrint('userCredential is null');
       return false;
     }
     try {
