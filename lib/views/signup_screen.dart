@@ -97,8 +97,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             return 'Please Enter Your Email';
                           } else if (!value.contains('@')) {
                             return 'Please Enter Valid Email';
-                          } else if (!value.contains('.')) {
-                            return 'Please Enter Valid Email';
                           } else if (value.contains(' ')) {
                             return 'Please Enter Valid Email';
                           } else if (value.contains('..')) {

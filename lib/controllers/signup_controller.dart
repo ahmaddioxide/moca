@@ -14,6 +14,7 @@ class SignUpController extends GetxController {
     debugPrint('authSignup() called');
     UserCredential? userCredential;
     try {
+
       userCredential = await auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
