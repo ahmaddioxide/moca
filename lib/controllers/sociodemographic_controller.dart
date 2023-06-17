@@ -6,52 +6,37 @@ import 'package:moca/controllers/firebase_const.dart';
 
 class DemographicController extends GetxController {
   String name = '';
-  String gender = '';
+  String gender = 'Male';
   String age = '18-20 years';
-  String residence = '';
+  String residence = 'Rural';
   String education = 'Matriculation (grade 9 and 10)';
   String profession = '';
 
-  /////signup
-  Future<UserCredential?> loginMethod({email, password}) async {
-    UserCredential? userCredential;
-    try {
-      userCredential = await auth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-    } on FirebaseAuthException catch (e) {
-      debugPrint('LoginCalled() called Error "$e"');
-    }
-    return userCredential;
-  }
-
-  void submitForm(
-      {name,
-      gender,
-      age,
-      residence,
-      education,
-      profession,
-      password,
-      email}) async {
+  Future<bool> submitSocioDemographicForm(
+      {name, gender, age, residence, education, profession, email}) async {
     debugPrint('submitForm() called');
-
     await FirebaseFirestore.instance
         .collection('users')
-        .doc('test_user')
+        .doc(currentUser!.uid)
         .collection('socio_demographic')
-        .doc(currentUser!.uid) //test result (do it)
-        .set({
-      'name': name,
-      'gender': gender,
-      'age': age,
-      'residence': residence,
-      'education': education,
-      'profession': profession,
-      'password': password,
-      'email': email,
-      'id': currentUser!.uid,
+        .doc('data') //test result (do it)
+        .set(
+      {
+        'name': name,
+        'gender': gender,
+        'age': age,
+        'residence': residence,
+        'education': education,
+        'profession': profession,
+      },
+    ).catchError((e) {
+      debugPrint('Error: $e');
+      Get.snackbar('Error', 'Error: $e',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white);
+      return false;
     });
+return true;
   }
 }

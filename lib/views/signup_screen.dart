@@ -219,7 +219,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               ).then(
                                 (value) {
                                   if(value == true){
-                                    Get.to(
+                                    Get.offAll(
                                           () => const SocioDemographicScreen(),
                                     );
                                   }
