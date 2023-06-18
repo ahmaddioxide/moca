@@ -14,10 +14,21 @@ class SignUpController extends GetxController {
   Future<UserCredential?> loginMethod({email, password}) async {
     UserCredential? userCredential;
     try {
-      userCredential = await auth.createUserWithEmailAndPassword(
+      userCredential = await auth
+          .createUserWithEmailAndPassword(
         email: email,
         password: password,
+<<<<<<< Updated upstream
       );
+=======
+      )
+          .then((value) {
+        debugPrint('auth.createUserWithEmailAndPassword() called');
+        currentUser = value.user;
+        debugPrint('currentUser: $currentUser');
+        return value;
+      });
+>>>>>>> Stashed changes
     } on FirebaseAuthException catch (e) {
       debugPrint('LoginCalled() called Error "$e"');
     }
