@@ -30,7 +30,7 @@ class SymptomsInitialIllnessController extends GetxController {
   String hotFlashes = 'None';
   String rash = 'None';
 
-  void submitForm({
+  Future<bool> submitForm({
     fever,
     cough,
     stuffyNose,
@@ -57,54 +57,125 @@ class SymptomsInitialIllnessController extends GetxController {
     hotFlashes,
     rash,
   }) async {
-    debugPrint('submitForm() called');
+    try {
+      debugPrint('submitForm() called');
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(currentUser!.uid)
+          .collection('symptoms_initial_illness')
+          .doc('data')
+          .set({
+        'fever': fever,
+        'cough': cough,
+        'stuffyNose': stuffyNose,
+        'soreThroat': soreThroat,
+        'breathingIssues': breathingIssues,
+        'chestPain': chestPain,
+        'irregularPulse': irregularPulse,
+        'itchyRedDryEyes': itchyRedDryEyes,
+        'headAches': headAches,
+        'lossOfSmelltaste': lossOfSmelltaste,
+        'blurredVision': blurredVision,
+        'hallucinations': hallucinations,
+        'confusion': confusion,
+        'difficultSleepy': difficultSleepy,
+        'depressionAnxiety': depressionAnxiety,
+        'numbness': numbness,
+        'fatigue': fatigue,
+        'bodyPain': bodyPain,
+        'nausea': nausea,
+        'vomiting': vomiting,
+        'diarrhea': diarrhea,
+        'abdominalPain': abdominalPain,
+        'lossOfAppetite': lossOfAppetite,
+        'hotFlashes': hotFlashes,
+        'rash': rash,
+      });
+      return true;
+    } catch (e) {
+      debugPrint('LoginCalled() called Error "$e"');
+      Get.snackbar(
+        'Error',
+        'Some Error Occured! ',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      return false;
+    }
+  }
 
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(currentUser!.uid)
-        .collection('symptoms_initial_illness')
-        .doc(currentUser!.uid)
-        .set({
-      'fever': fever,
-      'cough': cough,
-      'stuffyNose': stuffyNose,
-      'soreThroat': soreThroat,
-      'breathingIssues': breathingIssues,
-      'chestPain': chestPain,
-      'irregularPulse': irregularPulse,
-      'itchyRedDryEyes': itchyRedDryEyes,
-      'headAches': headAches,
-      'lossOfSmelltaste': lossOfSmelltaste,
-      'blurredVision': blurredVision,
-      'hallucinations': hallucinations,
-      'confusion': confusion,
-      'difficultSleepy': difficultSleepy,
-      'depressionAnxiety': depressionAnxiety,
-      'numbness': numbness,
-      'fatigue': fatigue,
-      'bodyPain': bodyPain,
-      'nausea': nausea,
-      'vomiting': vomiting,
-      'diarrhea': diarrhea,
-      'abdominalPain': abdominalPain,
-      'lossOfAppetite': lossOfAppetite,
-      'hotFlashes': hotFlashes,
-      'rash': rash,
-    });
-
-    // Get.dialog(
-    //   AlertDialog(
-    //     title: const Text('Form Submitted'),
-    //     content: const Text('Your socio-demographic data has been submitted.'),
-    //     actions: [
-    //       TextButton(
-    //         onPressed: () {
-    //           Get.back();
-    //         },
-    //         child: const Text('OK'),
-    //       ),
-    //     ],
-    //   ),
-    // );
+  Future<bool> signUpMethod({
+    fever,
+    cough,
+    stuffyNose,
+    soreThroat,
+    breathingIssues,
+    chestPain,
+    irregularPulse,
+    itchyRedDryEyes,
+    headAches,
+    lossOfSmelltaste,
+    blurredVision,
+    hallucinations,
+    confusion,
+    difficultSleepy,
+    depressionAnxiety,
+    numbness,
+    fatigue,
+    bodyPain,
+    nausea,
+    vomiting,
+    diarrhea,
+    abdominalPain,
+    lossOfAppetite,
+    hotFlashes,
+    rash,
+  }) async {
+    try {
+      debugPrint('submitForm() called');
+      bool? check = await submitForm(
+        fever: fever,
+        cough: cough,
+        stuffyNose: stuffyNose,
+        soreThroat: soreThroat,
+        breathingIssues: breathingIssues,
+        chestPain: chestPain,
+        irregularPulse: irregularPulse,
+        itchyRedDryEyes: itchyRedDryEyes,
+        headAches: headAches,
+        lossOfSmelltaste: lossOfSmelltaste,
+        blurredVision: blurredVision,
+        hallucinations: hallucinations,
+        confusion: confusion,
+        difficultSleepy: difficultSleepy,
+        depressionAnxiety: depressionAnxiety,
+        numbness: numbness,
+        fatigue: fatigue,
+        bodyPain: bodyPain,
+        nausea: nausea,
+        vomiting: vomiting,
+        diarrhea: diarrhea,
+        abdominalPain: abdominalPain,
+        lossOfAppetite: lossOfAppetite,
+        hotFlashes: hotFlashes,
+        rash: rash,
+      );
+      if (check == false) {
+        debugPrint('ERROR is storing data!');
+        return false;
+      }
+    } catch (e) {
+      debugPrint('Error: $e');
+      Get.snackbar(
+        'Error',
+        'Error: $e',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      return false;
+    }
+    return true;
   }
 }
