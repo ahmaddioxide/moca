@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:moca/controllers/firebase_const.dart';
+
+import '../views/medicalhistory_sceen.dart';
 
 class DemographicController extends GetxController {
   String name = '';
@@ -11,20 +12,6 @@ class DemographicController extends GetxController {
   String residence = '';
   String education = 'Matriculation (grade 9 and 10)';
   String profession = '';
-
-  /////signup
-  Future<UserCredential?> loginMethod({email, password}) async {
-    UserCredential? userCredential;
-    try {
-      userCredential = await auth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-    } on FirebaseAuthException catch (e) {
-      debugPrint('LoginCalled() called Error "$e"');
-    }
-    return userCredential;
-  }
 
   void submitForm(
       {name,
@@ -36,22 +23,30 @@ class DemographicController extends GetxController {
       password,
       email}) async {
     debugPrint('submitForm() called');
-
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc('test_user')
-        .collection('socio_demographic')
-        .doc(currentUser!.uid) //test result (do it)
-        .set({
-      'name': name,
-      'gender': gender,
-      'age': age,
-      'residence': residence,
-      'education': education,
-      'profession': profession,
-      'password': password,
-      'email': email,
-      'id': currentUser!.uid,
-    });
+    try {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(currentUser!.uid)
+          .collection('socio_demographic')
+          .doc('data') //test result (do it)
+          .set({
+        'name': name,
+        'gender': gender,
+        'age': age,
+        'residence': residence,
+        'education': education,
+        'profession': profession,
+        'id': currentUser!.uid,
+      }).then((value) => Get.offAll(() => const MedicalHistoryScreen()));
+    } catch (e) {
+      debugPrint('LoginCalled() called Error "$e"');
+      Get.snackbar(
+        'Error',
+        'Some Error Occured! ',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
   }
 }
