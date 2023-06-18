@@ -9,35 +9,59 @@ class MedicalHistoryController extends GetxController {
   String smoke = '';
   String medicalCondition = '';
 
-  void submitForm({diet, physicalActivity, smoke, medicalCondition}) async {
+  Future<bool> submitForm(
+      {diet, physicalActivity, smoke, medicalCondition}) async {
     debugPrint('submitForm() called');
+    try {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(currentUser!.uid)
+          .collection('medical_history')
+          .doc('data')
+          .set({
+        'diet': diet,
+        'physicalActivity': physicalActivity,
+        'smoke': smoke,
+        'medicalCondition': medicalCondition,
+        'id': currentUser!.uid,
+      });
+      return true;
+    } catch (e) {
+      debugPrint('Error: $e');
+      Get.snackbar(
+        'Error',
+        'Error: $e',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      return false;
+    }
+  }
 
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc('test_user')
-        .collection('medical_history')
-        .doc(currentUser!.uid)
-        .set({
-      'diet': diet,
-      'physicalActivity': physicalActivity,
-      'smoke': smoke,
-      'medicalCondition': medicalCondition,
-      'id': currentUser!.uid,
-    });
-
-    // Get.dialog(
-    //   AlertDialog(
-    //     title: const Text('Form Submitted'),
-    //     content: const Text('Your medical history data has been submitted.'),
-    //     actions: [
-    //       TextButton(
-    //         onPressed: () {
-    //           Get.back();
-    //         },
-    //         child: const Text('OK'),
-    //       ),
-    //     ],
-    //   ),
-    // );
+  Future<bool> signup({diet, physicalActivity, smoke, medicalCondition}) async {
+    try {
+      debugPrint('submitForm() called');
+      bool? check = await submitForm(
+          diet: diet,
+          physicalActivity: physicalActivity,
+          smoke: smoke,
+          medicalCondition: medicalCondition);
+      if (check == false) {
+        debugPrint('ERROR is storing data!');
+        return false;
+      }
+    } catch (e) {
+      debugPrint('Error: $e');
+      Get.snackbar(
+        'Error',
+        'Error: $e',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      return false;
+    }
+    return true;
   }
 }
