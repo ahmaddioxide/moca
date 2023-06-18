@@ -281,7 +281,7 @@ class _SocioDemographicScreenState extends State<SocioDemographicScreen> {
                 const SizedBox(height: 16),
                 TextFormField(
                   decoration: const InputDecoration(
-                    hintText: 'Enter your profession',
+                    labelText: 'Enter your profession',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(
                         Radius.circular(12),
