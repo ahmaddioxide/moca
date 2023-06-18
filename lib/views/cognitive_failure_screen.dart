@@ -4,7 +4,8 @@ import 'package:get/get.dart';
 import '../controllers/cognitive_failure_controller.dart';
 
 class CognitiveFailure extends StatelessWidget {
-  final CognitiveFailureController _cognitiveFailureController = Get.put(CognitiveFailureController());
+  final CognitiveFailureController _cognitiveFailureController =
+      Get.put(CognitiveFailureController());
 
   CognitiveFailure({super.key});
 
@@ -24,7 +25,10 @@ class CognitiveFailure extends StatelessWidget {
           children: [
             Text(
               'Please rate the frequency of the following events in the past six months using the scale below:',
-              style: TextStyle(fontSize: screenWidth * 0.04),
+              style: TextStyle(
+                  fontSize: screenWidth * 0.05,
+                  color: Colors.deepPurple,
+                  fontWeight: FontWeight.bold),
             ),
             SizedBox(height: screenHeight * 0.02),
             Row(
@@ -72,7 +76,10 @@ class CognitiveFailure extends StatelessWidget {
                         SizedBox(height: screenHeight * 0.02),
                         Text(
                           '${i + 1}. ${_cognitiveFailureController.getQuestion(i)}',
-                          style: TextStyle(fontSize: screenWidth * 0.04),
+                          style: TextStyle(
+                              fontSize: screenWidth * 0.04,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.deepPurple),
                         ),
                         SizedBox(height: screenHeight * 0.01),
                         Obx(
@@ -84,9 +91,11 @@ class CognitiveFailure extends StatelessWidget {
                                   children: [
                                     Radio<int>(
                                       value: rating,
-                                      groupValue: _cognitiveFailureController.ratings[i],
+                                      groupValue: _cognitiveFailureController
+                                          .ratings[i],
                                       onChanged: (value) {
-                                        _cognitiveFailureController.setRating(i, value!);
+                                        _cognitiveFailureController.setRating(
+                                            i, value!);
                                       },
                                     ),
                                     Text(_cognitiveFailureController
@@ -99,12 +108,31 @@ class CognitiveFailure extends StatelessWidget {
                         )
                       ],
                       SizedBox(height: screenHeight * 0.02),
-                      ElevatedButton(
-                        onPressed: () {
-                          _cognitiveFailureController.submitSurvey();
-                        },
-                        child: const Text('Submit'),
+                      SizedBox(
+                        width: double.infinity,
+                        height: screenHeight * 0.05,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.deepPurple,
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(screenWidth * 0.02),
+                            ),
+                          ),
+                          onPressed: () {
+                            _cognitiveFailureController.submitSurvey();
+                          },
+                          child: const Text(
+                            'Submit',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
                       ),
+                      SizedBox(height: screenHeight * 0.02),
                     ],
                   ),
                 ),
