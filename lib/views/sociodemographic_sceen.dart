@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:moca/views/medicalhistory_sceen.dart';
 import '../controllers/sociodemographic_controller.dart';
 
 class SocioDemographicScreen extends StatefulWidget {
@@ -19,22 +18,43 @@ class _SocioDemographicScreenState extends State<SocioDemographicScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Socio-Demographic Data'),
+        title: const Center(
+            child: Text(
+          'Socio-Demographic Data',
+          style: TextStyle(
+            fontSize: 28,
+            fontWeight: FontWeight.bold,
+            color: Colors.deepPurple,
+          ),
+        )),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
           child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                /////Name
-                const Text(
-                  '1. Name',
-                  style: TextStyle(fontSize: 18),
+                SizedBox(
+                  height: Get.height * 0.01,
                 ),
+                /////Name
                 TextFormField(
+                  decoration: const InputDecoration(
+                    // hintText: 'Enter Your Name',
+                    prefixIcon: Icon(
+                      Icons.person,
+                      color: Colors.deepPurple,
+                    ),
+                    labelText: 'Enter Your Name',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(12),
+                      ),
+                    ),
+                  ),
                   onChanged: (value) {
                     setState(() {
                       _controller.name = value;
@@ -47,11 +67,18 @@ class _SocioDemographicScreenState extends State<SocioDemographicScreen> {
                     return null;
                   },
                 ),
-
+                const SizedBox(height: 16),
+                const Divider(
+                  color: Colors.black12,
+                ),
                 const SizedBox(height: 16),
                 const Text(
-                  '2. Gender',
-                  style: TextStyle(fontSize: 18),
+                  'Gender',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.deepPurple,
+                  ),
                 ),
                 Row(
                   children: [
@@ -64,7 +91,14 @@ class _SocioDemographicScreenState extends State<SocioDemographicScreen> {
                         });
                       },
                     ),
-                    const Text('Male'),
+                    const Text(
+                      'Male',
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.deepPurple,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
                     Radio(
                       value: 'Female',
                       groupValue: _controller.gender,
@@ -74,52 +108,107 @@ class _SocioDemographicScreenState extends State<SocioDemographicScreen> {
                         });
                       },
                     ),
-                    const Text('Female'),
-                  ],
-                ),
-                const SizedBox(height: 16),
-                const Text(
-                  '3. Age',
-                  style: TextStyle(fontSize: 18),
-                ),
-                DropdownButton<String>(
-                  value: _controller.age,
-                  onChanged: (value) {
-                    setState(() {
-                      _controller.age = value!;
-                    });
-                  },
-                  items: const [
-                    DropdownMenuItem(
-                      value: '18-20 years',
-                      child: Text('18-20 years'),
-                    ),
-                    DropdownMenuItem(
-                      value: '21-30 years',
-                      child: Text('21-30 years'),
-                    ),
-                    DropdownMenuItem(
-                      value: '31-40 years',
-                      child: Text('31-40 years'),
-                    ),
-                    DropdownMenuItem(
-                      value: '41-50 years',
-                      child: Text('41-50 years'),
-                    ),
-                    DropdownMenuItem(
-                      value: '51-60 years',
-                      child: Text('51-60 years'),
-                    ),
-                    DropdownMenuItem(
-                      value: '61-65 years',
-                      child: Text('61-65 years'),
+                    const Text(
+                      'Female',
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.deepPurple,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ],
                 ),
                 const SizedBox(height: 16),
+                const Divider(
+                  color: Colors.black12,
+                ),
+                const SizedBox(height: 16),
                 const Text(
-                  '4. Residence',
-                  style: TextStyle(fontSize: 18),
+                  'Age',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.deepPurple,
+                  ),
+                ),
+
+                const SizedBox(height: 8),
+                DecoratedBox(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      color: Colors.deepPurple,
+                      width: 1.5,
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: DropdownButton<String>(
+                      isExpanded: true,
+                      underline: const SizedBox(),
+                      borderRadius: BorderRadius.circular(12),
+                      disabledHint: const Text(
+                        'Select your age',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.deepPurple,
+                        ),
+                      ),
+                      style: const TextStyle(
+                        fontSize: 18,
+                        color: Colors.deepPurple,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      value: _controller.age,
+                      onChanged: (value) {
+                        setState(
+                          () {
+                            _controller.age = value!;
+                          },
+                        );
+                      },
+                      items: const [
+                        DropdownMenuItem(
+                          value: '18-20 years',
+                          child: Text('18-20 years'),
+                        ),
+                        DropdownMenuItem(
+                          value: '21-30 years',
+                          child: Text('21-30 years'),
+                        ),
+                        DropdownMenuItem(
+                          value: '31-40 years',
+                          child: Text('31-40 years'),
+                        ),
+                        DropdownMenuItem(
+                          value: '41-50 years',
+                          child: Text('41-50 years'),
+                        ),
+                        DropdownMenuItem(
+                          value: '51-60 years',
+                          child: Text('51-60 years'),
+                        ),
+                        DropdownMenuItem(
+                          value: '61-65 years',
+                          child: Text('61-65 years'),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                const Divider(
+                  color: Colors.black12,
+                ),
+                const SizedBox(height: 16),
+                const Text(
+                  'Residence',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.deepPurple,
+                  ),
                 ),
                 Row(
                   children: [
@@ -132,7 +221,14 @@ class _SocioDemographicScreenState extends State<SocioDemographicScreen> {
                         });
                       },
                     ),
-                    const Text('Rural'),
+                    const Text(
+                      'Rural',
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.deepPurple,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
                     Radio(
                       value: 'Semi-urban',
                       groupValue: _controller.residence,
@@ -142,7 +238,14 @@ class _SocioDemographicScreenState extends State<SocioDemographicScreen> {
                         });
                       },
                     ),
-                    const Text('Semi-urban'),
+                    const Text(
+                      'Semi-urban',
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.deepPurple,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
                     Radio(
                       value: 'Urban',
                       groupValue: _controller.residence,
@@ -152,52 +255,114 @@ class _SocioDemographicScreenState extends State<SocioDemographicScreen> {
                         });
                       },
                     ),
-                    const Text('Urban'),
+                    const Text(
+                      'Urban',
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.deepPurple,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 16),
-                const Text(
-                  '5. Education',
-                  style: TextStyle(fontSize: 18),
-                ),
-                DropdownButtonFormField(
-                  value: _controller.education,
-                  onChanged: (value) {
-                    setState(() {
-                      _controller.education = value as String;
-                    });
-                  },
-                  items: const [
-                    DropdownMenuItem(
-                      value: 'Matriculation (grade 9 and 10)',
-                      child: Text('Matriculation (grade 9 and 10)'),
-                    ),
-                    DropdownMenuItem(
-                      value: 'Intermediate (grade 11 and 12)',
-                      child: Text('Intermediate (grade 11 and 12)'),
-                    ),
-                    DropdownMenuItem(
-                      value: 'Undergraduate degree (bachelor’s)',
-                      child: Text('Undergraduate degree (bachelor’s)'),
-                    ),
-                    DropdownMenuItem(
-                      value: 'Postgraduate degree',
-                      child: Text('Postgraduate degree'),
-                    ),
-                  ],
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please select your education';
-                    }
-                    return null;
-                  },
+                const Divider(
+                  color: Colors.black12,
                 ),
                 const SizedBox(height: 16),
                 const Text(
-                  '6. Profession',
-                  style: TextStyle(fontSize: 18),
+                  'Education',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.deepPurple,
+                  ),
                 ),
+                const SizedBox(height: 8),
+                DecoratedBox(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      color: Colors.deepPurple,
+                      width: 1.5,
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: DropdownButton<String>(
+                      isExpanded: true,
+                      underline: const SizedBox(),
+                      borderRadius: BorderRadius.circular(12),
+                      disabledHint: const Text(
+                        'Select your Education',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.deepPurple,
+                        ),
+                      ),
+                      style: const TextStyle(
+                        fontSize: 18,
+                        color: Colors.deepPurple,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      value: _controller.education,
+                      onChanged: (value) {
+                        setState(
+                          () {
+                            _controller.education = value!;
+                          },
+                        );
+                      },
+                      items: const [
+                        DropdownMenuItem(
+                          value: 'Matriculation (grade 9 and 10)',
+                          child: Text('Matriculation (grade 9 and 10)'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'Intermediate (grade 11 and 12)',
+                          child: Text('Intermediate (grade 11 and 12)'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'Undergraduate degree (bachelor’s)',
+                          child: Text('Undergraduate degree (bachelor’s)'),
+                        ),
+                        DropdownMenuItem(
+                          value: 'Postgraduate degree',
+                          child: Text('Postgraduate degree'),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                const Divider(
+                  color: Colors.black12,
+                ),
+                const SizedBox(height: 16),
+                const Text(
+                  'Profession',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.deepPurple,
+                  ),
+                ),
+                const SizedBox(height: 16),
                 TextFormField(
+                  decoration: const InputDecoration(
+                    // hintText: 'Enter Your Name',
+                    prefixIcon: Icon(
+                      Icons.art_track,
+                      color: Colors.deepPurple,
+                    ),
+                    labelText: 'Enter Your profession',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(12),
+                      ),
+                    ),
+                  ),
                   onChanged: (value) {
                     setState(() {
                       _controller.profession = value;
@@ -211,21 +376,52 @@ class _SocioDemographicScreenState extends State<SocioDemographicScreen> {
                   },
                 ),
                 const SizedBox(height: 16),
-                ElevatedButton(
-                  onPressed: () async {
-                    if (_formKey.currentState!.validate()) {
-                      _controller.submitForm(
-                        name: _controller.name,
-                        gender: _controller.gender,
-                        age: _controller.age,
-                        residence: _controller.residence,
-                        education: _controller.education,
-                        profession: _controller.profession,
-                      );
-                      Get.to(() => const MedicalHistoryScreen());
-                    }
-                  },
-                  child: const Text('Submit'),
+                const Divider(
+                  color: Colors.black12,
+                ),
+                const SizedBox(height: 16),
+                Column(
+                  children: [
+                    Center(
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          try {
+                            if (_formKey.currentState!.validate()) {
+                              if (_controller.gender == '' ||
+                                  _controller.residence == '') {
+                                Get.snackbar(
+                                  'Error',
+                                  'Complete the form! ',
+                                  snackPosition: SnackPosition.BOTTOM,
+                                  backgroundColor: Colors.red,
+                                  colorText: Colors.white,
+                                );
+                              } else {
+                                _controller.submitForm(
+                                  name: _controller.name,
+                                  gender: _controller.gender,
+                                  age: _controller.age,
+                                  residence: _controller.residence,
+                                  education: _controller.education,
+                                  profession: _controller.profession,
+                                );
+                              }
+                            }
+                          } catch (e) {
+                            debugPrint('LoginCalled() called Error "$e"');
+                            Get.snackbar(
+                              'Error',
+                              'Some Error Occured! ',
+                              snackPosition: SnackPosition.BOTTOM,
+                              backgroundColor: Colors.red,
+                              colorText: Colors.white,
+                            );
+                          }
+                        },
+                        child: const Text('Submit'),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
