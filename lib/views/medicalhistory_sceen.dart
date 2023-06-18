@@ -20,7 +20,15 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Medical History Data'),
+        title: const Center(
+            child: Text(
+          'Medical History Data',
+          style: TextStyle(
+            fontSize: 28,
+            fontWeight: FontWeight.bold,
+            color: Colors.deepPurple,
+          ),
+        )),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -33,8 +41,12 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
               children: [
                 const SizedBox(height: 16),
                 const Text(
-                  '1. What does your diet typically consist of? ',
-                  style: TextStyle(fontSize: 18),
+                  'What does your diet typically consist of? ',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.deepPurple,
+                  ),
                 ),
                 Column(
                   children: [
@@ -49,7 +61,14 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                             });
                           },
                         ),
-                        const Text('Grains: bread, cereal, rice, pasta'),
+                        const Text(
+                          'Grains: bread, cereal, rice, pasta',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.deepPurple,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
                       ],
                     ),
                     Row(
@@ -63,7 +82,14 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                             });
                           },
                         ),
-                        const Text('Dairy: milk, yoghurt, cheese'),
+                        const Text(
+                          'Dairy: milk, yoghurt, cheese',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.deepPurple,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
                       ],
                     ),
                     Row(
@@ -77,7 +103,14 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                             });
                           },
                         ),
-                        const Text('Vegetables and fruits'),
+                        const Text(
+                          'Vegetables and fruits',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.deepPurple,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
                       ],
                     ),
                     Row(
@@ -91,7 +124,14 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                             });
                           },
                         ),
-                        const Text('Fats, oils and sugars'),
+                        const Text(
+                          'Fats, oils and sugars',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.deepPurple,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
                       ],
                     ),
                     Row(
@@ -106,17 +146,34 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                             });
                           },
                         ),
+                        const SizedBox(
+                          height: 10,
+                        ),
                         const Text(
-                            'Protein: red meat, poultry, fish, eggs, beans'),
+                          'Red meat, poultry, fish,eggs, beans',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.deepPurple,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
                       ],
                     ),
                   ],
                 ),
                 /////////////2
-                const Divider(),
+                const SizedBox(height: 16),
+                const Divider(
+                  color: Colors.black12,
+                ),
+                const SizedBox(height: 16),
                 const Text(
-                  '2. How would you rate your physical activity level on the following scale?  ',
-                  style: TextStyle(fontSize: 18),
+                  'How would you rate your physical activity level on the following scale?  ',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.deepPurple,
+                  ),
                 ),
                 Column(
                   children: [
@@ -131,7 +188,14 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                             });
                           },
                         ),
-                        const Text('Rarely to never'),
+                        const Text(
+                          'Rarely to never',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.deepPurple,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
                       ],
                     ),
                     Row(
@@ -145,7 +209,14 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                             });
                           },
                         ),
-                        const Text('Occasional, light to moderate activity'),
+                        const Text(
+                          'Occasional, light to moderate activity',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.deepPurple,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
                       ],
                     ),
                     Row(
@@ -159,7 +230,14 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                             });
                           },
                         ),
-                        const Text('Regular, light to moderate activity'),
+                        const Text(
+                          'Regular, light to moderate activity',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.deepPurple,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
                       ],
                     ),
                     Row(
@@ -173,16 +251,31 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                             });
                           },
                         ),
-                        const Text('Regular, vigorous activity'),
+                        const Text(
+                          'Regular, vigorous activity',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.deepPurple,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
                       ],
                     ),
                   ],
                 ),
                 /////////////Q3
-                const Divider(),
+                const SizedBox(height: 16),
+                const Divider(
+                  color: Colors.black12,
+                ),
+                const SizedBox(height: 16),
                 const Text(
-                  '3. Do you smoke?',
-                  style: TextStyle(fontSize: 18),
+                  'Do you smoke?',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.deepPurple,
+                  ),
                 ),
                 Row(
                   children: [
@@ -197,7 +290,14 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                             });
                           },
                         ),
-                        const Text('Yes'),
+                        const Text(
+                          'Yes',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.deepPurple,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
                       ],
                     ),
                     Row(
@@ -211,16 +311,31 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                             });
                           },
                         ),
-                        const Text('No'),
+                        const Text(
+                          'No',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.deepPurple,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
                       ],
                     ),
                   ],
                 ),
                 /////////////Q4
-                const Divider(),
+                const SizedBox(height: 16),
+                const Divider(
+                  color: Colors.black12,
+                ),
+                const SizedBox(height: 16),
                 const Text(
-                  '4. Do you have any medical condition/ chronic illness?',
-                  style: TextStyle(fontSize: 18),
+                  'Do you have any medical condition/ chronic illness?',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.deepPurple,
+                  ),
                 ),
                 Column(
                   children: [
@@ -235,7 +350,14 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                             });
                           },
                         ),
-                        const Text('High blood pressure'),
+                        const Text(
+                          'High blood pressure',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.deepPurple,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
                       ],
                     ),
                     Row(
@@ -249,7 +371,14 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                             });
                           },
                         ),
-                        const Text('Asthma'),
+                        const Text(
+                          'Asthma',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.deepPurple,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
                       ],
                     ),
                     Row(
@@ -263,7 +392,14 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                             });
                           },
                         ),
-                        const Text('Heart disease'),
+                        const Text(
+                          'Heart disease',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.deepPurple,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
                       ],
                     ),
                     Row(
@@ -277,7 +413,14 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                             });
                           },
                         ),
-                        const Text('Mental health disorder'),
+                        const Text(
+                          'Mental health disorder',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.deepPurple,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
                       ],
                     ),
                     Row(
@@ -291,7 +434,14 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                             });
                           },
                         ),
-                        const Text('Diabetes'),
+                        const Text(
+                          'Diabetes',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.deepPurple,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
                       ],
                     ),
                     Row(
@@ -305,7 +455,14 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                             });
                           },
                         ),
-                        const Text('Obesity'),
+                        const Text(
+                          'Obesity',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.deepPurple,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
                       ],
                     ),
                     Row(
@@ -319,7 +476,14 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                             });
                           },
                         ),
-                        const Text('Kidney disease'),
+                        const Text(
+                          'Kidney disease',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.deepPurple,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
                       ],
                     ),
                     Row(
@@ -333,7 +497,14 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                             });
                           },
                         ),
-                        const Text('None'),
+                        const Text(
+                          'None',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.deepPurple,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
                       ],
                     ),
                     Row(
@@ -347,24 +518,55 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                             });
                           },
                         ),
-                        const Text('Other'),
+                        const Text(
+                          'Other',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.deepPurple,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
                       ],
                     ),
                   ],
                 ),
                 const SizedBox(height: 16),
-                ElevatedButton(
-                  onPressed: () async {
-                    if (_formKey.currentState!.validate()) {
-                      _controller.submitForm(
-                          diet: _controller.diet,
-                          physicalActivity: _controller.physicalActivity,
-                          smoke: _controller.smoke,
-                          medicalCondition: _controller.medicalCondition);
-                    }
-                    Get.to(() => const CovidExperienceScreen());
-                  },
-                  child: const Text('Submit'),
+                const Divider(
+                  color: Colors.black12,
+                ),
+                const SizedBox(height: 16),
+                Center(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      if (_controller.diet != '' &&
+                          _controller.physicalActivity != '' &&
+                          _controller.smoke != '' &&
+                          _controller.medicalCondition != '') {
+                        _controller
+                            .submitForm(
+                                diet: _controller.diet,
+                                physicalActivity: _controller.physicalActivity,
+                                smoke: _controller.smoke,
+                                medicalCondition: _controller.medicalCondition)
+                            .then((value) {
+                          if (value == true) {
+                            Get.offAll(
+                              () => const CovidExperienceScreen(),
+                            );
+                          }
+                        });
+                      } else {
+                        Get.snackbar(
+                          'Error',
+                          'Complete the Form !',
+                          snackPosition: SnackPosition.BOTTOM,
+                          backgroundColor: Colors.red,
+                          colorText: Colors.white,
+                        );
+                      }
+                    },
+                    child: const Text('Submit'),
+                  ),
                 ),
               ],
             ),
