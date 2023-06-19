@@ -7,9 +7,9 @@ import '../views/medicalhistory_sceen.dart';
 
 class DemographicController extends GetxController {
   String name = '';
-  String gender = '';
+  String gender = 'Male';
   String age = '18-20 years';
-  String residence = '';
+  String residence = 'Rural';
   String education = 'Matriculation (grade 9 and 10)';
   String profession = '';
 

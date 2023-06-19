@@ -383,42 +383,57 @@ class _SocioDemographicScreenState extends State<SocioDemographicScreen> {
                 Column(
                   children: [
                     Center(
-                      child: ElevatedButton(
-                        onPressed: () async {
-                          try {
-                            if (_formKey.currentState!.validate()) {
-                              if (_controller.gender == '' ||
-                                  _controller.residence == '') {
-                                Get.snackbar(
-                                  'Error',
-                                  'Complete the form! ',
-                                  snackPosition: SnackPosition.BOTTOM,
-                                  backgroundColor: Colors.red,
-                                  colorText: Colors.white,
-                                );
-                              } else {
-                                _controller.submitForm(
-                                  name: _controller.name,
-                                  gender: _controller.gender,
-                                  age: _controller.age,
-                                  residence: _controller.residence,
-                                  education: _controller.education,
-                                  profession: _controller.profession,
-                                );
+                      child: SizedBox(
+                        width:double.infinity,
+                        height: 50,
+
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            backgroundColor: Colors.deepPurple,
+                          ),
+                          onPressed: () async {
+                            try {
+                              if (_formKey.currentState!.validate()) {
+                                if (_controller.gender == '' ||
+                                    _controller.residence == '') {
+                                  Get.snackbar(
+                                    'Error',
+                                    'Complete the form! ',
+                                    snackPosition: SnackPosition.BOTTOM,
+                                    backgroundColor: Colors.red,
+                                    colorText: Colors.white,
+                                  );
+                                } else {
+                                  _controller.submitForm(
+                                    name: _controller.name,
+                                    gender: _controller.gender,
+                                    age: _controller.age,
+                                    residence: _controller.residence,
+                                    education: _controller.education,
+                                    profession: _controller.profession,
+                                  );
+                                }
                               }
+                            } catch (e) {
+                              debugPrint('LoginCalled() called Error "$e"');
+                              Get.snackbar(
+                                'Error',
+                                'Some Error Occured! ',
+                                snackPosition: SnackPosition.BOTTOM,
+                                backgroundColor: Colors.red,
+                                colorText: Colors.white,
+                              );
                             }
-                          } catch (e) {
-                            debugPrint('LoginCalled() called Error "$e"');
-                            Get.snackbar(
-                              'Error',
-                              'Some Error Occured! ',
-                              snackPosition: SnackPosition.BOTTOM,
-                              backgroundColor: Colors.red,
-                              colorText: Colors.white,
-                            );
-                          }
-                        },
-                        child: const Text('Submit'),
+                          },
+                          child: const Text('Submit',style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),),
+                        ),
                       ),
                     ),
                   ],
