@@ -14,11 +14,12 @@ class SignUpController extends GetxController {
     debugPrint('authSignup() called');
     UserCredential? userCredential;
     try {
-
-      userCredential = await auth.createUserWithEmailAndPassword(
+      userCredential = await auth
+          .createUserWithEmailAndPassword(
         email: email,
         password: password,
-      ).then((value) {
+      )
+          .then((value) {
         debugPrint('auth.createUserWithEmailAndPassword() called');
         currentUser = value.user;
         debugPrint('currentUser: $currentUser');

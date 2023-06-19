@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:moca/views/medicalhistory_sceen.dart';
 import '../controllers/sociodemographic_controller.dart';
 
 class SocioDemographicScreen extends StatefulWidget {
@@ -12,30 +11,48 @@ class SocioDemographicScreen extends StatefulWidget {
 class _SocioDemographicScreenState extends State<SocioDemographicScreen> {
   final _formKey = GlobalKey<FormState>();
 
+  // Create an instance of the controller
   final DemographicController _controller = Get.put(DemographicController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Socio-Demographic Data'),
+        title: const Center(
+            child: Text(
+          'Socio-Demographic Data',
+          style: TextStyle(
+            fontSize: 28,
+            fontWeight: FontWeight.bold,
+            color: Colors.deepPurple,
+          ),
+        )),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
           child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
                   height: Get.height * 0.01,
                 ),
+                /////Name
                 TextFormField(
                   decoration: const InputDecoration(
-                    labelText: 'Enter your name',
+                    // hintText: 'Enter Your Name',
+                    prefixIcon: Icon(
+                      Icons.person,
+                      color: Colors.deepPurple,
+                    ),
+                    labelText: 'Enter Your Name',
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(12)),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(12),
+                      ),
                     ),
                   ),
                   onChanged: (value) {
@@ -51,8 +68,12 @@ class _SocioDemographicScreenState extends State<SocioDemographicScreen> {
                   },
                 ),
                 const SizedBox(height: 16),
+                const Divider(
+                  color: Colors.black12,
+                ),
+                const SizedBox(height: 16),
                 const Text(
-                  'Select Your Gender',
+                  'Gender',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -75,6 +96,7 @@ class _SocioDemographicScreenState extends State<SocioDemographicScreen> {
                       style: TextStyle(
                         fontSize: 18,
                         color: Colors.deepPurple,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                     Radio(
@@ -91,9 +113,14 @@ class _SocioDemographicScreenState extends State<SocioDemographicScreen> {
                       style: TextStyle(
                         fontSize: 18,
                         color: Colors.deepPurple,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ],
+                ),
+                const SizedBox(height: 16),
+                const Divider(
+                  color: Colors.black12,
                 ),
                 const SizedBox(height: 16),
                 const Text(
@@ -104,6 +131,7 @@ class _SocioDemographicScreenState extends State<SocioDemographicScreen> {
                     color: Colors.deepPurple,
                   ),
                 ),
+
                 const SizedBox(height: 8),
                 DecoratedBox(
                   decoration: BoxDecoration(
@@ -123,12 +151,14 @@ class _SocioDemographicScreenState extends State<SocioDemographicScreen> {
                         'Select your age',
                         style: TextStyle(
                           fontSize: 18,
+                          fontWeight: FontWeight.w500,
                           color: Colors.deepPurple,
                         ),
                       ),
                       style: const TextStyle(
                         fontSize: 18,
                         color: Colors.deepPurple,
+                        fontWeight: FontWeight.w500,
                       ),
                       value: _controller.age,
                       onChanged: (value) {
@@ -168,6 +198,10 @@ class _SocioDemographicScreenState extends State<SocioDemographicScreen> {
                   ),
                 ),
                 const SizedBox(height: 16),
+                const Divider(
+                  color: Colors.black12,
+                ),
+                const SizedBox(height: 16),
                 const Text(
                   'Residence',
                   style: TextStyle(
@@ -189,7 +223,11 @@ class _SocioDemographicScreenState extends State<SocioDemographicScreen> {
                     ),
                     const Text(
                       'Rural',
-                      style: TextStyle(color: Colors.deepPurple, fontSize: 18),
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.deepPurple,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                     Radio(
                       value: 'Semi-urban',
@@ -202,7 +240,11 @@ class _SocioDemographicScreenState extends State<SocioDemographicScreen> {
                     ),
                     const Text(
                       'Semi-urban',
-                      style: TextStyle(color: Colors.deepPurple, fontSize: 18),
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.deepPurple,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                     Radio(
                       value: 'Urban',
@@ -215,9 +257,17 @@ class _SocioDemographicScreenState extends State<SocioDemographicScreen> {
                     ),
                     const Text(
                       'Urban',
-                      style: TextStyle(color: Colors.deepPurple, fontSize: 18),
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.deepPurple,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ],
+                ),
+                const SizedBox(height: 16),
+                const Divider(
+                  color: Colors.black12,
                 ),
                 const SizedBox(height: 16),
                 const Text(
@@ -239,17 +289,30 @@ class _SocioDemographicScreenState extends State<SocioDemographicScreen> {
                   ),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: DropdownButtonFormField(
+                    child: DropdownButton<String>(
+                      isExpanded: true,
+                      underline: const SizedBox(),
+                      borderRadius: BorderRadius.circular(12),
+                      disabledHint: const Text(
+                        'Select your Education',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.deepPurple,
+                        ),
+                      ),
                       style: const TextStyle(
                         fontSize: 18,
                         color: Colors.deepPurple,
+                        fontWeight: FontWeight.w500,
                       ),
-                      isExpanded: true,
                       value: _controller.education,
                       onChanged: (value) {
-                        setState(() {
-                          _controller.education = value as String;
-                        });
+                        setState(
+                          () {
+                            _controller.education = value!;
+                          },
+                        );
                       },
                       items: const [
                         DropdownMenuItem(
@@ -269,19 +332,31 @@ class _SocioDemographicScreenState extends State<SocioDemographicScreen> {
                           child: Text('Postgraduate degree'),
                         ),
                       ],
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please select your education';
-                        }
-                        return null;
-                      },
                     ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                const Divider(
+                  color: Colors.black12,
+                ),
+                const SizedBox(height: 16),
+                const Text(
+                  'Profession',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.deepPurple,
                   ),
                 ),
                 const SizedBox(height: 16),
                 TextFormField(
                   decoration: const InputDecoration(
-                    labelText: 'Enter your profession',
+                    // hintText: 'Enter Your Name',
+                    prefixIcon: Icon(
+                      Icons.art_track,
+                      color: Colors.deepPurple,
+                    ),
+                    labelText: 'Enter Your profession',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(
                         Radius.circular(12),
@@ -301,45 +376,52 @@ class _SocioDemographicScreenState extends State<SocioDemographicScreen> {
                   },
                 ),
                 const SizedBox(height: 16),
-                SizedBox(
-                  width: double.infinity,
-                  height: 50,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.deepPurple,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                    onPressed: () async {
-                      if (_formKey.currentState!.validate()) {
-                        _controller
-                            .submitSocioDemographicForm(
-                          name: _controller.name,
-                          gender: _controller.gender,
-                          age: _controller.age,
-                          residence: _controller.residence,
-                          education: _controller.education,
-                          profession: _controller.profession,
-                        )
-                            .then(
-                          (value) {
-                            if (value) {
-                              Get.to(() => const MedicalHistoryScreen());
+                const Divider(
+                  color: Colors.black12,
+                ),
+                const SizedBox(height: 16),
+                Column(
+                  children: [
+                    Center(
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          try {
+                            if (_formKey.currentState!.validate()) {
+                              if (_controller.gender == '' ||
+                                  _controller.residence == '') {
+                                Get.snackbar(
+                                  'Error',
+                                  'Complete the form! ',
+                                  snackPosition: SnackPosition.BOTTOM,
+                                  backgroundColor: Colors.red,
+                                  colorText: Colors.white,
+                                );
+                              } else {
+                                _controller.submitForm(
+                                  name: _controller.name,
+                                  gender: _controller.gender,
+                                  age: _controller.age,
+                                  residence: _controller.residence,
+                                  education: _controller.education,
+                                  profession: _controller.profession,
+                                );
+                              }
                             }
-                          },
-                        );
-                      }
-                    },
-                    child: const Text(
-                      'Submit',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                          } catch (e) {
+                            debugPrint('LoginCalled() called Error "$e"');
+                            Get.snackbar(
+                              'Error',
+                              'Some Error Occured! ',
+                              snackPosition: SnackPosition.BOTTOM,
+                              backgroundColor: Colors.red,
+                              colorText: Colors.white,
+                            );
+                          }
+                        },
+                        child: const Text('Submit'),
                       ),
                     ),
-                  ),
+                  ],
                 ),
               ],
             ),
