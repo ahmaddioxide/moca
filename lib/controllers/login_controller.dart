@@ -25,6 +25,56 @@ class LogInController extends GetxController {
       });
     } on FirebaseAuthException catch (e) {
       debugPrint('LoginCalled() called Error "$e"');
+      if (e.code == 'user-not-found') {
+        debugPrint('No user found for that email.');
+        Get.snackbar(
+          'Error',
+          'No user found for that email.',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      } else if (e.code == 'wrong-password') {
+        debugPrint('Wrong password provided for that user.');
+        Get.snackbar(
+          'Error',
+          'Wrong password provided for that user.',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
+      else if (e.code == 'user-disabled') {
+        debugPrint('User disabled.');
+        Get.snackbar(
+          'Error',
+          'User disabled.',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
+      else if(e.code == 'too-many-requests'){
+        debugPrint('Too many requests.');
+        Get.snackbar(
+          'Error',
+          'Too many requests.',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
+      else {
+        debugPrint('Error: $e');
+        Get.snackbar(
+          'Error',
+          'Error: $e',
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
+
     }
     return userCredential;
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:moca/views/cognitive_failure_screen.dart';
 import '../controllers/symptoms_ongoing_illness_controller.dart';
 import 'home_screen.dart';
 
@@ -1579,7 +1580,7 @@ class _SymptomsOnGoingIllnessScreenState
                               .then((value) {
                             if (value == true) {
                               Get.offAll(
-                                () => const HomePage(),
+                                () => CognitiveFailure(),
                               );
                             }
                           });

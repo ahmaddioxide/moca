@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:moca/views/orientation_screen.dart';
 
 class AbstractionController extends GetxController {
   Future<void> submitTaskResults(
@@ -21,6 +22,7 @@ class AbstractionController extends GetxController {
             backgroundColor: Colors.green,
             colorText: Colors.white,
             snackPosition: SnackPosition.BOTTOM);
+        Get.offAll(() =>  OreientationScreen());
       }, onError: (error) {
         Get.snackbar('Error', "Task results could not be saved.",
             backgroundColor: Colors.red,

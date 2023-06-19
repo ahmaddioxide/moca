@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:moca/views/abstraction_screen.dart';
 
 import '../controllers/cognitive_failure_controller.dart';
 
@@ -110,8 +111,13 @@ class CognitiveFailure extends StatelessWidget {
                               borderRadius: BorderRadius.circular(12),
                             ),
                           ),
-                          onPressed: () {
-                            _cognitiveFailureController.submitSurvey();
+                          onPressed: ()async {
+                          await  _cognitiveFailureController.submitSurvey().then((value) {
+                            if(value)
+                              {
+                                Get.offAll(() => AbstractionScreen());
+                              }
+                          });
                           },
                           child: const Text('Submit',style: TextStyle(
                             fontSize: 20,

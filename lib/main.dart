@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:moca/views/abstraction_screen.dart';
 import 'package:moca/views/cognitive_failure_screen.dart';
+import 'package:moca/views/login_screen.dart';
 import 'package:moca/views/orientation_screen.dart';
 import 'package:moca/views/signup_screen.dart';
 import 'package:moca/views/sociodemographic_sceen.dart';
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:  SocioDemographicScreen(),
+      home:  const SignUpScreen(),
     );
   }
 }

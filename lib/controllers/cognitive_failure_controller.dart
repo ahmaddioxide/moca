@@ -9,7 +9,7 @@ class CognitiveFailureController extends GetxController {
     update(); // Notify GetX that the ratings list has changed
   }
 
-  void submitSurvey() async {
+  Future<bool> submitSurvey() async {
     const currentUser = 'current_user'; // Replace with the current user ID
 
     // Create a new document for the current user
@@ -22,6 +22,9 @@ class CognitiveFailureController extends GetxController {
       await userDocRef.collection('survey_results').doc('question_$i').set({
         'question': getQuestion(i),
         'rating': rating,
+      }).onError((error, stackTrace) {
+        Get.snackbar('Error', 'Error saving survey results');
+        return false;
       });
     }
 
@@ -31,6 +34,7 @@ class CognitiveFailureController extends GetxController {
 
     // Show a success message or navigate to the next screen
     Get.snackbar('Survey Submitted', 'Thank you for completing the survey!');
+    return true;
   }
 
   String getQuestion(int index) {
