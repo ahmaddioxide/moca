@@ -24,7 +24,7 @@ class CognitiveFailure extends StatelessWidget {
           children: [
             Text(
               'Please rate the frequency of the following events in the past six months using the scale below:',
-              style: TextStyle(fontSize: screenWidth * 0.04),
+              style: TextStyle(fontSize: screenWidth * 0.04,color: Colors.deepPurple,fontWeight: FontWeight.bold),
             ),
             SizedBox(height: screenHeight * 0.02),
             Row(
@@ -60,6 +60,7 @@ class CognitiveFailure extends StatelessWidget {
               ],
             ),
             SizedBox(height: screenHeight * 0.02),
+            Divider(thickness: screenWidth * 0.01),
             Expanded(
               child: Scrollbar(
                 thickness: screenWidth * 0.03,
@@ -72,7 +73,7 @@ class CognitiveFailure extends StatelessWidget {
                         SizedBox(height: screenHeight * 0.02),
                         Text(
                           '${i + 1}. ${_cognitiveFailureController.getQuestion(i)}',
-                          style: TextStyle(fontSize: screenWidth * 0.04),
+                          style: TextStyle(fontSize: screenWidth * 0.04,color: Colors.deepPurple),
                         ),
                         SizedBox(height: screenHeight * 0.01),
                         Obx(
@@ -99,11 +100,25 @@ class CognitiveFailure extends StatelessWidget {
                         )
                       ],
                       SizedBox(height: screenHeight * 0.02),
-                      ElevatedButton(
-                        onPressed: () {
-                          _cognitiveFailureController.submitSurvey();
-                        },
-                        child: const Text('Submit'),
+                      SizedBox(
+                        width: double.infinity,
+                        height: screenHeight * 0.05,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.deepPurple,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                          onPressed: () {
+                            _cognitiveFailureController.submitSurvey();
+                          },
+                          child: const Text('Submit',style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),),
+                        ),
                       ),
                     ],
                   ),

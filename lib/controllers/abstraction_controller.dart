@@ -5,16 +5,16 @@ import 'package:get/get.dart';
 
 class AbstractionController extends GetxController {
   Future<void> submitTaskResults(
-    List<bool> taskResults,
-  ) async {
+      List<bool> taskResults,
+      ) async {
     final User? currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser != null) {
       // Save the results to Firestore
       final CollectionReference userCollection =
-          FirebaseFirestore.instance.collection('users');
+      FirebaseFirestore.instance.collection('users');
       final DocumentReference userDoc = userCollection.doc(currentUser.uid);
       final CollectionReference resultsCollection =
-          userDoc.collection('abstraction_results');
+      userDoc.collection('abstraction_results');
 
       await resultsCollection.add({'taskResults': taskResults}).then((value) {
         Get.snackbar('Success', "Task results saved successfully.",

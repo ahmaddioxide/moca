@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:moca/controllers/orientation_controller.dart';
 
-class Oreientation extends StatelessWidget {
+class OreientationScreen extends StatelessWidget {
   final OreientationController controller = Get.put(OreientationController());
 
-  Oreientation({super.key});
+  OreientationScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
