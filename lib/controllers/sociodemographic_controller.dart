@@ -1,42 +1,52 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:moca/controllers/firebase_const.dart';
 
+import '../views/medicalhistory_sceen.dart';
+
 class DemographicController extends GetxController {
   String name = '';
-  String gender = 'Male';
+  String gender = '';
   String age = '18-20 years';
-  String residence = 'Rural';
+  String residence = '';
   String education = 'Matriculation (grade 9 and 10)';
   String profession = '';
 
-  Future<bool> submitSocioDemographicForm(
-      {name, gender, age, residence, education, profession, email}) async {
+  void submitForm(
+      {name,
+      gender,
+      age,
+      residence,
+      education,
+      profession,
+      password,
+      email}) async {
     debugPrint('submitForm() called');
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(currentUser!.uid)
-        .collection('socio_demographic')
-        .doc('data') //test result (do it)
-        .set(
-      {
+    try {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(currentUser!.uid)
+          .collection('socio_demographic')
+          .doc('data') //test result (do it)
+          .set({
         'name': name,
         'gender': gender,
         'age': age,
         'residence': residence,
         'education': education,
         'profession': profession,
-      },
-    ).catchError((e) {
-      debugPrint('Error: $e');
-      Get.snackbar('Error', 'Error: $e',
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Colors.red,
-          colorText: Colors.white);
-      return false;
-    });
-return true;
+        'id': currentUser!.uid,
+      }).then((value) => Get.offAll(() => const MedicalHistoryScreen()));
+    } catch (e) {
+      debugPrint('LoginCalled() called Error "$e"');
+      Get.snackbar(
+        'Error',
+        'Some Error Occured! ',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
   }
 }

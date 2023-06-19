@@ -1,13 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-// import 'package:moca/views/abstraction_screen.dart';
-import 'package:moca/views/cognitive_failure_screen.dart';
-// import 'package:moca/views/signup_screen.dart';
-// import 'package:moca/views/signup_screen.dart';
-// import 'package:moca/views/sociodemographic_sceen.dart';
+import 'package:moca/views/signup_screen.dart';
 import 'firebase_options.dart';
-// import 'views/orientation_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,12 +20,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Moca',
+      title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: CognitiveFailure(),
+      home: const SignUpScreen(),
     );
   }
 }

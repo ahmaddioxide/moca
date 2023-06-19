@@ -12,7 +12,7 @@ class CovidExperienceController extends GetxController {
   String first4weeks = '';
   String week4Experience = '';
 
-  void submitForm({
+  Future<bool> submitForm({
     pcrTest,
     covid,
     result,
@@ -22,36 +22,71 @@ class CovidExperienceController extends GetxController {
     pcrTestDetails,
   }) async {
     debugPrint('submitForm() called');
+    try {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(currentUser!.uid)
+          .collection('covid_experience')
+          .doc('data')
+          .set({
+        'pcrTest': pcrTest,
+        'covid': covid,
+        'results': result,
+        'duration': duration,
+        'first4weeks': first4weeks,
+        'week4Experience': week4Experience,
+        'pcrTestDetails': pcrTestDetails,
+        'id': currentUser!.uid,
+      });
+      return true;
+    } catch (e) {
+      debugPrint('Error: $e');
+      Get.snackbar(
+        'Error',
+        'Error: $e',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      return false;
+    }
+  }
 
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc('test_user')
-        .collection('covid_experience')
-        .doc(currentUser!.uid)
-        .set({
-      'pcrTest': pcrTest,
-      'covid': covid,
-      'results': result,
-      'duration': duration,
-      'first4weeks': first4weeks,
-      'week4Experience': week4Experience,
-      'pcrTestDetails': pcrTestDetails,
-      'id': currentUser!.uid,
-    });
-
-    // Get.dialog(
-    //   AlertDialog(
-    //     title: const Text('Form Submitted'),
-    //     content: const Text('Your Covid Experience data has been submitted.'),
-    //     actions: [
-    //       TextButton(
-    //         onPressed: () {
-    //           Get.back();
-    //         },
-    //         child: const Text('OK'),
-    //       ),
-    //     ],
-    //   ),
-    // );
+  Future<bool> submitFormMethod({
+    pcrTest,
+    covid,
+    result,
+    duration,
+    first4weeks,
+    week4Experience,
+    pcrTestDetails,
+  }) async {
+    try {
+      debugPrint('submitForm() called');
+      bool? check = await submitForm(
+        pcrTest: pcrTest,
+        covid: covid,
+        result: result,
+        duration: duration,
+        first4weeks: first4weeks,
+        week4Experience: week4Experience,
+        pcrTestDetails: pcrTestDetails,
+      );
+      if (check == false) {
+        debugPrint('ERROR is storing data!');
+        return false;
+      }
+    } catch (e) {
+      debugPrint('Error: $e');
+      Get.snackbar(
+        'Error',
+        'Error: $e',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      return false;
+    }
+    return true;
   }
 }

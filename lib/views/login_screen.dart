@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:moca/views/sociodemographic_sceen.dart';
-import '../controllers/signup_controller.dart';
-import 'login_screen.dart';
+import 'package:moca/views/home_screen.dart';
+import 'package:moca/views/signup_screen.dart';
+import '../controllers/login_controller.dart';
 
-class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({super.key});
+class LogInScreen extends StatefulWidget {
+  const LogInScreen({super.key});
   @override
-  _SignUpScreenState createState() => _SignUpScreenState();
+  _LogInScreenState createState() => _LogInScreenState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
+class _LogInScreenState extends State<LogInScreen> {
   final _formKey = GlobalKey<FormState>();
 
-  final SignUpController _controller = Get.put(SignUpController());
+  final LogInController _controller = Get.put(LogInController());
   bool _isPasswordVisible = false;
-  bool _isRepasswordVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +27,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           child: Column(
             children: [
               const Text(
-                'Sign Up',
+                'Log In',
                 style: TextStyle(
                   fontSize: 35,
                   fontWeight: FontWeight.bold,
@@ -47,34 +46,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      TextFormField(
-                        decoration: const InputDecoration(
-                          // hintText: 'Enter Your Name',
-                          prefixIcon: Icon(
-                            Icons.person,
-                            color: Colors.deepPurple,
-                          ),
-                          labelText: 'Enter Your Name',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(12),
-                            ),
-                          ),
-                        ),
-                        onChanged: (value) {
-                          setState(
-                            () {
-                              _controller.name = value;
-                            },
-                          );
-                        },
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please Enter Your Name';
-                          }
-                          return null;
-                        },
-                      ),
                       SizedBox(height: Get.height * 0.02),
                       TextFormField(
                         decoration: const InputDecoration(
@@ -98,8 +69,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           if (value == null || value.isEmpty) {
                             return 'Please Enter Your Email';
                           } else if (!value.contains('@')) {
-                            return 'Please Enter Valid Email';
-                          } else if (!value.contains('.')) {
                             return 'Please Enter Valid Email';
                           } else if (value.contains(' ')) {
                             return 'Please Enter Valid Email';
@@ -156,52 +125,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         },
                       ),
                       SizedBox(height: Get.height * 0.02),
-                      TextFormField(
-                        obscureText: !_isRepasswordVisible,
-                        decoration: InputDecoration(
-                          prefixIcon: const Icon(
-                            Icons.fingerprint_outlined,
-                            color: Colors.deepPurple,
-                          ),
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              _isRepasswordVisible
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
-                              color: Colors.deepPurple,
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                _isRepasswordVisible = !_isRepasswordVisible;
-                              });
-                            },
-                          ),
-                          labelText: 'Re-Enter Your Password',
-                          border: const OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(12),
-                            ),
-                          ),
-                        ),
-                        onChanged: (value) {
-                          setState(() {
-                            _controller.repassword = value;
-                          });
-                        },
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter password';
-                          } else if (_controller.repassword !=
-                              _controller.password) {
-                            return 'Password MisMatched';
-                          } else if (value.length < 6) {
-                            return 'Password must be at least 6 characters!';
-                          } else if (value.contains(' ')) {
-                            return 'Password must not contain space!';
-                          }
-                          return null;
-                        },
-                      ),
                       SizedBox(height: Get.height * 0.02),
                       SizedBox(
                         width: double.infinity,
@@ -216,22 +139,29 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           onPressed: () async {
                             if (_formKey.currentState!.validate()) {
                               _controller
-                                  .signup(
-                                name: _controller.name.trim(),
+                                  .logIn(
                                 password: _controller.password.trim(),
                                 email: _controller.email.trim(),
                               )
                                   .then((value) {
                                 if (value == true) {
-                                  Get.offAll(
-                                    () => const SocioDemographicScreen(),
+                                  Get.to(
+                                    () => const HomePage(),
+                                  );
+                                } else {
+                                  Get.snackbar(
+                                    'Error',
+                                    'Some Error occured! ',
+                                    snackPosition: SnackPosition.BOTTOM,
+                                    backgroundColor: Colors.red,
+                                    colorText: Colors.white,
                                   );
                                 }
                               });
                             }
                           },
                           child: const Text(
-                            'Sign Up',
+                            'Log In',
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
@@ -249,10 +179,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           TextButton(
                             onPressed: () {
                               Get.offAll(() =>
-                                  const LogInScreen()); // Navigate to the LoginScreen
+                                  const SignUpScreen()); // Navigate to the LoginScreen
                             },
                             child: const Text(
-                              "Log in",
+                              "Sign Up",
                               style: TextStyle(
                                 fontSize: 18,
                                 color: Colors.deepPurple,

@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:moca/controllers/abstraction_controller.dart';
 
 class AbstractionScreen extends StatefulWidget {
   @override
@@ -11,36 +9,31 @@ class AbstractionScreen extends StatefulWidget {
 
 class _AbstractionScreenState extends State<AbstractionScreen> {
   List<bool> taskResults = List<bool>.filled(3, false);
-  final controller = Get.put(AbstractionController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Abstraction Task'),
+        title: Text('Abstraction Task'),
       ),
       body: LayoutBuilder(
         builder: (context, constraints) {
           return Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: EdgeInsets.all(16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                Text(
                   'Please perform the following abstraction tasks:',
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    color: Colors.deepPurple,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: TextStyle(fontSize: 18.0),
                 ),
-                const SizedBox(height: 16.0),
+                SizedBox(height: 16.0),
                 Expanded(
                   child: ListView(
                     children: [
                       TaskItem(
                         statement: 'Banana-Orange',
-                        options: const ['Fruit', 'Color', 'Vehicle', 'Animal'],
+                        options: ['Fruit', 'Color', 'Vehicle', 'Animal'],
                         result: 'Fruit',
                         onChanged: (result) {
                           setState(() {
@@ -50,7 +43,7 @@ class _AbstractionScreenState extends State<AbstractionScreen> {
                       ),
                       TaskItem(
                         statement: 'Train-Bicycle',
-                        options: const ['Fruit', 'Color', 'Vehicle', 'Animal'],
+                        options: ['Fruit', 'Color', 'Vehicle', 'Animal'],
                         result: 'Vehicle',
                         onChanged: (result) {
                           setState(() {
@@ -60,7 +53,7 @@ class _AbstractionScreenState extends State<AbstractionScreen> {
                       ),
                       TaskItem(
                         statement: 'Watch-Ruler',
-                        options: const ['Fruit', 'Color', 'Tool', 'Animal'],
+                        options: ['Fruit', 'Color', 'Tool', 'Animal'],
                         result: 'Tool',
                         onChanged: (result) {
                           setState(() {
@@ -71,27 +64,28 @@ class _AbstractionScreenState extends State<AbstractionScreen> {
                     ],
                   ),
                 ),
-                const SizedBox(height: 16.0),
-                SizedBox(
-                  width: double.infinity,
-                  height: 50.0,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.deepPurple,
-                    ),
-                    onPressed: () async {
-                    controller.submitTaskResults(taskResults);
-                    },
-                    child:const  Text(
-                      'Submit',
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
+                SizedBox(height: 16.0),
+                ElevatedButton(
+                  onPressed: () async {
+                    final User? currentUser = FirebaseAuth.instance.currentUser;
+                    if (currentUser != null) {
+                      // Save the results to Firestore
+                      final CollectionReference userCollection = FirebaseFirestore.instance.collection('users');
+                      final DocumentReference userDoc = userCollection.doc(currentUser.uid);
+                      final CollectionReference resultsCollection = userDoc.collection('abstraction_results');
+
+                      await resultsCollection.add({'taskResults': taskResults});
+
+                      // Process the results or navigate to the next screen
+                      print('Task Results: $taskResults');
+                    } else {
+                      // Handle user not signed in
+                      print('User is not signed in.');
+                    }
+                  },
+                  child: Text('Submit'),
                 ),
+
               ],
             ),
           );
@@ -127,39 +121,41 @@ class _TaskItemState extends State<TaskItem> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          widget.statement,
-          style:const TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.deepPurple),
+          'Task: ${widget.statement}',
+          style: TextStyle(fontSize: 16.0),
         ),
-        SizedBox(height: Get.height*0.01),
-        DecoratedBox(
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.deepPurple),
-            borderRadius: BorderRadius.circular(8.0),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: DropdownButton<String>(
-              hint: const Text('Select an option'),
-              underline: const SizedBox(),
-              isExpanded: true,
-              value: selectedOption,
-              onChanged: (value) {
-                setState(() {
-                  selectedOption = value!;
-                  widget.onChanged(value == widget.result);
-                });
-              },
-              items: widget.options.map((option) {
-                return DropdownMenuItem<String>(
-                  value: option,
-                  child: Text(option),
-                );
-              }).toList(),
-            ),
-          ),
+        SizedBox(height: 8.0),
+        DropdownButton<String>(
+          value: selectedOption,
+          onChanged: (value) {
+            setState(() {
+              selectedOption = value!;
+              widget.onChanged(value == widget.result);
+            });
+          },
+          items: widget.options.map((option) {
+            return DropdownMenuItem<String>(
+              value: option,
+              child: Text(option),
+            );
+          }).toList(),
         ),
-        SizedBox(height: Get.height*0.01),
-        const Divider(),
+        SizedBox(height: 8.0),
+        // Visibility(
+        //   visible: selectedOption == widget.result,
+        //   child: Text(
+        //     'Correct!',
+        //     style: TextStyle(color: Colors.green),
+        //   ),
+        // ),
+        // Visibility(
+        //   visible: selectedOption != widget.result && selectedOption != null,
+        //   child: Text(
+        //     'Incorrect!',
+        //     style: TextStyle(color: Colors.red),
+        //   ),
+        // ),
+        Divider(),
       ],
     );
   }
