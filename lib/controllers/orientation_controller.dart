@@ -8,12 +8,16 @@ class OreientationController extends GetxController {
   final TextEditingController dayController = TextEditingController();
   final TextEditingController placeController = TextEditingController();
   final TextEditingController cityController = TextEditingController();
+  final TextEditingController monthController = TextEditingController();
+  final TextEditingController yearController = TextEditingController();
 
   RxBool isDayCorrect = false.obs;
   RxBool isPlaceCorrect = false.obs;
   RxBool isCityCorrect = false.obs;
 
-  DateTime currentDate = DateTime.now();
+
+  late DateTime selectedDayMonthYear ;
+  DateTime currentDateTime= DateTime.now();
 
   Future<void> saveResultsToFirestore() async {
     final User? currentUser = FirebaseAuth.instance.currentUser;
@@ -64,13 +68,13 @@ class OreientationController extends GetxController {
       lastDate: DateTime(2100),
     );
     if (picked != null) {
-      currentDate = picked;
-      dayController.text = currentDate.day.toString();
+      selectedDayMonthYear = picked;
+      dayController.text = "${selectedDayMonthYear.day} / ${selectedDayMonthYear.month} /${selectedDayMonthYear.year}";
     }
   }
 
   void verifyInputs() {
-    isDayCorrect.value = dayController.text == currentDate.day.toString();
+    isDayCorrect.value = dayController.text == "${currentDateTime.day} / ${currentDateTime.month} /${currentDateTime.year}";
     isPlaceCorrect.value = placeController.text == 'islamabad'|| placeController.text == 'rawalpindi';
     isCityCorrect.value = cityController.text == 'islamabad'|| cityController.text == 'rawalpindi';
 

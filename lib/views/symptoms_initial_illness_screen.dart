@@ -1751,60 +1751,80 @@ class _SymptomsInitialIllnessScreenState
                 const Divider(color: Colors.black12),
                 const SizedBox(height: 8),
                 Center(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      try {
-                        if (_formKey.currentState!.validate()) {
-                          _controller
-                              .signUpMethod(
-                            fever: _controller.fever,
-                            cough: _controller.cough,
-                            stuffyNose: _controller.stuffyNose,
-                            soreThroat: _controller.soreThroat,
-                            breathingIssues: _controller.breathingIssues,
-                            chestPain: _controller.chestPain,
-                            irregularPulse: _controller.irregularPulse,
-                            itchyRedDryEyes: _controller.itchyRedDryEyes,
-                            headAches: _controller.headAches,
-                            lossOfSmelltaste: _controller.lossOfSmelltaste,
-                            blurredVision: _controller.blurredVision,
-                            hallucinations: _controller.hallucinations,
-                            confusion: _controller.confusion,
-                            difficultSleepy: _controller.difficultSleepy,
-                            depressionAnxiety: _controller.depressionAnxiety,
-                            numbness: _controller.numbness,
-                            fatigue: _controller.fatigue,
-                            bodyPain: _controller.bodyPain,
-                            nausea: _controller.nausea,
-                            vomiting: _controller.vomiting,
-                            diarrhea: _controller.diarrhea,
-                            abdominalPain: _controller.abdominalPain,
-                            lossOfAppetite: _controller.lossOfAppetite,
-                            hotFlashes: _controller.hotFlashes,
-                            rash: _controller.rash,
-                          )
-                              .then((value) {
-                            if (value == true) {
-                              Get.offAll(
-                                () => const SymptomsOnGoingIllnessScreen(),
-                              );
+                  child: SizedBox(
+                    width: double.infinity,
+                    height: 50,
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.deepPurple,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        onPressed: () {
+                          try {
+                            if (_formKey.currentState!.validate()) {
+                              _controller
+                                  .signUpMethod(
+                                fever: _controller.fever,
+                                cough: _controller.cough,
+                                stuffyNose: _controller.stuffyNose,
+                                soreThroat: _controller.soreThroat,
+                                breathingIssues: _controller.breathingIssues,
+                                chestPain: _controller.chestPain,
+                                irregularPulse: _controller.irregularPulse,
+                                itchyRedDryEyes: _controller.itchyRedDryEyes,
+                                headAches: _controller.headAches,
+                                lossOfSmelltaste: _controller.lossOfSmelltaste,
+                                blurredVision: _controller.blurredVision,
+                                hallucinations: _controller.hallucinations,
+                                confusion: _controller.confusion,
+                                difficultSleepy: _controller.difficultSleepy,
+                                depressionAnxiety: _controller.depressionAnxiety,
+                                numbness: _controller.numbness,
+                                fatigue: _controller.fatigue,
+                                bodyPain: _controller.bodyPain,
+                                nausea: _controller.nausea,
+                                vomiting: _controller.vomiting,
+                                diarrhea: _controller.diarrhea,
+                                abdominalPain: _controller.abdominalPain,
+                                lossOfAppetite: _controller.lossOfAppetite,
+                                hotFlashes: _controller.hotFlashes,
+                                rash: _controller.rash,
+                              )
+                                  .then((value) {
+                                if (value == true) {
+                                  Get.offAll(
+                                    () => const SymptomsOnGoingIllnessScreen(),
+                                  );
+                                }
+                              });
                             }
-                          });
-                        }
-                      } catch (e) {
-                        debugPrint('LoginCalled() called Error "$e"');
-                        Get.snackbar(
-                          'Error',
-                          'Some Error Occured! ',
-                          snackPosition: SnackPosition.BOTTOM,
-                          backgroundColor: Colors.red,
-                          colorText: Colors.white,
-                        );
-                      }
-                    },
-                    child: const Text('Submit'),
+                          } catch (e) {
+                            debugPrint('LoginCalled() called Error "$e"');
+                            Get.snackbar(
+                              'Error',
+                              'Some Error Occured! ',
+                              snackPosition: SnackPosition.BOTTOM,
+                              backgroundColor: Colors.red,
+                              colorText: Colors.white,
+                            );
+                          }
+                        },
+                        child: const Text('Submit',style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white,
+                        ),),
+                      ),
+                    ),
                   ),
                 ),
+                const SizedBox(height: 16),
               ],
             ),
           ),

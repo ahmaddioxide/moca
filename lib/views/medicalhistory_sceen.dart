@@ -536,38 +536,60 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                 ),
                 const SizedBox(height: 16),
                 Center(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      if (_controller.diet != '' &&
-                          _controller.physicalActivity != '' &&
-                          _controller.smoke != '' &&
-                          _controller.medicalCondition != '') {
-                        _controller
-                            .submitForm(
-                                diet: _controller.diet,
-                                physicalActivity: _controller.physicalActivity,
-                                smoke: _controller.smoke,
-                                medicalCondition: _controller.medicalCondition)
-                            .then((value) {
-                          if (value == true) {
-                            Get.offAll(
-                              () => const CovidExperienceScreen(),
+                  child: SizedBox(
+                    width: double.infinity,
+                    height: 50,
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        color: Colors.deepPurple,
+                      ),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.deepPurple,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        onPressed: () {
+                          if (_controller.diet != '' &&
+                              _controller.physicalActivity != '' &&
+                              _controller.smoke != '' &&
+                              _controller.medicalCondition != '') {
+                            _controller
+                                .submitForm(
+                                    diet: _controller.diet,
+                                    physicalActivity: _controller.physicalActivity,
+                                    smoke: _controller.smoke,
+                                    medicalCondition: _controller.medicalCondition)
+                                .then((value) {
+                              if (value == true) {
+                                Get.offAll(
+                                  () => const CovidExperienceScreen(),
+                                );
+                              }
+                            });
+                          } else {
+                            Get.snackbar(
+                              'Missing Fields',
+                              'Please answer all the questions',
+                              snackPosition: SnackPosition.BOTTOM,
+                              backgroundColor: Colors.red,
+                              colorText: Colors.white,
                             );
                           }
-                        });
-                      } else {
-                        Get.snackbar(
-                          'Error',
-                          'Complete the Form !',
-                          snackPosition: SnackPosition.BOTTOM,
-                          backgroundColor: Colors.red,
-                          colorText: Colors.white,
-                        );
-                      }
-                    },
-                    child: const Text('Submit'),
+                        },
+                        child: const Text('Submit',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),),
+                      ),
+                    ),
                   ),
                 ),
+                const SizedBox(height: 16),
               ],
             ),
           ),

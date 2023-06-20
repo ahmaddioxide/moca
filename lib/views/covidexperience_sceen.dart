@@ -5,6 +5,7 @@ import '../controllers/covidexperience_controller.dart';
 
 class CovidExperienceScreen extends StatefulWidget {
   const CovidExperienceScreen({super.key});
+
   @override
   _CovidExperienceScreenState createState() => _CovidExperienceScreenState();
 }
@@ -12,6 +13,7 @@ class CovidExperienceScreen extends StatefulWidget {
 class _CovidExperienceScreenState extends State<CovidExperienceScreen> {
   final _formKey = GlobalKey<FormState>();
   bool isVisible = true;
+
   // Create an instance of the controller
   final CovidExperienceController _controller =
       Get.put(CovidExperienceController());
@@ -616,55 +618,80 @@ class _CovidExperienceScreenState extends State<CovidExperienceScreen> {
                     ),
                     const SizedBox(height: 16),
                     Center(
-                      child: ElevatedButton(
-                        onPressed: () {
-                          try {
-                            if (_formKey.currentState!.validate() &&
-                                _controller.covid != '' &&
-                                _controller.pcrTest != '' &&
-                                _controller.result != '' &&
-                                _controller.duration != '' &&
-                                _controller.first4weeks != '' &&
-                                _controller.week4Experience != '' &&
-                                _controller.pcrTestDetails != '') {
-                              _controller
-                                  .submitFormMethod(
-                                pcrTest: _controller.pcrTest,
-                                covid: _controller.covid,
-                                result: _controller.result,
-                                duration: _controller.duration,
-                                first4weeks: _controller.first4weeks,
-                                week4Experience: _controller.week4Experience,
-                                pcrTestDetails: _controller.pcrTestDetails,
-                              )
-                                  .then((value) {
-                                if (value == true) {
-                                  Get.offAll(
-                                    () => const SymptomsInitialIllnessScreen(),
+                      child: SizedBox(
+                        width: double.infinity,
+                        height: 50,
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                            color: Colors.deepPurple,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.deepPurple,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                            onPressed: () {
+                              try {
+                                if (_formKey.currentState!.validate() &&
+                                    _controller.covid != '' &&
+                                    _controller.pcrTest != '' &&
+                                    _controller.result != '' &&
+                                    _controller.duration != '' &&
+                                    _controller.first4weeks != '' &&
+                                    _controller.week4Experience != '' &&
+                                    _controller.pcrTestDetails != '') {
+                                  _controller
+                                      .submitFormMethod(
+                                    pcrTest: _controller.pcrTest,
+                                    covid: _controller.covid,
+                                    result: _controller.result,
+                                    duration: _controller.duration,
+                                    first4weeks: _controller.first4weeks,
+                                    week4Experience:
+                                        _controller.week4Experience,
+                                    pcrTestDetails: _controller.pcrTestDetails,
+                                  )
+                                      .then((value) {
+                                    if (value == true) {
+                                      Get.offAll(
+                                        () =>
+                                            const SymptomsInitialIllnessScreen(),
+                                      );
+                                    }
+                                  });
+                                } else {
+                                  Get.snackbar(
+                                    'Missing Fields',
+                                    'Please fill all the fields',
+                                    snackPosition: SnackPosition.BOTTOM,
+                                    backgroundColor: Colors.red,
+                                    colorText: Colors.white,
                                   );
                                 }
-                              });
-                            } else {
-                              Get.snackbar(
-                                'Error',
-                                'Some Error Occured!',
-                                snackPosition: SnackPosition.BOTTOM,
-                                backgroundColor: Colors.red,
-                                colorText: Colors.white,
-                              );
-                            }
-                          } catch (e) {
-                            debugPrint('Error: $e');
-                            Get.snackbar(
-                              'Error',
-                              'Error: $e',
-                              snackPosition: SnackPosition.BOTTOM,
-                              backgroundColor: Colors.red,
-                              colorText: Colors.white,
-                            );
-                          }
-                        },
-                        child: const Text('Submit'),
+                              } catch (e) {
+                                debugPrint('Error: $e');
+                                Get.snackbar(
+                                  'Error',
+                                  'Error: $e',
+                                  snackPosition: SnackPosition.BOTTOM,
+                                  backgroundColor: Colors.red,
+                                  colorText: Colors.white,
+                                );
+                              }
+                            },
+                            child: const Text(
+                              'Submit',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   ],

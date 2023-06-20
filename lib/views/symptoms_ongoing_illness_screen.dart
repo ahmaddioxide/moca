@@ -1548,57 +1548,79 @@ class _SymptomsOnGoingIllnessScreenState
                 const Divider(color: Colors.black12),
                 const SizedBox(height: 8),
                 Center(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      try {
-                        if (_formKey.currentState!.validate()) {
-                          _controller
-                              .signUpMethod(
-                            cough: _controller.cough,
-                            breathingIssues: _controller.breathingIssues,
-                            chestPain: _controller.chestPain,
-                            irregularPulse: _controller.irregularPulse,
-                            itchyRedDryEyes: _controller.itchyRedDryEyes,
-                            headAche: _controller.headAche,
-                            lossOfSmelltaste: _controller.lossOfSmelltaste,
-                            blurredVision: _controller.blurredVision,
-                            hallucinations: _controller.hallucinations,
-                            confusion: _controller.confusion,
-                            forgetfulness: _controller.forgetfulness,
-                            delayedThinking: _controller.delayedThinking,
-                            depressionAnxiety: _controller.depressionAnxiety,
-                            poorConcentration: _controller.poorConcentration,
-                            difficultSleeping: _controller.difficultSleeping,
-                            difficultSpeaking: _controller.difficultSpeaking,
-                            numbness: _controller.numbness,
-                            fatigue: _controller.fatigue,
-                            bodyPain: _controller.bodyPain,
-                            nausea: _controller.nausea,
-                            abdominalPain: _controller.abdominalPain,
-                            lossOfAppetite: _controller.lossOfAppetite,
-                          )
-                              .then((value) {
-                            if (value == true) {
-                              Get.offAll(
-                                () => CognitiveFailure(),
-                              );
+                  child: SizedBox(
+                    width: double.infinity,
+                    height: 50,
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+
+                      ),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.deepPurple,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        onPressed: () {
+                          try {
+                            if (_formKey.currentState!.validate()) {
+                              _controller
+                                  .signUpMethod(
+                                cough: _controller.cough,
+                                breathingIssues: _controller.breathingIssues,
+                                chestPain: _controller.chestPain,
+                                irregularPulse: _controller.irregularPulse,
+                                itchyRedDryEyes: _controller.itchyRedDryEyes,
+                                headAche: _controller.headAche,
+                                lossOfSmelltaste: _controller.lossOfSmelltaste,
+                                blurredVision: _controller.blurredVision,
+                                hallucinations: _controller.hallucinations,
+                                confusion: _controller.confusion,
+                                forgetfulness: _controller.forgetfulness,
+                                delayedThinking: _controller.delayedThinking,
+                                depressionAnxiety: _controller.depressionAnxiety,
+                                poorConcentration: _controller.poorConcentration,
+                                difficultSleeping: _controller.difficultSleeping,
+                                difficultSpeaking: _controller.difficultSpeaking,
+                                numbness: _controller.numbness,
+                                fatigue: _controller.fatigue,
+                                bodyPain: _controller.bodyPain,
+                                nausea: _controller.nausea,
+                                abdominalPain: _controller.abdominalPain,
+                                lossOfAppetite: _controller.lossOfAppetite,
+                              )
+                                  .then((value) {
+                                if (value == true) {
+                                  Get.offAll(
+                                    () => CognitiveFailure(),
+                                  );
+                                }
+                              });
                             }
-                          });
-                        }
-                      } catch (e) {
-                        debugPrint('Error: $e');
-                        Get.snackbar(
-                          'Error',
-                          'Error: $e',
-                          snackPosition: SnackPosition.BOTTOM,
-                          backgroundColor: Colors.red,
-                          colorText: Colors.white,
-                        );
-                      }
-                    },
-                    child: const Text('Submit'),
+                          } catch (e) {
+                            debugPrint('Error: $e');
+                            Get.snackbar(
+                              'Error',
+                              'Error: $e',
+                              snackPosition: SnackPosition.BOTTOM,
+                              backgroundColor: Colors.red,
+                              colorText: Colors.white,
+                            );
+                          }
+                        },
+                        child: const Text('Submit',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white,
+                            ),),
+                      ),
+                    ),
                   ),
                 ),
+                const SizedBox(height: 8),
               ],
             ),
           ),

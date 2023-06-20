@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:moca/views/orientation_screen.dart';
 
 import 'package:moca/views/signup_screen.dart';
 import 'package:moca/views/sociodemographic_sceen.dart';
@@ -24,12 +25,13 @@ class MyApp extends StatelessWidget {
     User? user = FirebaseAuth.instance.currentUser;
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'MOCA',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:  user == null ? const SignUpScreen() : const SocioDemographicScreen(),
+      // home:  user == null ? const SignUpScreen() : const SocioDemographicScreen()
+      home:  OrientationScreen(),
     );
   }
 }

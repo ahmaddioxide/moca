@@ -75,19 +75,24 @@ class _AbstractionScreenState extends State<AbstractionScreen> {
                 SizedBox(
                   width: double.infinity,
                   height: 50.0,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.deepPurple,
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12.0),
                     ),
-                    onPressed: () async {
-                      controller.submitTaskResults(taskResults);
-                    },
-                    child:const  Text(
-                      'Submit',
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.deepPurple,
+                      ),
+                      onPressed: () async {
+                        controller.submitTaskResults(taskResults);
+                      },
+                      child:const  Text(
+                        'Submit',
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),

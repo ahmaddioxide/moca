@@ -22,7 +22,7 @@ class AbstractionController extends GetxController {
             backgroundColor: Colors.green,
             colorText: Colors.white,
             snackPosition: SnackPosition.BOTTOM);
-        Get.offAll(() =>  OreientationScreen());
+        Get.offAll(() =>  OrientationScreen());
       }, onError: (error) {
         Get.snackbar('Error', "Task results could not be saved.",
             backgroundColor: Colors.red,
