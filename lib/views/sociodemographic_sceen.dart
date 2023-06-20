@@ -353,7 +353,7 @@ class _SocioDemographicScreenState extends State<SocioDemographicScreen> {
                   decoration: const InputDecoration(
                     // hintText: 'Enter Your Name',
                     prefixIcon: Icon(
-                      Icons.art_track,
+                      Icons.work,
                       color: Colors.deepPurple,
                     ),
                     labelText: 'Enter Your profession',
@@ -436,6 +436,7 @@ class _SocioDemographicScreenState extends State<SocioDemographicScreen> {
                         ),
                       ),
                     ),
+                    const SizedBox(height: 16),
                   ],
                 ),
               ],
