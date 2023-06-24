@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:moca/controllers/abstraction_controller.dart';
@@ -86,7 +84,7 @@ class _AbstractionScreenState extends State<AbstractionScreen> {
                       onPressed: () async {
                         controller.submitTaskResults(taskResults);
                       },
-                      child:const  Text(
+                      child: const Text(
                         'Submit',
                         style: TextStyle(
                           fontSize: 20.0,
@@ -133,9 +131,12 @@ class _TaskItemState extends State<TaskItem> {
       children: [
         Text(
           widget.statement,
-          style:const TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: Colors.deepPurple),
+          style: const TextStyle(
+              fontSize: 16.0,
+              fontWeight: FontWeight.bold,
+              color: Colors.deepPurple),
         ),
-        SizedBox(height: Get.height*0.01),
+        SizedBox(height: Get.height * 0.01),
         DecoratedBox(
           decoration: BoxDecoration(
             border: Border.all(color: Colors.deepPurple),
@@ -163,7 +164,7 @@ class _TaskItemState extends State<TaskItem> {
             ),
           ),
         ),
-        SizedBox(height: Get.height*0.01),
+        SizedBox(height: Get.height * 0.01),
         const Divider(),
       ],
     );
