@@ -3,10 +3,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:moca/views/orientation_screen.dart';
-
 import 'package:moca/views/signup_screen.dart';
 import 'package:moca/views/sociodemographic_sceen.dart';
 import 'firebase_options.dart';
+import 'views/test/memory_test.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       // home:  user == null ? const SignUpScreen() : const SocioDemographicScreen()
-      home:  OrientationScreen(),
+      home:  MemoryTestScreen(),
     );
   }
 }

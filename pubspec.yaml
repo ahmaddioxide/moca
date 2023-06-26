@@ -42,6 +42,16 @@ dependencies:
   cloud_firestore: ^4.8.0
   firebase_auth: ^4.6.2
 
+
+
+
+
+  #voice dependencies
+  speech_to_text: ^6.2.0
+  flutter_tts: ^3.7.0
+  avatar_glow: ^2.0.2
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
