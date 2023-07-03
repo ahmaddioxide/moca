@@ -4,18 +4,20 @@ import 'package:get/get.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
+import '../../controllers/serial7test_controller.dart';
 import 'sentence_repetition.dart';
 
-class SerialScreen extends StatefulWidget {
-  const SerialScreen({Key? key}) : super(key: key);
+class Serial7Screen extends StatefulWidget {
+  const Serial7Screen({Key? key}) : super(key: key);
 
   @override
-  State<SerialScreen> createState() => _SerialState();
+  State<Serial7Screen> createState() => _Serial7State();
 }
 
-class _SerialState extends State<SerialScreen> {
+class _Serial7State extends State<Serial7Screen> {
   SpeechToText speechToText = SpeechToText();
   FlutterTts flutterTts = FlutterTts();
+  final Serial7Controller _controller = Get.put(Serial7Controller());
   var text = "Hold the button and start speaking";
   var isListening = false;
   var maxAttemptsReached = false;
@@ -27,14 +29,29 @@ class _SerialState extends State<SerialScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 2), () {
-      _speakInstructions();
-    });
+    // Future.delayed(const Duration(seconds: 2), () {
+    //   _speakInstructions();
+    // });
   }
 
-  void _speakInstructions() async {
-    await flutterTts.speak(
-        "Count backwards by subtracting 7 from 100. Do a total of 5 subtractions.");
+  // void _speakInstructions() async {
+  //   await flutterTts.speak(
+  //       "Count backwards by subtracting 7 from 100. Do a total of 5 subtractions.");
+  // }
+
+  Future<void> finalScore() async {
+    int finalScore;
+
+    if (score > 3) {
+      finalScore = 3;
+    } else if (score == 2 || score == 3) {
+      finalScore = 2;
+    } else if (score == 1) {
+      finalScore = 1;
+    } else {
+      finalScore = 0;
+    }
+    _controller.saveScore(finalScore);
   }
 
   void _validateCounting() {
@@ -42,10 +59,13 @@ class _SerialState extends State<SerialScreen> {
     if (recognizedNumber != null) {
       if (recognizedNumber == target) {
         attempts++;
-        setState(() {
+        setState(() async {
           score++;
           if (attempts == maxAttempts) {
-            _showPopup();
+            await finalScore();
+            Future.delayed(const Duration(seconds: 3), () {
+              _showPopup();
+            });
             isListening = false;
             maxAttemptsReached = true;
           } else {
@@ -57,8 +77,11 @@ class _SerialState extends State<SerialScreen> {
         attempts++;
         _showSnackbar("Wrong Input! Try Again");
         if (attempts == maxAttempts) {
-          setState(() {
-            _showPopup();
+          setState(() async {
+            await finalScore();
+            Future.delayed(const Duration(seconds: 3), () {
+              _showPopup();
+            });
             isListening = false;
             maxAttemptsReached = true;
           });
@@ -72,35 +95,24 @@ class _SerialState extends State<SerialScreen> {
   }
 
   void _showPopup() {
-      int finalScore;
-
-      if (score > 3) {
-        finalScore = 3;
-      } else if (score == 2 || score == 3) {
-        finalScore = 2;
-      } else if (score == 1) {
-        finalScore = 1;
-      } else {
-        finalScore = 0;
-      }
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Test Complete'),
-            content: Text('Your score is $finalScore'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Get.to(() => const SentenceRepetitionScreen());
-                },
-                child: const Text('OK'),
-              ),
-            ],
-          );
-        },
-      );
-
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Test Complete'),
+          content: const Text(
+              'Congratulations! You have completed the Attention Test.'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Get.offAll(() => const SentenceRepetitionScreen());
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   void _showSnackbar(String message) {
@@ -151,7 +163,7 @@ class _SerialState extends State<SerialScreen> {
                 : isListening
                     ? Colors.grey
                     : Colors.deepPurple,
-            radius: 30,
+            radius: 40,
             child: Icon(
               isListening ? Icons.mic : Icons.mic_none,
               color: Colors.white,
@@ -160,30 +172,55 @@ class _SerialState extends State<SerialScreen> {
         ),
       ),
       appBar: AppBar(
-        title: const Text('Series 7 Screen'),
+        title: const Text(
+          'Attention Test',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: Colors.deepPurple,
+          ),
+        ),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
+          const Padding(
+            padding: EdgeInsets.only(top: 5, left: 16),
             child: Text(
-              'Correct Responses: $score',
-              style: const TextStyle(
+              'Serial 7 Test',
+              style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
             ),
+          ),
+          const Padding(padding: EdgeInsets.only(top: 5, left: 16, right: 16),
+          child: Text(
+            'Count backwards from 100 by subtracting 7. Do a total of 5 subtractions.',
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.deepPurple,
+            ),
+          ),
           ),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Text(
               'Attempts Left: ${maxAttempts - attempts}',
               style: const TextStyle(
-                fontSize: 18,
+                fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
             ),
+          ),
+          const Divider(
+            thickness: 1,
+            indent: 16,
+            endIndent: 16,
+            color: Colors.deepPurple,
+          ),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.1,
           ),
           Padding(
             padding: const EdgeInsets.only(top: 50),
@@ -199,8 +236,8 @@ class _SerialState extends State<SerialScreen> {
                 child: Text(
                   text,
                   style: TextStyle(
-                    fontSize: 24,
-                    color: isListening ? Colors.black87 : Colors.black54,
+                    fontSize: 20,
+                    color: isListening ? Colors.deepPurple : Colors.black54,
                   ),
                 ),
               ),

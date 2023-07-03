@@ -1,6 +1,7 @@
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:moca/controllers/digitspan_controller.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
@@ -16,10 +17,11 @@ class ForwardDigitSpan extends StatefulWidget {
 class _ForwardDigitState extends State<ForwardDigitSpan> {
   SpeechToText speechToText = SpeechToText();
   FlutterTts flutterTts = FlutterTts();
+  final DigitSpanController _controller = Get.put(DigitSpanController());
   String text = "Hold the button and start speaking";
   bool isListening = false;
   int score = 0;
-  var numbers = ['1', '2', '3', '4', '5'];
+  var numbers = ['2', '4', '5', '7', '9'];
   bool isReading = true;
 
   @override
@@ -47,6 +49,7 @@ class _ForwardDigitState extends State<ForwardDigitSpan> {
 
   @override
   Widget build(BuildContext context) {
+    final double height = MediaQuery.sizeOf(context).height;
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: AvatarGlow(
@@ -68,11 +71,11 @@ class _ForwardDigitState extends State<ForwardDigitSpan> {
                     onResult: (result) {
                       setState(() {
                         text = result.recognizedWords;
-                        var recognizedWords =
-                            text.replaceAll(' ', '').split('');
+                        var recognizedWords = text.replaceAll('', ' ').split(' ');
                         var numbersJoined = numbers.join('');
                         if (recognizedWords.join('') == numbersJoined) {
                           score++;
+                          _controller.incrementScore();
                         }
                       });
                     },
@@ -87,13 +90,13 @@ class _ForwardDigitState extends State<ForwardDigitSpan> {
             });
             speechToText.stop();
             Future.delayed(const Duration(seconds: 3), () {
-              Get.to(() => const BackwardDigitSpan());
+              Get.offAll(() => const BackwardDigitSpan());
             });
 
           },
           child: CircleAvatar(
             backgroundColor: isReading ? Colors.grey : Colors.deepPurple,
-            radius: 30,
+            radius: 40,
             child: Icon(
               isListening ? Icons.mic : Icons.mic_none,
               color: Colors.white,
@@ -102,33 +105,49 @@ class _ForwardDigitState extends State<ForwardDigitSpan> {
         ),
       ),
       appBar: AppBar(
-        title: const Text('Forward Test'),
+        title: const Text('Attention Test',
+        style: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+          color: Colors.deepPurple,
+        ),
+      ),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Padding(
-            padding: EdgeInsets.all(16.0),
+            padding: EdgeInsets.only(top: 5.0, left: 16.0),
             child: Text(
-              'Repeat the numbers in Forward order',
+              'Forward Digit Span',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
+          const Padding(
+            padding: EdgeInsets.only(top: 5.0, left: 16.0,bottom: 16.0, right: 12.0),
             child: Text(
-              'Score: $score',
-              style: const TextStyle(
+              'A list of numbers will be read to you. Please repeat them exactly in the same order',
+              style: TextStyle(
                 fontSize: 18,
-                fontWeight: FontWeight.bold,
+                color: Colors.deepPurple,
               ),
             ),
           ),
+          // Padding(
+          //   padding: const EdgeInsets.all(16.0),
+          //   child: Text(
+          //     'Score: $score',
+          //     style: const TextStyle(
+          //       fontSize: 18,
+          //       fontWeight: FontWeight.bold,
+          //     ),
+          //   ),
+          // ),
           const Padding(
-            padding: EdgeInsets.all(16.0),
+            padding: EdgeInsets.only(top: 5.0, left: 16.0, bottom: 16.0, right: 12.0),
             child: Text(
               'Numbers:',
               style: TextStyle(
@@ -147,13 +166,20 @@ class _ForwardDigitState extends State<ForwardDigitSpan> {
                     for (var number in numbers) ...[
                       const SizedBox(width: 8),
                       Chip(
-                        label: Text(number),
+                        label: Text(number, style: const TextStyle(fontSize: 18, color: Colors.deepPurple),),
                       ),
                     ],
                   ],
                 ),
               ),
             ),
+          ),
+          SizedBox(height: height * 0.05),
+          const Divider(
+            thickness: 1,
+            indent: 16,
+            endIndent: 16,
+            color: Colors.deepPurple,
           ),
           Padding(
             padding: const EdgeInsets.only(top: 50),
@@ -169,7 +195,7 @@ class _ForwardDigitState extends State<ForwardDigitSpan> {
                 child: Text(
                   text,
                   style: TextStyle(
-                    fontSize: 24,
+                    fontSize: 20,
                     color: isListening ? Colors.black87 : Colors.black54,
                   ),
                 ),

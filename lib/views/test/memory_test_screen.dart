@@ -1,10 +1,11 @@
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:moca/views/test/Forward_digit_span.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
-import 'Forward_digit_span.dart';
+import '../../controllers/memorytest_controller.dart';
 
 class MemoryTestScreen extends StatefulWidget {
   const MemoryTestScreen({Key? key}) : super(key: key);
@@ -17,13 +18,13 @@ class MemoryTestScreenState extends State<MemoryTestScreen> {
   SpeechToText speechToText = SpeechToText();
   FlutterTts flutterTts = FlutterTts();
   bool isListening = false;
-  var text = "Hold the button and start speaking";
+  String text = "Hold the button and start speaking";
   List<String> wordList = [
-    'apple',
-    'banana',
-    'orange',
-    'grape',
-    'watermelon',
+    'face',
+    'velvet',
+    'church',
+    'daisy',
+    'red',
   ];
   List<String> recognizedWordsList = [];
   String recognizedText = '';
@@ -32,6 +33,8 @@ class MemoryTestScreenState extends State<MemoryTestScreen> {
   bool isSpeaking = true;
   bool isMicEnabled = false;
   int currentTrial = 1;
+
+  final MemoryTestController _controller = Get.put(MemoryTestController());
 
   @override
   void initState() {
@@ -43,7 +46,6 @@ class MemoryTestScreenState extends State<MemoryTestScreen> {
 
   void resetScreen() {
     setState(() {
-      recognizedWordsList = [];
       wordCount = 0;
       spokenSentence = 'Hold the button and start speaking';
       isListening = false;
@@ -79,11 +81,17 @@ class MemoryTestScreenState extends State<MemoryTestScreen> {
     });
   }
 
+  //future async await function to return recognized words
+  Future<String> getRecognizedWords() async {
+    return recognizedText;
+  }
+
   @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.sizeOf(context).height;
 
     return Scaffold(
+
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: AvatarGlow(
         animate: isListening,
@@ -105,28 +113,33 @@ class MemoryTestScreenState extends State<MemoryTestScreen> {
                     onResult: (result) {
                       if (result.finalResult) {
                         spokenSentence = result.recognizedWords.trim().toLowerCase();
+
                         List<String> spokenWords = spokenSentence.split(' ');
-                        recognizedWordsList.addAll(spokenWords);
                         for (String spokenWord in spokenWords) {
-                          if (wordList.contains(spokenWord)) {
+                          if (!recognizedWordsList.contains(spokenWord) &&
+                              wordList.contains(spokenWord)) {
                             setState(() {
+                              recognizedWordsList.add(spokenWord);
+                              debugPrint("List: ${recognizedWordsList.toString()}");
                               wordCount++;
                             });
                           }
                         }
                         if (currentTrial == 2) {
+                          _controller.saveData(wordList, recognizedWordsList);
                           Future.delayed(const Duration(seconds: 5), () {
                             showDialog(
+                              barrierDismissible: false,
                               context: context,
                               builder: (BuildContext context) {
                                 return AlertDialog(
-                                  title: const Text('Trials Completed'),
+                                  title: const Text('Memory Test Completed'),
                                   content: const Text(
-                                      'You have completed the memory test.'),
+                                      'You will be asked to recall those words again at the end of the test.'),
                                   actions: [
                                     TextButton(
                                       onPressed: () {
-                                        Get.to(() => const ForwardDigitSpan());
+                                        Get.offAll(() => const ForwardDigitSpan());
                                       },
                                       child: const Text('OK'),
                                     ),
@@ -170,7 +183,7 @@ class MemoryTestScreenState extends State<MemoryTestScreen> {
           },
           child: CircleAvatar(
             backgroundColor: isMicEnabled ? Colors.deepPurple : Colors.grey,
-            radius: 30,
+            radius: 40,
             child: Icon(
               isListening ? Icons.mic : Icons.mic_none,
               color: Colors.white,
@@ -179,7 +192,12 @@ class MemoryTestScreenState extends State<MemoryTestScreen> {
         ),
       ),
       appBar: AppBar(
-        title: const Text('Memory Test'),
+        title: const Text('Memory Test',
+            style: TextStyle(
+              fontSize: 28,
+              fontWeight: FontWeight.bold,
+              color: Colors.deepPurple,
+            )),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -189,26 +207,32 @@ class MemoryTestScreenState extends State<MemoryTestScreen> {
           children: [
             Text(
               "Trial $currentTrial of 2",
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: height * 0.01),
             const Text(
               "This is a memory test. A list of words will be read to you that you will have to repeat and remember.",
-              style: TextStyle(fontSize: 20),
+              style: TextStyle(fontSize: 18, color: Colors.deepPurple),
             ),
             SizedBox(height: height * 0.01),
-            const Divider(),
+            const Divider(
+              color: Colors.deepPurple,
+              thickness: 1,
+              indent: 16,
+              endIndent: 16,
+
+            ),
             SizedBox(height: height * 0.01),
             Text(
               'Words Matched: $wordCount',
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: height * 0.1),
             Text(
               spokenSentence,
               style: TextStyle(
-                fontSize: 24,
-                color: isListening ? Colors.black87 : Colors.black54,
+                fontSize: 20,
+                color: isListening ? Colors.deepPurple : Colors.black54,
               ),
               textAlign: TextAlign.center,
             ),
