@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:moca/views/test/sentence_repetition.dart';
+import 'package:moca/views/test/verbalfluency_test.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       // home:  user == null ? const SignUpScreen() : const SocioDemographicScreen()
-      home:  const SentenceRepetitionScreen(),
+      home:  const VocabularyScreen(),
     );
   }
 }

@@ -285,6 +285,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.8.1"
+  language_tool:
+    dependency: "direct main"
+    description:
+      name: language_tool
+      sha256: a27c4ccff2b90647c5fa0f702d7c0c172c3d11d1a7b6c4ffc3c51ba8e7fc5a84
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.2.0"
   lints:
     dependency: transitive
     description:

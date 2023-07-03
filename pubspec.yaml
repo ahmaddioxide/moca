@@ -50,6 +50,7 @@ dependencies:
   speech_to_text: ^6.2.0
   flutter_tts: ^3.7.0
   avatar_glow: ^2.0.2
+  language_tool: ^2.2.0
 
 
 dev_dependencies:
