@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:get/get.dart';
+import 'package:moca/views/abstraction_screen.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
@@ -87,7 +88,7 @@ class SentenceRepetitionScreenState extends State<SentenceRepetitionScreen> {
         });
       } else {
         Future.delayed(const Duration(seconds: 1), () {
-          Get.offAll(() => const ());
+          Get.offAll(() =>  AbstractionScreen());
         });
       }
     });

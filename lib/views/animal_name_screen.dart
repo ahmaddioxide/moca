@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:moca/views/home_screen.dart';
+import 'package:moca/views/test/memory_test_screen.dart';
 import '../constants/list.dart';
 import '../controllers/animal_name_controller.dart';
 
@@ -68,7 +69,7 @@ class _AnimalNameGuessScreenState extends State<AnimalNameGuessScreen> {
                           currentPictureIndex = 0;
                           score = 0;
                         });
-                        Get.offAll(const HomePage());
+                        Get.offAll(const MemoryTestScreen());
                       }
                     });
                   } else {
