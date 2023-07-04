@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:moca/views/orientation_screen.dart';
+import 'package:moca/views/test/orientation_screen.dart';
 
 class AbstractionController extends GetxController {
   Future<void> submitTaskResults(

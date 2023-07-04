@@ -75,8 +75,8 @@ class OreientationController extends GetxController {
 
   void verifyInputs() {
     isDayCorrect.value = dayController.text == "${currentDateTime.day} / ${currentDateTime.month} /${currentDateTime.year}";
-    isPlaceCorrect.value = placeController.text == 'islamabad'|| placeController.text == 'rawalpindi';
-    isCityCorrect.value = cityController.text == 'islamabad'|| cityController.text == 'rawalpindi';
+    isPlaceCorrect.value = placeController.text.toLowerCase() == 'islamabad'|| placeController.text == 'rawalpindi';
+    isCityCorrect.value = cityController.text.toLowerCase() == 'islamabad'|| cityController.text == 'rawalpindi';
 
     saveResultsToFirestore();
   }

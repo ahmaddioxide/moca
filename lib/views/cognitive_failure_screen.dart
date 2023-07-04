@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:moca/views/abstraction_screen.dart';
+import 'package:moca/views/test/abstraction_screen.dart';
 import 'package:moca/views/animal_name_screen.dart';
 
 import '../controllers/cognitive_failure_controller.dart';
