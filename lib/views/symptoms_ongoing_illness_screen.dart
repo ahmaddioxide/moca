@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:moca/views/cognitive_failure_screen.dart';
 import '../controllers/symptoms_ongoing_illness_controller.dart';
-import 'home_screen.dart';
 
 class SymptomsOnGoingIllnessScreen extends StatefulWidget {
   const SymptomsOnGoingIllnessScreen({super.key});
@@ -1554,7 +1553,6 @@ class _SymptomsOnGoingIllnessScreenState
                     child: DecoratedBox(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
-
                       ),
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
@@ -1580,10 +1578,14 @@ class _SymptomsOnGoingIllnessScreenState
                                 confusion: _controller.confusion,
                                 forgetfulness: _controller.forgetfulness,
                                 delayedThinking: _controller.delayedThinking,
-                                depressionAnxiety: _controller.depressionAnxiety,
-                                poorConcentration: _controller.poorConcentration,
-                                difficultSleeping: _controller.difficultSleeping,
-                                difficultSpeaking: _controller.difficultSpeaking,
+                                depressionAnxiety:
+                                    _controller.depressionAnxiety,
+                                poorConcentration:
+                                    _controller.poorConcentration,
+                                difficultSleeping:
+                                    _controller.difficultSleeping,
+                                difficultSpeaking:
+                                    _controller.difficultSpeaking,
                                 numbness: _controller.numbness,
                                 fatigue: _controller.fatigue,
                                 bodyPain: _controller.bodyPain,
@@ -1610,12 +1612,14 @@ class _SymptomsOnGoingIllnessScreenState
                             );
                           }
                         },
-                        child: const Text('Submit',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.white,
-                            ),),
+                        child: const Text(
+                          'Submit',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.white,
+                          ),
+                        ),
                       ),
                     ),
                   ),
