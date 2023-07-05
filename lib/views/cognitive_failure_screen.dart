@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:moca/views/test/abstraction_screen.dart';
 import 'package:moca/views/animal_name_screen.dart';
 
 import '../controllers/cognitive_failure_controller.dart';
 
-class CognitiveFailure extends StatelessWidget {
-  final CognitiveFailureController _cognitiveFailureController = Get.put(CognitiveFailureController());
-
+class CognitiveFailure extends StatefulWidget {
   CognitiveFailure({super.key});
+
+  @override
+  State<CognitiveFailure> createState() => _CognitiveFailureState();
+}
+
+class _CognitiveFailureState extends State<CognitiveFailure> {
+  final CognitiveFailureController _cognitiveFailureController =
+      Get.put(CognitiveFailureController());
+
+  bool _isloading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +33,10 @@ class CognitiveFailure extends StatelessWidget {
           children: [
             Text(
               'Please rate the frequency of the following events in the past six months using the scale below:',
-              style: TextStyle(fontSize: screenWidth * 0.04,color: Colors.deepPurple,fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  fontSize: screenWidth * 0.04,
+                  color: Colors.deepPurple,
+                  fontWeight: FontWeight.bold),
             ),
             SizedBox(height: screenHeight * 0.02),
             Row(
@@ -75,7 +85,9 @@ class CognitiveFailure extends StatelessWidget {
                         SizedBox(height: screenHeight * 0.02),
                         Text(
                           '${i + 1}. ${_cognitiveFailureController.getQuestion(i)}',
-                          style: TextStyle(fontSize: screenWidth * 0.04,color: Colors.deepPurple),
+                          style: TextStyle(
+                              fontSize: screenWidth * 0.04,
+                              color: Colors.deepPurple),
                         ),
                         SizedBox(height: screenHeight * 0.01),
                         Obx(
@@ -87,9 +99,11 @@ class CognitiveFailure extends StatelessWidget {
                                   children: [
                                     Radio<int>(
                                       value: rating,
-                                      groupValue: _cognitiveFailureController.ratings[i],
+                                      groupValue: _cognitiveFailureController
+                                          .ratings[i],
                                       onChanged: (value) {
-                                        _cognitiveFailureController.setRating(i, value!);
+                                        _cognitiveFailureController.setRating(
+                                            i, value!);
                                       },
                                     ),
                                     Text(_cognitiveFailureController
@@ -99,9 +113,11 @@ class CognitiveFailure extends StatelessWidget {
                               ],
                             ],
                           ),
-                        )
+                        ),
+                        const SizedBox(height: 8),
+                        const Divider(color: Colors.black12),
+                        const SizedBox(height: 8),
                       ],
-                      SizedBox(height: screenHeight * 0.02),
                       SizedBox(
                         width: double.infinity,
                         height: screenHeight * 0.05,
@@ -112,19 +128,56 @@ class CognitiveFailure extends StatelessWidget {
                               borderRadius: BorderRadius.circular(12),
                             ),
                           ),
-                          onPressed: ()async {
-                          await  _cognitiveFailureController.submitSurvey().then((value) {
-                            if(value)
-                              {
+                          onPressed: () async {
+                            setState(() {
+                              _isloading = true;
+                            });
+                            await _cognitiveFailureController
+                                .submitSurvey()
+                                .then((value) {
+                              if (value) {
+                                setState(() {
+                                  _isloading = false;
+                                });
                                 Get.offAll(() => const AnimalNameGuessScreen());
                               }
-                          });
+                            });
                           },
-                          child: const Text('Submit',style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),),
+                          child: _isloading == true
+                              ? const Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      "Loading",
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    SizedBox(
+                                      height: 20,
+                                      width: 20,
+                                      child: CircularProgressIndicator(
+                                        valueColor: AlwaysStoppedAnimation(
+                                            Colors.white),
+                                        backgroundColor: Colors.blue,
+                                        strokeWidth: 4,
+                                      ),
+                                    )
+                                  ],
+                                )
+                              : const Text(
+                                  'Submit',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
                         ),
                       ),
                     ],
