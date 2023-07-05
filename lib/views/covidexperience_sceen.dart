@@ -13,6 +13,7 @@ class CovidExperienceScreen extends StatefulWidget {
 class _CovidExperienceScreenState extends State<CovidExperienceScreen> {
   final _formKey = GlobalKey<FormState>();
   bool isVisible = true;
+  bool _isloading = false;
 
   // Create an instance of the controller
   final CovidExperienceController _controller =
@@ -635,6 +636,9 @@ class _CovidExperienceScreenState extends State<CovidExperienceScreen> {
                             ),
                             onPressed: () {
                               try {
+                                setState(() {
+                                  _isloading = true;
+                                });
                                 if (_formKey.currentState!.validate() &&
                                     _controller.covid != '' &&
                                     _controller.pcrTest != '' &&
@@ -656,6 +660,9 @@ class _CovidExperienceScreenState extends State<CovidExperienceScreen> {
                                   )
                                       .then((value) {
                                     if (value == true) {
+                                      setState(() {
+                                        _isloading = false;
+                                      });
                                       Get.offAll(
                                         () =>
                                             const SymptomsInitialIllnessScreen(),
@@ -663,6 +670,9 @@ class _CovidExperienceScreenState extends State<CovidExperienceScreen> {
                                     }
                                   });
                                 } else {
+                                  setState(() {
+                                    _isloading = false;
+                                  });
                                   Get.snackbar(
                                     'Missing Fields',
                                     'Please fill all the fields',
@@ -672,6 +682,9 @@ class _CovidExperienceScreenState extends State<CovidExperienceScreen> {
                                   );
                                 }
                               } catch (e) {
+                                setState(() {
+                                  _isloading = false;
+                                });
                                 debugPrint('Error: $e');
                                 Get.snackbar(
                                   'Error',
@@ -682,14 +695,41 @@ class _CovidExperienceScreenState extends State<CovidExperienceScreen> {
                                 );
                               }
                             },
-                            child: const Text(
-                              'Submit',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
+                            child: _isloading == true
+                                ? const Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text(
+                                        "Loading",
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
+                                      SizedBox(
+                                        height: 20,
+                                        width: 20,
+                                        child: CircularProgressIndicator(
+                                          valueColor: AlwaysStoppedAnimation(
+                                              Colors.white),
+                                          backgroundColor: Colors.blue,
+                                          strokeWidth: 4,
+                                        ),
+                                      )
+                                    ],
+                                  )
+                                : const Text(
+                                    'Submit',
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  ),
                           ),
                         ),
                       ),
