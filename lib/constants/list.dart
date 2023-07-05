@@ -3,12 +3,12 @@ import 'package:moca/constants/image.dart';
 import 'strings.dart';
 
 const animalsPicList = [
-  elephantPic,
-  bearPic,
-  horsePic,
+  camelPic,
+  rihnoPic,
+  lionPic,
 ];
 const animalsNameList = [
-  elephant,
-  bear,
-  horse,
+  camel,
+  rihno,
+  lion,
 ];
