@@ -13,7 +13,7 @@ class _SocioDemographicScreenState extends State<SocioDemographicScreen> {
 
   // Create an instance of the controller
   final DemographicController _controller = Get.put(DemographicController());
-
+  bool _isloading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -384,9 +384,8 @@ class _SocioDemographicScreenState extends State<SocioDemographicScreen> {
                   children: [
                     Center(
                       child: SizedBox(
-                        width:double.infinity,
+                        width: double.infinity,
                         height: 50,
-
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(
@@ -407,6 +406,9 @@ class _SocioDemographicScreenState extends State<SocioDemographicScreen> {
                                     colorText: Colors.white,
                                   );
                                 } else {
+                                  setState(() {
+                                    _isloading = true;
+                                  });
                                   _controller.submitForm(
                                     name: _controller.name,
                                     gender: _controller.gender,
@@ -428,11 +430,41 @@ class _SocioDemographicScreenState extends State<SocioDemographicScreen> {
                               );
                             }
                           },
-                          child: const Text('Submit',style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),),
+                          child: _isloading == true
+                              ? const Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      "Loading",
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    SizedBox(
+                                      height: 20,
+                                      width: 20,
+                                      child: CircularProgressIndicator(
+                                        valueColor: AlwaysStoppedAnimation(
+                                            Colors.white),
+                                        backgroundColor: Colors.blue,
+                                        strokeWidth: 4,
+                                      ),
+                                    )
+                                  ],
+                                )
+                              : const Text(
+                                  'Submit',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
                         ),
                       ),
                     ),
