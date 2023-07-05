@@ -15,7 +15,7 @@ class _LogInScreenState extends State<LogInScreen> {
 
   final LogInController _controller = Get.put(LogInController());
   bool _isPasswordVisible = false;
-
+  bool _isloading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -137,29 +137,79 @@ class _LogInScreenState extends State<LogInScreen> {
                             ),
                           ),
                           onPressed: () async {
-                            if (_formKey.currentState!.validate()) {
-                              _controller
-                                  .logIn(
-                                password: _controller.password.trim(),
-                                email: _controller.email.trim(),
-                              )
-                                  .then((value) {
-                                if (value == true) {
-                                  Get.to(
-                                    () => const SocioDemographicScreen(),
-                                  );
-                                }
+                            try {
+                              setState(() {
+                                _isloading = true;
                               });
+                              if (_formKey.currentState!.validate()) {
+                                _controller
+                                    .logIn(
+                                  password: _controller.password.trim(),
+                                  email: _controller.email.trim(),
+                                )
+                                    .then((value) {
+                                  if (value == true) {
+                                    setState(() {
+                                      _isloading = false;
+                                    });
+                                    Get.to(
+                                      () => const SocioDemographicScreen(),
+                                    );
+                                  } else {
+                                    setState(() {
+                                      _isloading = false;
+                                    });
+                                  }
+                                });
+                              }
+                            } catch (e) {
+                              setState(() {
+                                _isloading = false;
+                              });
+                              Get.snackbar(
+                                'Error',
+                                'Some Error Occured!',
+                                snackPosition: SnackPosition.BOTTOM,
+                                backgroundColor: Colors.red,
+                                colorText: Colors.white,
+                              );
                             }
                           },
-                          child: const Text(
-                            'Log In',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
+                          child: _isloading == true
+                              ? const Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      "Loading",
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    SizedBox(
+                                      height: 20,
+                                      width: 20,
+                                      child: CircularProgressIndicator(
+                                        valueColor: AlwaysStoppedAnimation(
+                                            Colors.white),
+                                        backgroundColor: Colors.blue,
+                                        strokeWidth: 4,
+                                      ),
+                                    )
+                                  ],
+                                )
+                              : const Text(
+                                  'Log In',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
                         ),
                       ),
                       Row(
