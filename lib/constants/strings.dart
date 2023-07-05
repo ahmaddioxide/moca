@@ -1,3 +1,3 @@
-const bear = "bear";
-const horse = "horse";
-const elephant = "elephant";
+const lion = "lion";
+const camel = "camel";
+const rihno = "rihno";
