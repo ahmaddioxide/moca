@@ -3,11 +3,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:moca/views/animal_name_screen.dart';
-import 'package:moca/views/test/orientation_screen.dart';
+import 'package:moca/views/signup_screen.dart';
 import 'package:moca/views/sociodemographic_sceen.dart';
-import 'package:moca/views/test/sentence_repetition.dart';
 import 'firebase_options.dart';
-import 'views/signup_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,8 +29,9 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      // home:  user == null ? const SignUpScreen() : const SocioDemographicScreen()
-      home:  OrientationScreen(),
+      home:
+          user == null ? const SignUpScreen() : const SocioDemographicScreen(),
+      // home: const AnimalNameGuessScreen(),
     );
   }
 }
