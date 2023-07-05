@@ -1,3 +1,3 @@
-const elephantPic = "assets/images/elephant.png";
-const bearPic = "assets/images/bear.jpg";
-const horsePic = "assets/images/horse.jpg";
+const camelPic = "assets/images/camel.png";
+const lionPic = "assets/images/lion.png";
+const rihnoPic = "assets/images/rihno.png";
