@@ -31,6 +31,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
     speechToText.initialize();
   }
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

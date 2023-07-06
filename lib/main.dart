@@ -13,6 +13,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   ).then((value) => debugPrint('Firebase initialized in main.dart'));
 
+
   runApp(const MyApp());
 }
 
