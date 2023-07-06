@@ -21,6 +21,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
   String currentLetter = '';
   String text = 'Hold the button and start speaking';
   var Words = <String>[];
+  var word;
   bool isSpeechAvailable = false;
   bool starttest = true;
 
@@ -101,9 +102,12 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
           ),
           SizedBox(height: MediaQuery.sizeOf(context).height * 0.2),
           Center(
-            child: Padding(padding: const EdgeInsets.only(left: 16, right: 16),
+            child: Padding(
+              padding: const EdgeInsets.only(left: 16, right: 16),
               child: Text(
-                starttest? "Double top the button to start test": "Hold the button and start speaking",
+                starttest
+                    ? "Double top the button to start test"
+                    : "Hold the button and start speaking",
                 style: const TextStyle(
                   fontSize: 18,
                   color: Colors.deepPurple,
@@ -114,10 +118,12 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
           const SizedBox(height: 20),
           Padding(
             padding: const EdgeInsets.only(left: 16, right: 16),
-            child: Text(
-              "${Words}",
-              style: const TextStyle(
-                fontSize: 18,
+            child: Center(
+              child: Text(
+                "${Words}",
+                style: const TextStyle(
+                  fontSize: 18,
+                ),
               ),
             ),
           )
@@ -134,7 +140,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
         showTwoGlows: true,
         child: GestureDetector(
           onLongPress: () async {
-            if (!isListening && !starttest) {
+            if (!isListening && !starttest && isTimerStarted) {
               bool available = await speechToText.initialize();
               if (available) {
                 _startListening();
@@ -143,18 +149,29 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
               }
             }
           },
+          //allow double tap only once
           onDoubleTap: () {
-            setState(() {
-              starttest = false;
-            });
-            _startTest();
+            if (starttest) {
+              setState(() {
+                starttest = false;
+              });
+              _startTest();
+            }
           },
           onLongPressUp: _stopListening,
           child: CircleAvatar(
-            backgroundColor: Colors.deepPurple,
+            backgroundColor: starttest
+                ? Colors.deepPurple
+                : isTimerStarted
+                    ? Colors.deepPurple
+                    : Colors.grey,
             radius: 40,
             child: Icon(
-              starttest? Icons.double_arrow_rounded:isListening ? Icons.mic : Icons.mic_none,
+              starttest
+                  ? Icons.double_arrow_rounded
+                  : isListening
+                      ? Icons.mic
+                      : Icons.mic_none,
               color: Colors.white,
               size: 40,
             ),
@@ -183,10 +200,8 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
         remainingSeconds--;
       });
     }
-    speechToText.stop();
-    setState(() {
-      isListening = false;
-    });
+    isTimerStarted = false;
+    _stopListening();
   }
 
   void _speakRandomLetter() async {
@@ -205,7 +220,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
     speechToText.listen(
       onResult: (result) {
         if (result.finalResult) {
-          var word = result.recognizedWords.toLowerCase();
+          word = result.recognizedWords.toLowerCase();
           if (!_isInvalidWord(word)) {
             setState(() {
               subjectWords.add(word);
