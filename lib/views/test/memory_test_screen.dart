@@ -2,6 +2,7 @@ import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:moca/views/test/Forward_digit_span.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
@@ -15,6 +16,21 @@ class MemoryTestScreen extends StatefulWidget {
 }
 
 class MemoryTestScreenState extends State<MemoryTestScreen> {
+  late SharedPreferences sf;
+  @override
+  initState()  {
+    super.initState();
+    initalizeSharedPref();
+    initializeSpeechToText();
+    speakWordList();
+    disableMicButton();
+  }
+  Future<void> initalizeSharedPref() async {
+    sf=await SharedPreferences.getInstance();
+  }
+
+
+
   SpeechToText speechToText = SpeechToText();
   FlutterTts flutterTts = FlutterTts();
   bool isListening = false;
@@ -36,13 +52,6 @@ class MemoryTestScreenState extends State<MemoryTestScreen> {
 
   final MemoryTestController _controller = Get.put(MemoryTestController());
 
-  @override
-  void initState() {
-    super.initState();
-    initializeSpeechToText();
-    speakWordList();
-    disableMicButton();
-  }
 
   void resetScreen() {
     setState(() {
@@ -139,6 +148,8 @@ class MemoryTestScreenState extends State<MemoryTestScreen> {
                                   actions: [
                                     TextButton(
                                       onPressed: () {
+                                        sf.setInt('nextGame', 4);
+                                        Navigator.of(context).pop();
                                         Get.offAll(() => const ForwardDigitSpan());
                                       },
                                       child: const Text('OK'),
