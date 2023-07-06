@@ -13,7 +13,7 @@ class SymptomsOnGoingIllnessScreen extends StatefulWidget {
 class _SymptomsOnGoingIllnessScreenState
     extends State<SymptomsOnGoingIllnessScreen> {
   final _formKey = GlobalKey<FormState>();
-
+  bool _isloading = false;
   // Create an instance of the controller
   final SymptomsOnGoingIllnessController _controller =
       Get.put(SymptomsOnGoingIllnessController());
@@ -1562,6 +1562,9 @@ class _SymptomsOnGoingIllnessScreenState
                           ),
                         ),
                         onPressed: () {
+                          setState(() {
+                            _isloading = true;
+                          });
                           try {
                             if (_formKey.currentState!.validate()) {
                               _controller
@@ -1595,13 +1598,23 @@ class _SymptomsOnGoingIllnessScreenState
                               )
                                   .then((value) {
                                 if (value == true) {
+                                  setState(() {
+                                    _isloading = false;
+                                  });
                                   Get.offAll(
                                     () => CognitiveFailure(),
                                   );
                                 }
                               });
+                            } else {
+                              setState(() {
+                                _isloading = false;
+                              });
                             }
                           } catch (e) {
+                            setState(() {
+                              _isloading = false;
+                            });
                             debugPrint('Error: $e');
                             Get.snackbar(
                               'Error',
@@ -1612,14 +1625,41 @@ class _SymptomsOnGoingIllnessScreenState
                             );
                           }
                         },
-                        child: const Text(
-                          'Submit',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.white,
-                          ),
-                        ),
+                        child: _isloading == true
+                            ? const Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    "Loading",
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  SizedBox(
+                                    height: 20,
+                                    width: 20,
+                                    child: CircularProgressIndicator(
+                                      valueColor:
+                                          AlwaysStoppedAnimation(Colors.white),
+                                      backgroundColor: Colors.blue,
+                                      strokeWidth: 4,
+                                    ),
+                                  )
+                                ],
+                              )
+                            : const Text(
+                                'Submit',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.white,
+                                ),
+                              ),
                       ),
                     ),
                   ),

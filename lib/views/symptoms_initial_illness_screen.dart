@@ -13,7 +13,7 @@ class SymptomsInitialIllnessScreen extends StatefulWidget {
 class _SymptomsInitialIllnessScreenState
     extends State<SymptomsInitialIllnessScreen> {
   final _formKey = GlobalKey<FormState>();
-
+  bool _isloading = false;
   // Create an instance of the controller
   final SymptomsInitialIllnessController _controller =
       Get.put(SymptomsInitialIllnessController());
@@ -1766,6 +1766,9 @@ class _SymptomsInitialIllnessScreenState
                           ),
                         ),
                         onPressed: () {
+                          setState(() {
+                            _isloading = true;
+                          });
                           try {
                             if (_formKey.currentState!.validate()) {
                               _controller
@@ -1784,7 +1787,8 @@ class _SymptomsInitialIllnessScreenState
                                 hallucinations: _controller.hallucinations,
                                 confusion: _controller.confusion,
                                 difficultSleepy: _controller.difficultSleepy,
-                                depressionAnxiety: _controller.depressionAnxiety,
+                                depressionAnxiety:
+                                    _controller.depressionAnxiety,
                                 numbness: _controller.numbness,
                                 fatigue: _controller.fatigue,
                                 bodyPain: _controller.bodyPain,
@@ -1798,13 +1802,23 @@ class _SymptomsInitialIllnessScreenState
                               )
                                   .then((value) {
                                 if (value == true) {
+                                  setState(() {
+                                    _isloading = false;
+                                  });
                                   Get.offAll(
                                     () => const SymptomsOnGoingIllnessScreen(),
                                   );
                                 }
                               });
+                            } else {
+                              setState(() {
+                                _isloading = false;
+                              });
                             }
                           } catch (e) {
+                            setState(() {
+                              _isloading = false;
+                            });
                             debugPrint('LoginCalled() called Error "$e"');
                             Get.snackbar(
                               'Error',
@@ -1815,11 +1829,41 @@ class _SymptomsInitialIllnessScreenState
                             );
                           }
                         },
-                        child: const Text('Submit',style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white,
-                        ),),
+                        child: _isloading == true
+                            ? const Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    "Loading",
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  SizedBox(
+                                    height: 20,
+                                    width: 20,
+                                    child: CircularProgressIndicator(
+                                      valueColor:
+                                          AlwaysStoppedAnimation(Colors.white),
+                                      backgroundColor: Colors.blue,
+                                      strokeWidth: 4,
+                                    ),
+                                  )
+                                ],
+                              )
+                            : const Text(
+                                'Submit',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.white,
+                                ),
+                              ),
                       ),
                     ),
                   ),

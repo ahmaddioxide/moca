@@ -1,7 +1,9 @@
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:moca/views/home_screen.dart';
-import 'package:moca/views/test/memory_test_screen.dart';
+import 'package:moca/views/test_main_screens.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import '../constants/list.dart';
 import '../controllers/animal_name_controller.dart';
 
@@ -13,12 +15,29 @@ class AnimalNameGuessScreen extends StatefulWidget {
 }
 
 class _AnimalNameGuessScreenState extends State<AnimalNameGuessScreen> {
+
+
+
+
   final AnimalNameTestController _controller =
       Get.put(AnimalNameTestController());
-
   int currentPictureIndex = 0;
   int score = 0;
   TextEditingController guessController = TextEditingController();
+  bool _isloading = false;
+
+
+  late SharedPreferences sf;
+  @override
+  initState()  {
+    super.initState();
+    initalizeSharedPref();
+
+  }
+
+  Future<void> initalizeSharedPref() async {
+    sf=await SharedPreferences.getInstance();
+  }
 
   void checkAnswer(String guess) {
     String answer = animalsNameList[currentPictureIndex];
@@ -51,8 +70,8 @@ class _AnimalNameGuessScreenState extends State<AnimalNameGuessScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Game Over'),
-          content: const Text('Thank You for Playing'),
+          title: const Text('Thank You for Playing'),
+          content: const Text('Moving On to Next Game'),
           actions: <Widget>[
             TextButton(
               child: const Text('Next'),
@@ -63,13 +82,14 @@ class _AnimalNameGuessScreenState extends State<AnimalNameGuessScreen> {
                         .submitForm(
                       score: score,
                     )
-                        .then((value) {
+                        .then((value) async {
                       if (value == true) {
                         setState(() {
                           currentPictureIndex = 0;
                           score = 0;
                         });
-                        Get.offAll(const MemoryTestScreen());
+                        await sf.setInt('nextGame', 3);
+                        Get.offAll(() =>  MainTestScreen());
                       }
                     });
                   } else {
@@ -112,8 +132,8 @@ class _AnimalNameGuessScreenState extends State<AnimalNameGuessScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                width: 250,
-                height: 250,
+                width: 280,
+                height: 270,
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage(
@@ -128,18 +148,13 @@ class _AnimalNameGuessScreenState extends State<AnimalNameGuessScreen> {
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
-              // Image.asset(
-              //   animalsPicList[currentPictureIndex],
-              //   width: 200,
-              //   height: 200,
-              // ),
               Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: TextField(
                   controller: guessController,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
+                        borderRadius: BorderRadius.circular(10),
                       ),
                       labelText: 'Enter your guess',
                       focusedBorder: const OutlineInputBorder(
@@ -155,11 +170,20 @@ class _AnimalNameGuessScreenState extends State<AnimalNameGuessScreen> {
                   backgroundColor: Colors.purple.shade100,
                 ),
                 onPressed: () {
+                  setState(() {
+                    _isloading = true;
+                  });
                   try {
                     if (guessController.text.isNotEmpty) {
                       String guess = guessController.text;
                       checkAnswer(guess);
+                      setState(() {
+                        _isloading = false;
+                      });
                     } else {
+                      setState(() {
+                        _isloading = false;
+                      });
                       Get.snackbar(
                         'Error',
                         'Please Enter Name of the Animal',
@@ -169,6 +193,9 @@ class _AnimalNameGuessScreenState extends State<AnimalNameGuessScreen> {
                       );
                     }
                   } catch (e) {
+                    setState(() {
+                      _isloading = false;
+                    });
                     Get.snackbar(
                       'Error',
                       'Some Error Occured!',
@@ -178,7 +205,40 @@ class _AnimalNameGuessScreenState extends State<AnimalNameGuessScreen> {
                     );
                   }
                 },
-                child: const Text('Submit'),
+                child: _isloading == true
+                    ? const Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            "Loading",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          SizedBox(
+                            height: 20,
+                            width: 20,
+                            child: CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation(Colors.white),
+                              backgroundColor: Colors.blue,
+                              strokeWidth: 4,
+                            ),
+                          )
+                        ],
+                      )
+                    : const Text(
+                        'Submit',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white,
+                        ),
+                      ),
               ),
               const SizedBox(height: 20),
             ],

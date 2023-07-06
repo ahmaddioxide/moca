@@ -11,7 +11,7 @@ class MedicalHistoryScreen extends StatefulWidget {
 
 class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
   final _formKey = GlobalKey<FormState>();
-
+  bool _isloading = false;
   // Create an instance of the controller
   final MedicalHistoryController _controller =
       Get.put(MedicalHistoryController());
@@ -552,6 +552,9 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                           ),
                         ),
                         onPressed: () {
+                          setState(() {
+                            _isloading = true;
+                          });
                           if (_controller.diet != '' &&
                               _controller.physicalActivity != '' &&
                               _controller.smoke != '' &&
@@ -559,17 +562,25 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                             _controller
                                 .submitForm(
                                     diet: _controller.diet,
-                                    physicalActivity: _controller.physicalActivity,
+                                    physicalActivity:
+                                        _controller.physicalActivity,
                                     smoke: _controller.smoke,
-                                    medicalCondition: _controller.medicalCondition)
+                                    medicalCondition:
+                                        _controller.medicalCondition)
                                 .then((value) {
                               if (value == true) {
+                                setState(() {
+                                  _isloading = false;
+                                });
                                 Get.offAll(
                                   () => const CovidExperienceScreen(),
                                 );
                               }
                             });
                           } else {
+                            setState(() {
+                              _isloading = false;
+                            });
                             Get.snackbar(
                               'Missing Fields',
                               'Please answer all the questions',
@@ -579,12 +590,41 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                             );
                           }
                         },
-                        child: const Text('Submit',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),),
+                        child: _isloading == true
+                            ? const Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    "Loading",
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  SizedBox(
+                                    height: 20,
+                                    width: 20,
+                                    child: CircularProgressIndicator(
+                                      valueColor:
+                                          AlwaysStoppedAnimation(Colors.white),
+                                      backgroundColor: Colors.blue,
+                                      strokeWidth: 4,
+                                    ),
+                                  )
+                                ],
+                              )
+                            : const Text(
+                                'Submit',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
+                              ),
                       ),
                     ),
                   ),
