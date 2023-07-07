@@ -7,7 +7,6 @@ import 'package:google_fonts/google_fonts.dart';
 class AdminHomeScreen extends StatelessWidget {
   final AdminController _adminController = Get.put(AdminController());
   AdminHomeScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,13 +52,25 @@ class AdminHomeScreen extends StatelessWidget {
                           fontWeight: FontWeight.w500,
                       ),
                     ),
-                    Text(
-                      '23',
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.roboto (
-                          fontSize: 32,
-                          fontWeight: FontWeight.w300,
-                      ),
+                    FutureBuilder<void>(
+                      future: _adminController.getTotalSubmissions(),
+                      builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+                        return Obx(() {
+                          if(!_adminController.isTotalSubmissionLoaded.value) {
+                            return const CircularProgressIndicator();
+                          }
+                          else {
+                            return Text(
+                              '${_adminController.totalSubmissionCount.value}',
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.roboto (
+                                fontSize: 32,
+                                fontWeight: FontWeight.w300,
+                              ),
+                            );
+                          }
+                        });
+                      }
                     )
                   ],
                 ),
