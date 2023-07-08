@@ -2,11 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:moca/views/animal_name_screen.dart';
 import 'package:moca/views/signup_screen.dart';
-import 'package:moca/views/sociodemographic_sceen.dart';
-import 'package:moca/views/test/visuospatial_clock_test_screen.dart';
-import 'package:moca/views/test_main_screens.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -31,7 +27,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:   ClockTestScreen(),
+      home: const SignUpScreen(),
     );
   }
 }
