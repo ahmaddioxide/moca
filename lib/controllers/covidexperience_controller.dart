@@ -26,18 +26,30 @@ class CovidExperienceController extends GetxController {
       await FirebaseFirestore.instance
           .collection('users')
           .doc(currentUser!.uid)
-          .collection('covid_experience')
-          .doc('data')
-          .set({
-        'pcrTest': pcrTest,
-        'covid': covid,
-        'results': result,
-        'duration': duration,
-        'first4weeks': first4weeks,
-        'week4Experience': week4Experience,
-        'pcrTestDetails': pcrTestDetails,
-        'id': currentUser!.uid,
+          .update({
+        'covid_experience': {
+          'pcrTest': pcrTest,
+          'covid': covid,
+          'results': result,
+          'duration': duration,
+          'first4weeks': first4weeks,
+          'week4Experience': week4Experience,
+          'pcrTestDetails': pcrTestDetails,
+          'id': currentUser!.uid,
+        }
       });
+      //     .collection('covid_experience')
+      //     .doc('data')
+      //     .set({
+      //   'pcrTest': pcrTest,
+      //   'covid': covid,
+      //   'results': result,
+      //   'duration': duration,
+      //   'first4weeks': first4weeks,
+      //   'week4Experience': week4Experience,
+      //   'pcrTestDetails': pcrTestDetails,
+      //   'id': currentUser!.uid,
+      // });
       return true;
     } catch (e) {
       debugPrint('Error: $e');
