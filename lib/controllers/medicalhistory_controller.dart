@@ -16,15 +16,24 @@ class MedicalHistoryController extends GetxController {
       await FirebaseFirestore.instance
           .collection('users')
           .doc(currentUser!.uid)
-          .collection('medical_history')
-          .doc('data')
-          .set({
-        'diet': diet,
-        'physicalActivity': physicalActivity,
-        'smoke': smoke,
-        'medicalCondition': medicalCondition,
-        'id': currentUser!.uid,
+          .update({
+        'medical_history': {
+          'diet': diet,
+          'physicalActivity': physicalActivity,
+          'smoke': smoke,
+          'medicalCondition': medicalCondition,
+          'id': currentUser!.uid,
+        }
       });
+      //.collection('medical_history')
+      //.doc('data')
+      //     .set({
+      //   'diet': diet,
+      //   'physicalActivity': physicalActivity,
+      //   'smoke': smoke,
+      //   'medicalCondition': medicalCondition,
+      //   'id': currentUser!.uid,
+      // });
       return true;
     } catch (e) {
       debugPrint('Error: $e');
