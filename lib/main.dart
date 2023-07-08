@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:moca/views/animal_name_screen.dart';
 import 'package:moca/views/signup_screen.dart';
 import 'package:moca/views/sociodemographic_sceen.dart';
+import 'package:moca/views/test/visuospatial_clock_test_screen.dart';
 import 'package:moca/views/test_main_screens.dart';
 import 'firebase_options.dart';
 
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:  MainTestScreen(),
+      home:   ClockTestScreen(),
     );
   }
 }
