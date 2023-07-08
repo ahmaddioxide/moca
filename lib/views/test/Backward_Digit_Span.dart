@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:moca/controllers/digitspan_controller.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-
 import 'vigilance_test.dart';
 
 class BackwardDigitSpan extends StatefulWidget {
@@ -22,34 +21,65 @@ class _BackDigitState extends State<BackwardDigitSpan> {
   bool isListening = false;
   int score = 0;
   var numbers = ['8', '7', '5', '3', '1'];
-  bool isReading = true;
+
+  bool isTimerStarted = false;
+  var timerDuration = const Duration(seconds: 60);
+  bool innNextScreen = false;
+
+  void _startTest() {
+    isTimerStarted = true;
+    _controller.timeDuration();
+    _countdownTimer();
+    _speakNumbers();
+    // disableMicButton();
+  }
+
+  void _countdownTimer() async {
+    while (_controller.remainingSeconds > 0) {
+      await Future.delayed(const Duration(seconds: 1));
+      _controller.decrementSeconds();
+    }
+    isTimerStarted = false;
+    if (innNextScreen == false) {
+      nextTest();
+    }
+    // _stopListening();
+  }
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   Future.delayed(const Duration(seconds: 3), () {
+  //     _speakNumbers();
+  //   });
+  // }
 
   @override
-  void initState() {
-    super.initState();
-    Future.delayed(const Duration(seconds: 3), () {
-      _speakNumbers();
-    });
+  void dispose() {
+    super.dispose();
+    _controller.remainingSeconds;
   }
 
   void _speakNumbers() async {
-    setState(() {
-      isReading = true;
-    });
-
+    _controller.isReading = true.obs;
     for (var number in numbers) {
       await flutterTts.speak(number);
-      await Future.delayed(const Duration(seconds: 1));
+      await Future.delayed(const Duration(seconds: 2));
     }
-
-    setState(() {
-      isReading = false;
-    });
+    _controller.isReading = false.obs;
   }
 
+  void nextTest() {
+    innNextScreen = true;
+    _controller.remainingSeconds = 0.obs;
+    Get.offAll(() => const VigilanceScreen());
+  }
+
+  var i = 0;
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('build ${i++}');
     final double height = MediaQuery.sizeOf(context).height;
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -63,7 +93,10 @@ class _BackDigitState extends State<BackwardDigitSpan> {
         showTwoGlows: true,
         child: GestureDetector(
           onTapDown: (details) async {
-            if (!isListening && !isReading) {
+            if (!isListening &&
+                !_controller.isReading.value &&
+                !_controller.starttest.value &&
+                isTimerStarted) {
               var available = await speechToText.initialize();
               if (available) {
                 setState(() {
@@ -73,7 +106,7 @@ class _BackDigitState extends State<BackwardDigitSpan> {
                       setState(() {
                         text = result.recognizedWords;
                         var recognizedWords =
-                        text.replaceAll('', ' ').split(' ');
+                            text.replaceAll('', ' ').split(' ');
                         var numbersJoined = numbers.join('');
                         if (recognizedWords.join('') == numbersJoined) {
                           score++;
@@ -86,28 +119,45 @@ class _BackDigitState extends State<BackwardDigitSpan> {
               }
             }
           },
-          onTapUp: (details) {
-            setState(() {
-              isListening = false;
-            });
-            speechToText.stop();
-            Future.delayed(const Duration(seconds: 3), () {
-              Get.offAll(() => const VigilanceScreen());
-            });
-
+          onDoubleTap: () {
+            if (_controller.starttest.value) {
+              _controller.starttest.value = false;
+              _startTest();
+            }
           },
-          child: CircleAvatar(
-            backgroundColor: isReading ? Colors.grey : Colors.deepPurple,
-            radius: 40,
-            child: Icon(
-              isListening ? Icons.mic : Icons.mic_none,
-              color: Colors.white,
+          onTapUp: (details) {
+            if (!_controller.starttest.value && _controller.isReading.isFalse) {
+              isListening = false;
+              speechToText.stop();
+              Future.delayed(const Duration(seconds: 3), () {
+                nextTest();
+              });
+            }
+          },
+          child: Obx(
+            () => CircleAvatar(
+              backgroundColor: _controller.starttest.value
+                  ? Colors.deepPurple
+                  : _controller.isReading.value
+                      ? Colors.grey
+                      : Colors.deepPurple,
+              radius: 40,
+              child: Obx(
+                () => Icon(
+                  _controller.starttest.value
+                      ? Icons.double_arrow_rounded
+                      : Icons.mic,
+                  color: Colors.white,
+                  size: 40,
+                ),
+              ),
             ),
           ),
         ),
       ),
       appBar: AppBar(
-        title: const Text('Attention Test',
+        title: const Text(
+          'Attention Test',
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
@@ -118,7 +168,6 @@ class _BackDigitState extends State<BackwardDigitSpan> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-
           const Padding(
             padding: EdgeInsets.only(top: 5.0, left: 16.0),
             child: Text(
@@ -130,7 +179,8 @@ class _BackDigitState extends State<BackwardDigitSpan> {
             ),
           ),
           const Padding(
-            padding: EdgeInsets.only(top: 5.0, left: 16.0,bottom: 16.0, right: 12.0),
+            padding: EdgeInsets.only(
+                top: 5.0, left: 16.0, bottom: 16.0, right: 12.0),
             child: Text(
               'A list of numbers will be read to you. Please repeat them exactly in the same order.',
               style: TextStyle(
@@ -149,14 +199,28 @@ class _BackDigitState extends State<BackwardDigitSpan> {
           //     ),
           //   ),
           // ),
-          const Padding(
-            padding: EdgeInsets.only(top: 5.0, left: 16.0, bottom: 16.0, right: 12.0),
-            child: Text(
-              'Numbers:',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+          Padding(
+            padding: const EdgeInsets.only(
+                top: 5.0, left: 16.0, bottom: 16.0, right: 12.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Numbers:',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  '${_controller.remainingSeconds}',
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.deepPurple,
+                  ),
+                ),
+              ],
             ),
           ),
           Center(
@@ -169,7 +233,11 @@ class _BackDigitState extends State<BackwardDigitSpan> {
                     for (var number in numbers) ...[
                       const SizedBox(width: 8),
                       Chip(
-                        label: Text(number, style: const TextStyle(fontSize: 18, color: Colors.deepPurple),),
+                        label: Text(
+                          number,
+                          style: const TextStyle(
+                              fontSize: 18, color: Colors.deepPurple),
+                        ),
                       ),
                     ],
                   ],
@@ -193,13 +261,18 @@ class _BackDigitState extends State<BackwardDigitSpan> {
                 width: MediaQuery.of(context).size.width,
                 alignment: Alignment.center,
                 padding:
-                const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                 margin: const EdgeInsets.only(bottom: 150),
-                child: Text(
-                  text,
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: isListening ? Colors.black87 : Colors.black54,
+                child: Obx(
+                  () => Text(
+                    _controller.starttest.value
+                        ? "Double top the button to start test"
+                        : text,
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: isListening ? Colors.deepPurple : Colors.black54,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
                 ),
               ),

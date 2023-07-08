@@ -8,6 +8,19 @@ class MemoryTestController extends GetxController {
 
   RxList<String> wordList = <String>[].obs;
   RxList<String> recognizedWordsList = <String>[].obs;
+  RxBool isListening = false.obs;
+
+
+  RxInt remainingSeconds = 60.obs;
+  var timerDuration = const Duration(seconds: 60);
+
+  void timeDuration() {
+    remainingSeconds.value = timerDuration.inSeconds;
+  }
+
+  void decrementSeconds() {
+    remainingSeconds.value--;
+  }
 
 
   void saveData(wordList, recognizedWordsList) async {

@@ -2,9 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:moca/views/test/Backward_Digit_Span.dart';
+import 'package:moca/views/test/Forward_digit_span.dart';
 import 'package:moca/views/test/memory_test_screen.dart';
-
 import 'firebase_options.dart';
 
 void main() async {
@@ -12,8 +12,6 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   ).then((value) => debugPrint('Firebase initialized in main.dart'));
-
-
   runApp(const MyApp());
 }
 
@@ -30,7 +28,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:  MemoryTestScreen(),
+      home: MemoryTestScreen(),
     );
   }
 }
