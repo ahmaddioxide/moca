@@ -62,35 +62,64 @@ class SymptomsInitialIllnessController extends GetxController {
       await FirebaseFirestore.instance
           .collection('users')
           .doc(currentUser!.uid)
-          .collection('symptoms_initial_illness')
-          .doc('data')
-          .set({
-        'fever': fever,
-        'cough': cough,
-        'stuffyNose': stuffyNose,
-        'soreThroat': soreThroat,
-        'breathingIssues': breathingIssues,
-        'chestPain': chestPain,
-        'irregularPulse': irregularPulse,
-        'itchyRedDryEyes': itchyRedDryEyes,
-        'headAches': headAches,
-        'lossOfSmelltaste': lossOfSmelltaste,
-        'blurredVision': blurredVision,
-        'hallucinations': hallucinations,
-        'confusion': confusion,
-        'difficultSleepy': difficultSleepy,
-        'depressionAnxiety': depressionAnxiety,
-        'numbness': numbness,
-        'fatigue': fatigue,
-        'bodyPain': bodyPain,
-        'nausea': nausea,
-        'vomiting': vomiting,
-        'diarrhea': diarrhea,
-        'abdominalPain': abdominalPain,
-        'lossOfAppetite': lossOfAppetite,
-        'hotFlashes': hotFlashes,
-        'rash': rash,
+          .update({
+        'symptoms_initial_illness': {
+          'fever': fever,
+          'cough': cough,
+          'stuffyNose': stuffyNose,
+          'soreThroat': soreThroat,
+          'breathingIssues': breathingIssues,
+          'chestPain': chestPain,
+          'irregularPulse': irregularPulse,
+          'itchyRedDryEyes': itchyRedDryEyes,
+          'headAches': headAches,
+          'lossOfSmelltaste': lossOfSmelltaste,
+          'blurredVision': blurredVision,
+          'hallucinations': hallucinations,
+          'confusion': confusion,
+          'difficultSleepy': difficultSleepy,
+          'depressionAnxiety': depressionAnxiety,
+          'numbness': numbness,
+          'fatigue': fatigue,
+          'bodyPain': bodyPain,
+          'nausea': nausea,
+          'vomiting': vomiting,
+          'diarrhea': diarrhea,
+          'abdominalPain': abdominalPain,
+          'lossOfAppetite': lossOfAppetite,
+          'hotFlashes': hotFlashes,
+          'rash': rash,
+        }
       });
+      //     .collection('symptoms_initial_illness')
+      //     .doc('data')
+      //     .set({
+      //   'fever': fever,
+      //   'cough': cough,
+      //   'stuffyNose': stuffyNose,
+      //   'soreThroat': soreThroat,
+      //   'breathingIssues': breathingIssues,
+      //   'chestPain': chestPain,
+      //   'irregularPulse': irregularPulse,
+      //   'itchyRedDryEyes': itchyRedDryEyes,
+      //   'headAches': headAches,
+      //   'lossOfSmelltaste': lossOfSmelltaste,
+      //   'blurredVision': blurredVision,
+      //   'hallucinations': hallucinations,
+      //   'confusion': confusion,
+      //   'difficultSleepy': difficultSleepy,
+      //   'depressionAnxiety': depressionAnxiety,
+      //   'numbness': numbness,
+      //   'fatigue': fatigue,
+      //   'bodyPain': bodyPain,
+      //   'nausea': nausea,
+      //   'vomiting': vomiting,
+      //   'diarrhea': diarrhea,
+      //   'abdominalPain': abdominalPain,
+      //   'lossOfAppetite': lossOfAppetite,
+      //   'hotFlashes': hotFlashes,
+      //   'rash': rash,
+      // });
       return true;
     } catch (e) {
       debugPrint('LoginCalled() called Error "$e"');
