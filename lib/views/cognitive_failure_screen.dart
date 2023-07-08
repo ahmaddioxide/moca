@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:moca/views/animal_name_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../controllers/cognitive_failure_controller.dart';
 
@@ -16,6 +17,16 @@ class _CognitiveFailureState extends State<CognitiveFailure> {
       Get.put(CognitiveFailureController());
 
   bool _isloading = false;
+  late SharedPreferences sf;
+  @override
+  initState() {
+    super.initState();
+    initalizeSharedPref();
+  }
+
+  Future<void> initalizeSharedPref() async {
+    sf = await SharedPreferences.getInstance();
+  }
 
   @override
   Widget build(BuildContext context) {
