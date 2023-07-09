@@ -53,9 +53,7 @@ class VigilanceScreenState extends State<VigilanceScreen> {
   int currentIndex = 0;
   Timer? timer;
 
-  @override
-  void initState() {
-    super.initState();
+  void _startTest() {
     _startSpeaking();
   }
 
@@ -75,9 +73,7 @@ class VigilanceScreenState extends State<VigilanceScreen> {
         if (currentLetter == 'A') {
           Future.delayed(const Duration(milliseconds: 2900), () {
             if (!isClicked) {
-              setState(() {
-                errors++;
-              });
+              errors++;
             }
           });
         }
@@ -101,41 +97,13 @@ class VigilanceScreenState extends State<VigilanceScreen> {
     _controller.saveScore(score);
   }
 
-  // void _showResultDialog() {
-  //   showDialog(
-  //     context: context,
-  //     builder: (context) {
-  //       return AlertDialog(
-  //         title: const Text('Test Result'),
-  //         content: Column(
-  //           mainAxisSize: MainAxisSize.min,
-  //           children: [
-  //             Text('Errors: $errors'),
-  //           ],
-  //         ),
-  //         actions: [
-  //           ElevatedButton(
-  //             onPressed: () {
-  //             },
-  //             child: const Text('OK'),
-  //           ),
-  //         ],
-  //       );
-  //     },
-  //   );
-  // }
-
   void _compareResponse(String response) {
     if (currentIndex > 0 && currentIndex <= sequence.length) {
       var spokenLetter = sequence[currentIndex - 1];
       if (spokenLetter == 'A' && response == 'A' && canrespond) {
-        setState(() {
-          correct++;
-        });
+        correct++;
       } else if (spokenLetter != 'A' && response == 'A' && canrespond) {
-        setState(() {
-          errors++;
-        });
+        errors++;
       } else {}
       canrespond = false;
     }
@@ -170,16 +138,29 @@ class VigilanceScreenState extends State<VigilanceScreen> {
           ),
           const Padding(
             padding: EdgeInsets.only(top: 5.0, left: 16.0, right: 5.0),
-            child:  Text(
+            child: Text(
               'A sequence of letters will be read to you. Every time the letter A is said, tap your hand once. Do not tap your hand on any different letter.',
               style: TextStyle(fontSize: 18, color: Colors.deepPurple),
-
             ),
           ),
-          // Text(
-          //   'Errors: $errors',
-          //   style: const TextStyle(fontSize: 24),
-          // ),
+          SizedBox(height: height * 0.05),
+          const Divider(
+            color: Colors.deepPurple,
+            thickness: 1,
+            indent: 16,
+            endIndent: 16,
+          ),
+          SizedBox(height: height * 0.15),
+          Center(
+            child: Obx(
+              () => Text(
+                _controller.startTest.value
+                    ? "Tap the button when Letter 'A' is said"
+                    : "Double top the button to start test",
+                style: const TextStyle(fontSize: 18, color: Colors.deepPurple),
+              ),
+            ),
+          ),
           SizedBox(height: height * 0.25),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -187,24 +168,36 @@ class VigilanceScreenState extends State<VigilanceScreen> {
               SizedBox(
                 width: width * 0.5,
                 height: height * 0.08,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.white,
-                    backgroundColor: Colors.deepPurple,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(32.0),
-                    ),
-                  ),
-                  onPressed: () {
-                    isClicked = true;
-                    _compareResponse('A');
-                    Future.delayed(const Duration(seconds: 3), () {
-                      isClicked = false;
-                    });
+                child: GestureDetector(
+                  onDoubleTap: () {
+                    if (!_controller.startTest.value) {
+                      _controller.startTest.value = true;
+                      _startTest();
+                    }
                   },
-                  child: const Text(
-                    'Tap',
-                    style: TextStyle(fontSize: 16),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      backgroundColor: Colors.deepPurple,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(32.0),
+                      ),
+                    ),
+                    onPressed: () {
+                      if (_controller.startTest.value) {
+                        isClicked = true;
+                        _compareResponse('A');
+                        Future.delayed(const Duration(seconds: 3), () {
+                          isClicked = false;
+                        });
+                      }
+                    },
+                    child: Obx(
+                      () => Text(
+                        _controller.startTest.value ? 'Tap' : 'Start',
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                    ),
                   ),
                 ),
               ),

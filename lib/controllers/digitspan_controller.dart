@@ -7,9 +7,12 @@ class DigitSpanController extends GetxController {
   final CollectionReference _scoresCollection =
       FirebaseFirestore.instance.collection('users');
 
-  RxInt Score = 0.obs;
+  RxInt score = 0.obs;
+  RxBool isListening = false.obs;
   RxBool starttest = true.obs;
   RxBool isReading = true.obs;
+  RxString text = "Hold the button and start speaking".obs;
+
 
   RxInt remainingSeconds = 60.obs;
   var timerDuration = const Duration(seconds: 60);
@@ -23,8 +26,8 @@ class DigitSpanController extends GetxController {
   }
 
   void incrementScore() {
-    Score.value++;
-    _updateScore(Score.value);
+    score.value++;
+    _updateScore(score.value);
   }
 
   Future<void> _updateScore(int score) async {

@@ -48,7 +48,6 @@ class MemoryTestScreenState extends State<MemoryTestScreen> {
   int currentTrial = 1;
   bool alert = false;
   bool isTimerStarted = false;
-  bool starttest = true;
 
   final MemoryTestController _controller = Get.put(MemoryTestController());
 
@@ -78,7 +77,7 @@ class MemoryTestScreenState extends State<MemoryTestScreen> {
   }
 
   void resetScreen() {
-    _controller.remainingSeconds = 60.obs;
+    _controller.remainingSeconds.value = 60;
     _controller.isListening.value = false;
     setState(() {
       wordCount = 0;
@@ -117,7 +116,7 @@ class MemoryTestScreenState extends State<MemoryTestScreen> {
 
   void alertdialog() {
     alert = true;
-    _controller.remainingSeconds = 1.obs;
+    _controller.remainingSeconds.value = 1;
     showDialog(
       barrierDismissible: false,
       context: context,
@@ -146,11 +145,8 @@ class MemoryTestScreenState extends State<MemoryTestScreen> {
     return recognizedText;
   }
 
-  var i = 0;
-
   @override
   Widget build(BuildContext context) {
-    debugPrint('build${i++}');
     final double height = MediaQuery.sizeOf(context).height;
 
     return Scaffold(
@@ -167,12 +163,12 @@ class MemoryTestScreenState extends State<MemoryTestScreen> {
           onTapDown: (details) async {
             if (!_controller.isListening.value &&
                 isMicEnabled &&
-                !starttest &&
+                !_controller.starttest.value &&
                 isTimerStarted) {
               bool available = await speechToText.initialize();
               if (available) {
                 setState(() {
-                  _controller.isListening = true.obs;
+                  _controller.isListening.value = true;
                   recognizedText = '';
                   speechToText.listen(
                     onResult: (result) {
@@ -225,26 +221,24 @@ class MemoryTestScreenState extends State<MemoryTestScreen> {
             }
           },
           onDoubleTap: () {
-            if (starttest) {
-              setState(() {
-                starttest = false;
-              });
+            if (_controller.starttest.value) {
+              _controller.starttest.value = false;
               _startTest();
             }
           },
           onTapUp: (details) {
-            _controller.isListening = false.obs;
+            _controller.isListening.value = false;
             speechToText.stop();
           },
           child: CircleAvatar(
-            backgroundColor: starttest
+            backgroundColor: _controller.starttest.value
                 ? Colors.deepPurple
                 : isMicEnabled
                     ? Colors.deepPurple
                     : Colors.grey,
             radius: 40,
             child: Icon(
-              starttest
+              _controller.starttest.value
                   ? Icons.double_arrow_rounded
                   : _controller.isListening.value
                       ? Icons.mic
@@ -252,17 +246,6 @@ class MemoryTestScreenState extends State<MemoryTestScreen> {
               color: Colors.white,
               size: 40,
             ),
-            // child: Obx(
-            //   () => Icon(
-            //     starttest
-            //         ? Icons.double_arrow_rounded
-            //         : _controller.isListening.value
-            //             ? Icons.mic
-            //             : Icons.mic_none,
-            //     color: Colors.white,
-            //     size: 40,
-            //   ),
-            // ),
           ),
         ),
       ),
@@ -323,7 +306,7 @@ class MemoryTestScreenState extends State<MemoryTestScreen> {
             SizedBox(height: height * 0.1),
             Obx(
               () => Text(
-                starttest
+                _controller.starttest.value
                     ? "Double top the button to start test"
                     : spokenSentence,
                 style: TextStyle(

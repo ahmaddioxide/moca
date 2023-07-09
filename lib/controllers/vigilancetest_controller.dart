@@ -7,6 +7,8 @@ class VigilanceController extends GetxController {
   final CollectionReference _collection =
   FirebaseFirestore.instance.collection('users');
 
+  RxBool startTest = false.obs;
+
   Future<void> saveScore(int scoreValue) async {
     try {
       await _collection.doc(currentUser!.uid)

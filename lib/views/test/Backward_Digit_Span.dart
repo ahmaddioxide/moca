@@ -17,13 +17,10 @@ class _BackDigitState extends State<BackwardDigitSpan> {
   SpeechToText speechToText = SpeechToText();
   FlutterTts flutterTts = FlutterTts();
   final DigitSpanController _controller = Get.put(DigitSpanController());
-  String text = "Hold the button and start speaking";
-  bool isListening = false;
   int score = 0;
   var numbers = ['8', '7', '5', '3', '1'];
 
   bool isTimerStarted = false;
-  var timerDuration = const Duration(seconds: 60);
   bool innNextScreen = false;
 
   void _startTest() {
@@ -43,16 +40,7 @@ class _BackDigitState extends State<BackwardDigitSpan> {
     if (innNextScreen == false) {
       nextTest();
     }
-    // _stopListening();
   }
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   Future.delayed(const Duration(seconds: 3), () {
-  //     _speakNumbers();
-  //   });
-  // }
 
   @override
   void dispose() {
@@ -61,30 +49,27 @@ class _BackDigitState extends State<BackwardDigitSpan> {
   }
 
   void _speakNumbers() async {
-    _controller.isReading = true.obs;
+    _controller.isReading.value = true;
     for (var number in numbers) {
       await flutterTts.speak(number);
       await Future.delayed(const Duration(seconds: 2));
     }
-    _controller.isReading = false.obs;
+    _controller.isReading.value = false;
   }
 
   void nextTest() {
     innNextScreen = true;
-    _controller.remainingSeconds = 0.obs;
+    _controller.remainingSeconds.value = 0;
     Get.offAll(() => const VigilanceScreen());
   }
 
-  var i = 0;
-
   @override
   Widget build(BuildContext context) {
-    debugPrint('build ${i++}');
     final double height = MediaQuery.sizeOf(context).height;
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: AvatarGlow(
-        animate: isListening,
+        animate: _controller.isListening.value,
         endRadius: 75,
         duration: const Duration(milliseconds: 2000),
         glowColor: Colors.deepPurple,
@@ -93,29 +78,25 @@ class _BackDigitState extends State<BackwardDigitSpan> {
         showTwoGlows: true,
         child: GestureDetector(
           onTapDown: (details) async {
-            if (!isListening &&
+            if (!_controller.isListening.value &&
                 !_controller.isReading.value &&
                 !_controller.starttest.value &&
                 isTimerStarted) {
               var available = await speechToText.initialize();
               if (available) {
-                setState(() {
-                  isListening = true;
-                  speechToText.listen(
-                    onResult: (result) {
-                      setState(() {
-                        text = result.recognizedWords;
-                        var recognizedWords =
-                            text.replaceAll('', ' ').split(' ');
-                        var numbersJoined = numbers.join('');
-                        if (recognizedWords.join('') == numbersJoined) {
-                          score++;
-                          _controller.incrementScore();
-                        }
-                      });
-                    },
-                  );
-                });
+                _controller.isListening.value = true;
+                speechToText.listen(
+                  onResult: (result) {
+                    _controller.text.value = result.recognizedWords;
+                    var recognizedWords =
+                        _controller.text.replaceAll('', ' ').split(' ');
+                    var numbersJoined = numbers.join('');
+                    if (recognizedWords.join('') == numbersJoined) {
+                      score++;
+                      _controller.incrementScore();
+                    }
+                  },
+                );
               }
             }
           },
@@ -127,7 +108,7 @@ class _BackDigitState extends State<BackwardDigitSpan> {
           },
           onTapUp: (details) {
             if (!_controller.starttest.value && _controller.isReading.isFalse) {
-              isListening = false;
+              _controller.isListening.value = false;
               speechToText.stop();
               Future.delayed(const Duration(seconds: 3), () {
                 nextTest();
@@ -212,12 +193,14 @@ class _BackDigitState extends State<BackwardDigitSpan> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Text(
-                  '${_controller.remainingSeconds}',
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.deepPurple,
+                Obx(
+                  () => Text(
+                    '${_controller.remainingSeconds}',
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.deepPurple,
+                    ),
                   ),
                 ),
               ],
@@ -267,10 +250,12 @@ class _BackDigitState extends State<BackwardDigitSpan> {
                   () => Text(
                     _controller.starttest.value
                         ? "Double top the button to start test"
-                        : text,
+                        : _controller.text.value,
                     style: TextStyle(
                       fontSize: 20,
-                      color: isListening ? Colors.deepPurple : Colors.black54,
+                      color: _controller.isListening.value
+                          ? Colors.deepPurple
+                          : Colors.black54,
                     ),
                     textAlign: TextAlign.center,
                   ),

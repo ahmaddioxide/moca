@@ -20,7 +20,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
   var subjectWords = <String>[];
   String currentLetter = '';
   String text = 'Hold the button and start speaking';
-  var Words = <String>[];
+  var words = <String>[];
   var word;
   bool isSpeechAvailable = false;
   bool starttest = true;
@@ -122,7 +122,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
             padding: const EdgeInsets.only(left: 16, right: 16),
             child: Center(
               child: Text(
-                "${Words}",
+                "$words",
                 style: const TextStyle(
                   fontSize: 18,
                 ),
@@ -188,7 +188,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
       isTimerStarted = true;
       remainingSeconds = timerDuration.inSeconds;
       subjectWords.clear();
-      Words.clear(); // Clear the Words list
+      words.clear(); // Clear the Words list
     });
 
     _countdownTimer();
@@ -226,7 +226,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
           if (!_isInvalidWord(word)) {
             setState(() {
               subjectWords.add(word);
-              Words.add(word); // Store the spoken word in the Words list
+              words.add(word); // Store the spoken word in the Words list
             });
           }
         }

@@ -2,6 +2,7 @@ import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:moca/controllers/digitspan_controller.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'Backward_Digit_Span.dart';
@@ -17,11 +18,9 @@ class _ForwardDigitState extends State<ForwardDigitSpan> {
   SpeechToText speechToText = SpeechToText();
   FlutterTts flutterTts = FlutterTts();
   final DigitSpanController _controller = Get.put(DigitSpanController());
-  String text = "Hold the button and start speaking";
-  bool isListening = false;
   int score = 0;
   var numbers = ['2', '4', '5', '7', '9'];
-
+  late SharedPreferences sf;
   bool isTimerStarted = false;
   bool innNextScreen = false;
 
@@ -31,6 +30,10 @@ class _ForwardDigitState extends State<ForwardDigitSpan> {
     _countdownTimer();
     _speakNumbers();
     // disableMicButton();
+  }
+
+  Future<void> initalizeSharedPref() async {
+    sf = await SharedPreferences.getInstance();
   }
 
   void _countdownTimer() async {
@@ -50,41 +53,30 @@ class _ForwardDigitState extends State<ForwardDigitSpan> {
     _controller.remainingSeconds;
   }
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   Future.delayed(const Duration(seconds: 3), () {
-  //     _speakNumbers();
-  //   });
-  // }
 
   void nextTest() {
     innNextScreen = true;
-    _controller.remainingSeconds = 0.obs;
+    _controller.remainingSeconds.value = 0;
     Get.offAll(() => const BackwardDigitSpan());
   }
 
   void _speakNumbers() async {
-    _controller.isReading = true.obs;
+    _controller.isReading.value = true;
     for (var number in numbers) {
       await flutterTts.speak(number);
       await Future.delayed(const Duration(seconds: 2));
     }
-    setState(() {
-      _controller.isReading = false.obs;
-    });
+    _controller.isReading.value = false;
   }
 
-  var i = 0;
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('build ${i++}');
     final double height = MediaQuery.sizeOf(context).height;
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: AvatarGlow(
-        animate: isListening,
+        animate: _controller.isListening.value,
         endRadius: 75,
         duration: const Duration(milliseconds: 2000),
         glowColor: Colors.deepPurple,
@@ -93,24 +85,22 @@ class _ForwardDigitState extends State<ForwardDigitSpan> {
         showTwoGlows: true,
         child: GestureDetector(
           onTapDown: (details) async {
-            if (!isListening &&
+            if (!_controller.isListening.value &&
                 !_controller.isReading.value &&
                 !_controller.starttest.value &&
                 isTimerStarted) {
               var available = await speechToText.initialize();
               if (available) {
-                isListening = true;
+                _controller.isListening.value = true;
                 speechToText.listen(
                   onResult: (result) {
-                    setState(() {
-                      text = result.recognizedWords;
-                      var recognizedWords = text.replaceAll('', ' ').split(' ');
+                      _controller.text.value = result.recognizedWords;
+                      var recognizedWords = _controller.text.replaceAll('', ' ').split(' ');
                       var numbersJoined = numbers.join('');
                       if (recognizedWords.join('') == numbersJoined) {
                         score++;
                         _controller.incrementScore();
                       }
-                    });
                   },
                 );
               }
@@ -118,7 +108,7 @@ class _ForwardDigitState extends State<ForwardDigitSpan> {
           },
           onTapUp: (details) {
             if (!_controller.starttest.value && _controller.isReading.isFalse) {
-              isListening = false;
+              _controller.isListening.value = false;
               speechToText.stop();
               Future.delayed(const Duration(seconds: 3), () {
                 nextTest();
@@ -135,11 +125,9 @@ class _ForwardDigitState extends State<ForwardDigitSpan> {
             () => CircleAvatar(
               backgroundColor: _controller.starttest.value
                   ? Colors.deepPurple
-                  : isTimerStarted
-                      ? _controller.isReading.value
+                      :_controller.isReading.value
                           ? Colors.grey
-                          : Colors.deepPurple
-                      : Colors.grey,
+                          : Colors.deepPurple,
               radius: 40,
               child: Obx(
                 () => Icon(
@@ -268,10 +256,10 @@ class _ForwardDigitState extends State<ForwardDigitSpan> {
                   () => Text(
                     _controller.starttest.value
                         ? "Double top the button to start test"
-                        : text,
+                        : _controller.text.value,
                     style: TextStyle(
                       fontSize: 20,
-                      color: isListening ? Colors.deepPurple : Colors.black54,
+                      color: _controller.isListening.value ? Colors.deepPurple : Colors.black54,
                     ),
                     textAlign: TextAlign.center,
                   ),

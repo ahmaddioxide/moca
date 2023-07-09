@@ -9,6 +9,7 @@ class MemoryTestController extends GetxController {
   RxList<String> wordList = <String>[].obs;
   RxList<String> recognizedWordsList = <String>[].obs;
   RxBool isListening = false.obs;
+  RxBool starttest = true.obs;
 
 
   RxInt remainingSeconds = 60.obs;
