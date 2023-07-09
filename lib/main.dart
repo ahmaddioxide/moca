@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:moca/views/test/Backward_Digit_Span.dart';
 import 'package:moca/views/test/Forward_digit_span.dart';
 import 'package:moca/views/test/memory_test_screen.dart';
-import 'package:moca/views/test/vigilance_test.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -29,7 +28,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const VigilanceScreen(),
+      home: const MemoryTestScreen(),
     );
   }
 }

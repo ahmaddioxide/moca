@@ -10,6 +10,13 @@ class MemoryTestController extends GetxController {
   RxList<String> recognizedWordsList = <String>[].obs;
   RxBool isListening = false.obs;
   RxBool starttest = true.obs;
+  RxBool isMicEnabled = false.obs;
+  RxString recognizedText = ''.obs;
+  RxInt wordCount = 0.obs;
+  RxString spokenSentence = 'Hold the button and start speaking'.obs;
+  RxInt currentTrial = 1.obs;
+
+
 
 
   RxInt remainingSeconds = 60.obs;
@@ -23,6 +30,20 @@ class MemoryTestController extends GetxController {
     remainingSeconds.value--;
   }
 
+  void enableMicButton() {
+    isMicEnabled.value = true;
+  }
+
+  void disableMicButton() {
+    isMicEnabled.value = false;
+  }
+
+  void incrementWordCount() {
+    wordCount.value++;
+  }
+  void incrementTrial() {
+    currentTrial.value++;
+  }
 
   void saveData(wordList, recognizedWordsList) async {
     try {

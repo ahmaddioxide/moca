@@ -30,7 +30,6 @@ class MemoryTestScreenState extends State<MemoryTestScreen> {
 
   SpeechToText speechToText = SpeechToText();
   FlutterTts flutterTts = FlutterTts();
-  String text = "Hold the button and start speaking";
   List<String> wordList = [
     'face',
     'velvet',
@@ -39,13 +38,8 @@ class MemoryTestScreenState extends State<MemoryTestScreen> {
     'red',
   ];
 
-  bool isMicEnabled = false;
   List<String> recognizedWordsList = [];
-  String recognizedText = '';
-  String spokenSentence = 'Hold the button and start speaking';
-  int wordCount = 0;
   bool isSpeaking = true;
-  int currentTrial = 1;
   bool alert = false;
   bool isTimerStarted = false;
 
@@ -55,7 +49,7 @@ class MemoryTestScreenState extends State<MemoryTestScreen> {
     isTimerStarted = true;
     _controller.timeDuration();
     _countdownTimer();
-    disableMicButton();
+    _controller.disableMicButton();
     speakWordList();
   }
 
@@ -79,12 +73,9 @@ class MemoryTestScreenState extends State<MemoryTestScreen> {
   void resetScreen() {
     _controller.remainingSeconds.value = 60;
     _controller.isListening.value = false;
-    setState(() {
-      wordCount = 0;
-      spokenSentence = 'Hold the button and start speaking';
-      recognizedText = '';
-      disableMicButton();
-    });
+    _controller.recognizedText.value = '';
+    _controller.spokenSentence.value = 'Hold the button and start speaking';
+    _controller.disableMicButton();
   }
 
   Future<void> initializeSpeechToText() async {
@@ -99,19 +90,7 @@ class MemoryTestScreenState extends State<MemoryTestScreen> {
       await flutterTts.speak(word);
       await Future.delayed(const Duration(milliseconds: 1500));
     }
-    enableMicButton();
-  }
-
-  void enableMicButton() {
-    setState(() {
-      isMicEnabled = true;
-    });
-  }
-
-  void disableMicButton() {
-    setState(() {
-      isMicEnabled = false;
-    });
+    _controller.enableMicButton();
   }
 
   void alertdialog() {
@@ -142,11 +121,13 @@ class MemoryTestScreenState extends State<MemoryTestScreen> {
 
   //future async await function to return recognized words
   Future<String> getRecognizedWords() async {
-    return recognizedText;
+    return _controller.recognizedText.value;
   }
 
+  var i = 0;
   @override
   Widget build(BuildContext context) {
+    debugPrint('Build method called ${++i} times');
     final double height = MediaQuery.sizeOf(context).height;
 
     return Scaffold(
@@ -162,59 +143,47 @@ class MemoryTestScreenState extends State<MemoryTestScreen> {
         child: GestureDetector(
           onTapDown: (details) async {
             if (!_controller.isListening.value &&
-                isMicEnabled &&
+                _controller.isMicEnabled.value &&
                 !_controller.starttest.value &&
                 isTimerStarted) {
               bool available = await speechToText.initialize();
               if (available) {
-                setState(() {
-                  _controller.isListening.value = true;
-                  recognizedText = '';
-                  speechToText.listen(
-                    onResult: (result) {
-                      if (result.finalResult) {
-                        spokenSentence =
-                            result.recognizedWords.trim().toLowerCase();
-
-                        List<String> spokenWords = spokenSentence.split(' ');
-                        for (String spokenWord in spokenWords) {
-                          if (!recognizedWordsList.contains(spokenWord) &&
-                              wordList.contains(spokenWord)) {
-                            setState(() {
-                              recognizedWordsList.add(spokenWord);
-                              debugPrint(
-                                  "List: ${recognizedWordsList.toString()}");
-                              wordCount++;
-                            });
-                          }
+                _controller.isListening.value = true;
+                _controller.recognizedText.value = '';
+                speechToText.listen(
+                  onResult: (result) {
+                    if (result.finalResult) {
+                      _controller.spokenSentence.value =
+                          result.recognizedWords.trim().toLowerCase();
+                      List<String> spokenWords =
+                          _controller.spokenSentence.value.split(' ');
+                      for (String spokenWord in spokenWords) {
+                        if (!recognizedWordsList.contains(spokenWord) &&
+                            wordList.contains(spokenWord)) {
+                          recognizedWordsList.add(spokenWord);
+                          // debugPrint("List: ${recognizedWordsList.toString()}");
+                          _controller.incrementWordCount();
                         }
-                        if (currentTrial == 2) {
-                          _controller.saveData(wordList, recognizedWordsList);
-                          Future.delayed(const Duration(seconds: 3), () {
-                            alertdialog();
-                          });
-                        }
-                        if (currentTrial < 2) {
-                          setState(() {
-                            recognizedText = '';
-                          });
-                          Future.delayed(const Duration(seconds: 3), () {
-                            setState(() {
-                              currentTrial++;
-                              wordCount = 0;
-                            });
-                            resetScreen();
-                            speakWordList();
-                          });
-                        }
-                      } else {
-                        setState(() {
-                          recognizedText = result.recognizedWords;
+                      }
+                      if (_controller.currentTrial.value == 2) {
+                        _controller.saveData(wordList, recognizedWordsList);
+                        Future.delayed(const Duration(seconds: 3), () {
+                          alertdialog();
                         });
                       }
-                    },
-                  );
-                });
+                      if (_controller.currentTrial.value < 2) {
+                        _controller.recognizedText.value = '';
+                        Future.delayed(const Duration(seconds: 3), () {
+                          _controller.incrementTrial();
+                          resetScreen();
+                          speakWordList();
+                        });
+                      }
+                    } else {
+                      _controller.recognizedText.value = result.recognizedWords;
+                    }
+                  },
+                );
               } else {
                 debugPrint('Speech recognition is not available');
               }
@@ -230,21 +199,23 @@ class MemoryTestScreenState extends State<MemoryTestScreen> {
             _controller.isListening.value = false;
             speechToText.stop();
           },
-          child: CircleAvatar(
-            backgroundColor: _controller.starttest.value
-                ? Colors.deepPurple
-                : isMicEnabled
-                    ? Colors.deepPurple
-                    : Colors.grey,
-            radius: 40,
-            child: Icon(
-              _controller.starttest.value
-                  ? Icons.double_arrow_rounded
-                  : _controller.isListening.value
-                      ? Icons.mic
-                      : Icons.mic_none,
-              color: Colors.white,
-              size: 40,
+          child: Obx(
+            () => CircleAvatar(
+              backgroundColor: _controller.starttest.value
+                  ? Colors.deepPurple
+                  : _controller.isMicEnabled.value
+                      ? Colors.deepPurple
+                      : Colors.grey,
+              radius: 40,
+              child: Icon(
+                _controller.starttest.value
+                    ? Icons.double_arrow_rounded
+                    : _controller.isListening.value
+                        ? Icons.mic
+                        : Icons.mic_none,
+                color: Colors.white,
+                size: 40,
+              ),
             ),
           ),
         ),
@@ -263,9 +234,12 @@ class MemoryTestScreenState extends State<MemoryTestScreen> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(
-              "Trial $currentTrial of 2",
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            Obx(
+              () => Text(
+                "Trial ${_controller.currentTrial.value} of 2",
+                style:
+                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
             ),
             SizedBox(height: height * 0.01),
             const Text(
@@ -285,10 +259,12 @@ class MemoryTestScreenState extends State<MemoryTestScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    'Words Matched: $wordCount',
-                    style: const TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.bold),
+                  Obx(
+                    () => Text(
+                      'Words Matched: ${_controller.wordCount.value}',
+                      style: const TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
                   ),
                   Obx(
                     () => Text(
@@ -308,7 +284,9 @@ class MemoryTestScreenState extends State<MemoryTestScreen> {
               () => Text(
                 _controller.starttest.value
                     ? "Double top the button to start test"
-                    : spokenSentence,
+                    : _controller.isListening.value
+                        ? _controller.recognizedText.value
+                        : _controller.spokenSentence.value,
                 style: TextStyle(
                   fontSize: 20,
                   color: _controller.isListening.value
