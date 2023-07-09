@@ -5,6 +5,9 @@ import 'package:get/get.dart';
 import 'package:moca/views/test/Backward_Digit_Span.dart';
 import 'package:moca/views/test/Forward_digit_span.dart';
 import 'package:moca/views/test/memory_test_screen.dart';
+import 'package:moca/views/test/sentence_repetition.dart';
+import 'package:moca/views/test/serial7_test.dart';
+import 'package:moca/views/test/connecting_dot_screen.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -12,11 +15,11 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   ).then((value) => debugPrint('Firebase initialized in main.dart'));
-  runApp(const MyApp());
+  runApp( MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+   MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +31,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MemoryTestScreen(),
+      home: SentenceRepetitionScreen(),
     );
   }
 }

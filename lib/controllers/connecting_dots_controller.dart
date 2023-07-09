@@ -1,16 +1,16 @@
+
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:moca/controllers/firebase_const.dart';
 
-class SentenceController extends GetxController {
+class ConnectingDotsController extends GetxController {
   final CollectionReference _scoresCollection =
   FirebaseFirestore.instance.collection('users');
 
-  RxInt Score = 0.obs;
-  RxBool isMicEnabled = false.obs;
-  RxInt remainingSeconds = 60.obs;
-  var timerDuration = const Duration(seconds: 60);
+  RxInt remainingSeconds = 120.obs;
+  var timerDuration = const Duration(seconds: 120);
 
   void timeDuration() {
     remainingSeconds.value = timerDuration.inSeconds;
@@ -20,24 +20,10 @@ class SentenceController extends GetxController {
     remainingSeconds.value--;
   }
 
-  void enableMicButton() {
-    isMicEnabled.value = true;
-  }
-
-  void disableMicButton() {
-    isMicEnabled.value = false;
-  }
-
-  void incrementScore() {
-    Score.value++;
-    _updateScore(Score.value);
-  }
-
-  Future<void> _updateScore(int score) async {
+  Future<void> updatetestScore(int score) async {
     try {
       await _scoresCollection.doc(currentUser!.uid)
-          .collection('language_test')
-          .doc('SentenceRepetitionTest').set({'score': score});
+          .update({'connecting_dot_score': score});
     } catch (e) {
       debugPrint('Error updating score: $e');
       Get.snackbar(
@@ -49,4 +35,8 @@ class SentenceController extends GetxController {
       );
     }
   }
+
+
+
+
 }

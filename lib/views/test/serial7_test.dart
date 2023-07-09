@@ -18,20 +18,30 @@ class _Serial7State extends State<Serial7Screen> {
   SpeechToText speechToText = SpeechToText();
   FlutterTts flutterTts = FlutterTts();
   final Serial7Controller _controller = Get.put(Serial7Controller());
-  var text = "Hold the button and start speaking";
-  var isListening = false;
-  var maxAttemptsReached = false;
-  var score = 0;
-  var attempts = 0;
-  var maxAttempts = 5;
-  var target = 93;
+  int score = 0;
+  RxInt attempts = 0.obs;
+  RxInt maxAttempts = 5.obs;
+  int target = 93;
+  bool isTimerStarted = false;
+  bool alert = false;
 
-  @override
-  void initState() {
-    super.initState();
-    // Future.delayed(const Duration(seconds: 2), () {
-    //   _speakInstructions();
-    // });
+  void _countdownTimer() async {
+    while (_controller.remainingSeconds > 0) {
+      await Future.delayed(const Duration(seconds: 1));
+      _controller.decrementSeconds();
+    }
+    isTimerStarted = false;
+    if (alert == false) {
+      _showPopup();
+    }
+  }
+
+  void _startTest() {
+    if (isTimerStarted == false) {
+      isTimerStarted = true;
+      _controller.timeDuration();
+      _countdownTimer();
+    }
   }
 
   // void _speakInstructions() async {
@@ -41,7 +51,6 @@ class _Serial7State extends State<Serial7Screen> {
 
   Future<void> finalScore() async {
     int finalScore;
-
     if (score > 3) {
       finalScore = 3;
     } else if (score == 2 || score == 3) {
@@ -54,37 +63,33 @@ class _Serial7State extends State<Serial7Screen> {
     _controller.saveScore(finalScore);
   }
 
-  void _validateCounting() {
-    var recognizedNumber = int.tryParse(text);
+  Future<void> _validateCounting() async {
+    var recognizedNumber = int.tryParse(_controller.text.value);
     if (recognizedNumber != null) {
       if (recognizedNumber == target) {
         attempts++;
-        setState(() async {
-          score++;
-          if (attempts == maxAttempts) {
-            await finalScore();
-            Future.delayed(const Duration(seconds: 3), () {
-              _showPopup();
-            });
-            isListening = false;
-            maxAttemptsReached = true;
-          } else {
-            _speakTarget();
-          }
-          target -= 7;
-        });
+        score++;
+        if (attempts.value == maxAttempts.value) {
+          await finalScore();
+          Future.delayed(const Duration(seconds: 3), () {
+            _showPopup();
+          });
+          _controller.isListening.value = false;
+          _controller.maxAttemptsReached.value = true;
+        } else {
+          _speakTarget();
+        }
+        target -= 7;
       } else {
         attempts++;
         _showSnackbar("Wrong Input! Try Again");
-        if (attempts == maxAttempts) {
-          setState(() async {
-            await finalScore();
-            Future.delayed(const Duration(seconds: 3), () {
-              _showPopup();
-            });
-            isListening = false;
-            maxAttemptsReached = true;
+        if (attempts.value == maxAttempts.value) {
+          await finalScore();
+          Future.delayed(const Duration(seconds: 3), () {
+            _showPopup();
           });
+          _controller.isListening.value = false;
+          _controller.maxAttemptsReached.value = true;
         }
       }
     }
@@ -95,6 +100,7 @@ class _Serial7State extends State<Serial7Screen> {
   }
 
   void _showPopup() {
+    alert = true;
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -105,9 +111,10 @@ class _Serial7State extends State<Serial7Screen> {
           actions: [
             TextButton(
               onPressed: () {
+                Navigator.of(context).pop();
                 Get.offAll(() => const SentenceRepetitionScreen());
               },
-              child: const Text('OK'),
+              child: const Text('Next'),
             ),
           ],
         );
@@ -125,7 +132,7 @@ class _Serial7State extends State<Serial7Screen> {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: AvatarGlow(
-        animate: isListening,
+        animate: _controller.isListening.value,
         endRadius: 75,
         duration: const Duration(milliseconds: 2000),
         glowColor: Colors.deepPurple,
@@ -134,39 +141,48 @@ class _Serial7State extends State<Serial7Screen> {
         showTwoGlows: true,
         child: GestureDetector(
           onTapDown: (details) async {
-            if (!isListening && !maxAttemptsReached) {
+            if (!_controller.isListening.value &&
+                !_controller.maxAttemptsReached.value &&
+                _controller.starttest.value) {
               var available = await speechToText.initialize();
               if (available) {
-                setState(() {
-                  isListening = true;
-                  speechToText.listen(
-                    onResult: (result) {
-                      setState(() {
-                        text = result.recognizedWords;
-                        _validateCounting();
-                      });
-                    },
-                  );
-                });
+                _controller.isListening.value = true;
+                speechToText.listen(
+                  onResult: (result) {
+                    _controller.text.value = result.recognizedWords;
+                    _validateCounting();
+                  },
+                );
               }
             }
           },
+          onDoubleTap: () {
+            if (!_controller.starttest.value) {
+              _controller.starttest.value = true;
+              _startTest();
+            }
+          },
           onTapUp: (details) {
-            setState(() {
-              isListening = false;
-            });
+            _controller.isListening.value = false;
             speechToText.stop();
           },
-          child: CircleAvatar(
-            backgroundColor: maxAttemptsReached
-                ? Colors.grey
-                : isListening
-                    ? Colors.grey
-                    : Colors.deepPurple,
-            radius: 40,
-            child: Icon(
-              isListening ? Icons.mic : Icons.mic_none,
-              color: Colors.white,
+          child: Obx(
+            () => CircleAvatar(
+              backgroundColor: _controller.maxAttemptsReached.value
+                  ? Colors.grey
+                  : _controller.isListening.value
+                      ? Colors.grey
+                      : Colors.deepPurple,
+              radius: 40,
+              child: Icon(
+                !_controller.starttest.value
+                    ? Icons.double_arrow_rounded
+                    : _controller.isListening.value
+                        ? Icons.mic
+                        : Icons.mic_none,
+                color: Colors.white,
+                size: 40,
+              ),
             ),
           ),
         ),
@@ -194,30 +210,52 @@ class _Serial7State extends State<Serial7Screen> {
               ),
             ),
           ),
-          const Padding(padding: EdgeInsets.only(top: 5, left: 16, right: 16),
-          child: Text(
-            'Count backwards from 100 by subtracting 7. Do a total of 5 subtractions.',
-            style: TextStyle(
-              fontSize: 16,
-              color: Colors.deepPurple,
-            ),
-          ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
+          const Padding(
+            padding: EdgeInsets.only(top: 5, left: 16, right: 16),
             child: Text(
-              'Attempts Left: ${maxAttempts - attempts}',
-              style: const TextStyle(
+              'Count backwards from 100 by subtracting 7. Do a total of 5 subtractions.',
+              style: TextStyle(
                 fontSize: 16,
-                fontWeight: FontWeight.bold,
+                color: Colors.deepPurple,
               ),
             ),
+          ),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.03,
           ),
           const Divider(
             thickness: 1,
             indent: 16,
             endIndent: 16,
             color: Colors.deepPurple,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Obx(() => Text(
+                  'Attempts Left: ${maxAttempts.value - attempts.value}',
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Obx(
+                  () => Text(
+                    '${_controller.remainingSeconds.value}',
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.1,
@@ -233,11 +271,15 @@ class _Serial7State extends State<Serial7Screen> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                 margin: const EdgeInsets.only(bottom: 150),
-                child: Text(
-                  text,
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: isListening ? Colors.deepPurple : Colors.black54,
+                child: Obx(
+                  () => Text(
+                    _controller.text.value,
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: _controller.isListening.value
+                          ? Colors.deepPurple
+                          : Colors.black54,
+                    ),
                   ),
                 ),
               ),

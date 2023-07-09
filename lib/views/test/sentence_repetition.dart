@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:get/get.dart';
-import 'package:moca/views/test/abstraction_screen.dart';
+import 'package:moca/views/test/verbalfluency_test.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
@@ -19,18 +19,20 @@ class SentenceRepetitionScreenState extends State<SentenceRepetitionScreen> {
   SpeechToText speechToText = SpeechToText();
   FlutterTts flutterTts = FlutterTts();
   final SentenceController _controller = Get.put(SentenceController());
-  bool isListening = false;
+  RxBool isListening = false.obs;
   int score = 0;
-  var spokenSentence = 'Hold the button and start speaking';
+  bool isTimerStarted = false;
+  bool gotoNextSentence = false;
+  RxString spokenSentence = 'Hold the button and start speaking'.obs;
   var sentences = [
     'I only know that John is the one to help today',
     'The cat always hides under the couch when dogs are in the room',
   ];
   int currentSentenceIndex = 0;
-  String recognizedText = 'Hold the button and start speaking';
-  bool isMicEnabled = false;
-  bool secondSentence = true;
-
+  RxString recognizedText = 'Hold the button and start speaking'.obs;
+  RxBool secondSentence = true.obs;
+  RxBool starttest = false.obs;
+  bool gotoNextScreen = false;
   String sentence1 =
       "A sentence will be read to you. Repeat it exactly as it is said.";
   String sentence2 =
@@ -40,9 +42,43 @@ class SentenceRepetitionScreenState extends State<SentenceRepetitionScreen> {
   void initState() {
     super.initState();
     initializeSpeechToText();
-    Future.delayed(const Duration(seconds: 3), () {
+  }
+
+  void _startTest() {
+    isTimerStarted = true;
+    _controller.disableMicButton();
+    _countdownTimer();
+    Future.delayed(const Duration(seconds: 1), () {
       _speakSentence();
-      disableMicButton();
+    });
+  }
+
+  void _countdownTimer() async {
+    while (_controller.remainingSeconds > 0) {
+      await Future.delayed(const Duration(seconds: 1));
+      _controller.decrementSeconds();
+    }
+    isTimerStarted = false;
+    if (gotoNextSentence == false) {
+      goToNextSentence();
+    }else if(gotoNextSentence == true && gotoNextScreen == false){
+      nextTest();
+    }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    speechToText.stop();
+    flutterTts.stop();
+    _controller.remainingSeconds.value;
+  }
+
+  void nextTest() {
+    gotoNextScreen = true;
+    _controller.remainingSeconds.value = 2;
+    Future.delayed(const Duration(seconds: 3), () {
+      Get.offAll(() => const VocabularyScreen());
     });
   }
 
@@ -53,45 +89,34 @@ class SentenceRepetitionScreenState extends State<SentenceRepetitionScreen> {
     }
   }
 
-  void disableMicButton() {
-    setState(() {
-      isMicEnabled = false;
-    });
-  }
-
-  void enableMicButton() {
-    setState(() {
-      isMicEnabled = true;
-    });
-  }
-
   Future<void> _speakSentence() async {
     await flutterTts.setLanguage('en-US');
     await flutterTts.setSpeechRate(0.4);
     await flutterTts.speak(sentences[currentSentenceIndex]);
 
     Future.delayed(const Duration(seconds: 3), () {
-      enableMicButton();
+      _controller.enableMicButton();
     });
   }
 
   void goToNextSentence() {
-    setState(() {
-      recognizedText = '';
-      spokenSentence = 'Hold the button and start speaking';
-      currentSentenceIndex++;
-      if (secondSentence) {
-        disableMicButton();
-        secondSentence = false;
-        Future.delayed(const Duration(seconds: 1), () {
-          _speakSentence();
-        });
-      } else {
-        Future.delayed(const Duration(seconds: 1), () {
-          Get.offAll(() =>  AbstractionScreen());
-        });
-      }
-    });
+    _controller.remainingSeconds.value = 60;
+    gotoNextSentence = true;
+    _countdownTimer();
+    recognizedText.value = '';
+    spokenSentence.value = 'Hold the button and start speaking';
+    currentSentenceIndex++;
+
+
+    if (secondSentence.value) {
+      _controller.disableMicButton();
+      secondSentence.value = false;
+      Future.delayed(const Duration(seconds: 1), () {
+        _speakSentence();
+      });
+    } else {
+        nextTest();
+    }
   }
 
   @override
@@ -100,7 +125,7 @@ class SentenceRepetitionScreenState extends State<SentenceRepetitionScreen> {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: AvatarGlow(
-        animate: isListening,
+        animate: isListening.value,
         endRadius: 75,
         duration: const Duration(milliseconds: 2000),
         glowColor: Colors.deepPurple,
@@ -109,58 +134,73 @@ class SentenceRepetitionScreenState extends State<SentenceRepetitionScreen> {
         showTwoGlows: true,
         child: GestureDetector(
           onTapDown: (details) async {
-            if (!isListening && isMicEnabled) {
+            if (!isListening.value &&
+                _controller.isMicEnabled.value &&
+                starttest.value &&
+                isTimerStarted) {
               bool available = await speechToText.initialize();
               if (available) {
-                setState(() {
-                  isListening = true;
-                  recognizedText = '';
-                  speechToText.listen(
-                    onResult: (result) {
-                      if (result.finalResult) {
-                        spokenSentence = result.recognizedWords.trim();
-                        var targetSentence = sentences[currentSentenceIndex];
-                        if (spokenSentence.toLowerCase() ==
-                            targetSentence.toLowerCase()) {
-                          setState(() {
-                            score++;
-                            _controller.incrementScore();
-                          });
-                        }
-                        Future.delayed(const Duration(seconds: 3), () {
-                          goToNextSentence();
-                        });
-                      } else {
-                        setState(() {
-                          recognizedText = result.recognizedWords;
-                        });
+                isListening.value = true;
+                recognizedText.value = '';
+                speechToText.listen(
+                  onResult: (result) {
+                    if (result.finalResult) {
+                      spokenSentence.value = result.recognizedWords.trim();
+                      var targetSentence = sentences[currentSentenceIndex];
+                      if (spokenSentence.toLowerCase() ==
+                          targetSentence.toLowerCase()) {
+                        score++;
+                        _controller.incrementScore();
                       }
-                    },
-                  );
-                });
+                      Future.delayed(const Duration(seconds: 3), () {
+                        goToNextSentence();
+                      });
+                    } else {
+                      recognizedText.value = result.recognizedWords;
+                    }
+                  },
+                );
               } else {
                 debugPrint('Speech recognition is not available');
               }
             }
           },
           onTapUp: (details) {
-            setState(() {
-              isListening = false;
-            });
+            isListening.value = false;
             speechToText.stop();
           },
-          child: CircleAvatar(
-            backgroundColor: isMicEnabled ? Colors.deepPurple : Colors.grey,
-            radius: 40,
-            child: Icon(
-              isListening ? Icons.mic : Icons.mic_none,
-              color: Colors.white,
+          onDoubleTap: () {
+            if (!starttest.value) {
+              starttest.value = true;
+              _startTest();
+            }
+          },
+          child: Obx(
+            () => CircleAvatar(
+              backgroundColor: !starttest.value
+                  ? Colors.deepPurple
+                  : _controller.isMicEnabled.value
+                      ? Colors.deepPurple
+                      : Colors.grey,
+              radius: 40,
+              child: Obx(
+                () => Icon(
+                  starttest.value ? Icons.mic : Icons.double_arrow_rounded,
+                  color: Colors.white,
+                  size: 40,
+                ),
+              ),
             ),
           ),
         ),
       ),
       appBar: AppBar(
-        title: const Text('Language Test'),
+        title: const Text('Language Test',
+            style: TextStyle(
+              color: Colors.deepPurple,
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            )),
       ),
       body: Center(
         child: Column(
@@ -179,11 +219,13 @@ class SentenceRepetitionScreenState extends State<SentenceRepetitionScreen> {
             ),
             Padding(
               padding: const EdgeInsets.only(left: 16, right: 16),
-              child: Text(
-                secondSentence ? sentence1 : sentence2,
-                style: const TextStyle(
-                  fontSize: 18,
-                  color: Colors.deepPurple,
+              child: Obx(
+                () => Text(
+                  secondSentence.value ? sentence1 : sentence2,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    color: Colors.deepPurple,
+                  ),
                 ),
               ),
             ),
@@ -194,27 +236,40 @@ class SentenceRepetitionScreenState extends State<SentenceRepetitionScreen> {
               indent: 16,
               endIndent: 16,
             ),
-            // Text(
-            //   'Score: $score',
-            //   style: const TextStyle(fontSize: 24),
-            // ),
-            // if (currentSentenceIndex < sentences.length)
-            //   Text(
-            //     sentences[currentSentenceIndex],
-            //     style: const TextStyle(fontSize: 16),
-            //     textAlign: TextAlign.center,
-            //   ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 16.0, left: 16.0),
+                  child: Obx(
+                    () => Text(
+                      _controller.remainingSeconds.value.toString(),
+                      style: const TextStyle(
+                          fontSize: 18,
+                          color: Colors.deepPurple,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+              ],
+            ),
             SizedBox(height: height * 0.25),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Center(
-                child: Text(
-                  isListening ? recognizedText : spokenSentence,
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: isListening ? Colors.deepPurple : Colors.black54,
+                child: Obx(
+                  () => Text(
+                    isListening.value
+                        ? recognizedText.value
+                        : spokenSentence.value,
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: isListening.value
+                          ? Colors.deepPurple
+                          : Colors.black54,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                  textAlign: TextAlign.center,
                 ),
               ),
             ),

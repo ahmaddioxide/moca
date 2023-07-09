@@ -16,9 +16,6 @@ class MemoryTestController extends GetxController {
   RxString spokenSentence = 'Hold the button and start speaking'.obs;
   RxInt currentTrial = 1.obs;
 
-
-
-
   RxInt remainingSeconds = 60.obs;
   var timerDuration = const Duration(seconds: 60);
 
