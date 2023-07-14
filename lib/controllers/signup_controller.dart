@@ -76,14 +76,17 @@ class SignUpController extends GetxController {
       await FirebaseFirestore.instance
           .collection('users')
           .doc(currentUser!.uid)
-          .collection('user_info')
-          .doc('data')
-          .set(
-        {
-          'name': name,
-          'email': email,
-        },
-      );
+          .set({
+        'user_info': {'name': name, 'email': email}
+      });
+      //     .collection('user_info')
+      //     .doc('data')
+      //     .set(
+      //   {
+      //     'name': name,
+      //     'email': email,
+      //   },
+      // );
     } catch (e) {
       debugPrint('Error: $e');
       Get.snackbar(

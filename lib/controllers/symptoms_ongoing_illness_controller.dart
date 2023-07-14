@@ -57,32 +57,58 @@ class SymptomsOnGoingIllnessController extends GetxController {
       await FirebaseFirestore.instance
           .collection('users')
           .doc(currentUser!.uid)
-          .collection('symptoms_ongoing_illness')
-          .doc('data')
-          .set({
-        'cough': cough,
-        'breathingIssues': breathingIssues,
-        'chestPain': chestPain,
-        'irregularPulse': irregularPulse,
-        'itchyRedDryEyes': itchyRedDryEyes,
-        'lossOfSmelltaste': lossOfSmelltaste,
-        'blurredVision': blurredVision,
-        'hallucinations': hallucinations,
-        'confusion': confusion,
-        'forgetfulness': forgetfulness,
-        'delayedThinking': delayedThinking,
-        'poorConcentration': poorConcentration,
-        'difficultSpeaking': difficultSpeaking,
-        'difficultSleeping': difficultSleeping,
-        'depressionAnxiety': depressionAnxiety,
-        'numbness': numbness,
-        'fatigue': fatigue,
-        'bodyPain': bodyPain,
-        'nausea': nausea,
-        'abdominalPain': abdominalPain,
-        'lossOfAppetite': lossOfAppetite,
-        'headAche': headAche
+          .update({
+        'symptoms_ongoing_illness': {
+          'cough': cough,
+          'breathingIssues': breathingIssues,
+          'chestPain': chestPain,
+          'irregularPulse': irregularPulse,
+          'itchyRedDryEyes': itchyRedDryEyes,
+          'lossOfSmelltaste': lossOfSmelltaste,
+          'blurredVision': blurredVision,
+          'hallucinations': hallucinations,
+          'confusion': confusion,
+          'forgetfulness': forgetfulness,
+          'delayedThinking': delayedThinking,
+          'poorConcentration': poorConcentration,
+          'difficultSpeaking': difficultSpeaking,
+          'difficultSleeping': difficultSleeping,
+          'depressionAnxiety': depressionAnxiety,
+          'numbness': numbness,
+          'fatigue': fatigue,
+          'bodyPain': bodyPain,
+          'nausea': nausea,
+          'abdominalPain': abdominalPain,
+          'lossOfAppetite': lossOfAppetite,
+          'headAche': headAche
+        }
       });
+      //     .collection('symptoms_ongoing_illness')
+      //     .doc('data')
+      //     .set({
+      //   'cough': cough,
+      //   'breathingIssues': breathingIssues,
+      //   'chestPain': chestPain,
+      //   'irregularPulse': irregularPulse,
+      //   'itchyRedDryEyes': itchyRedDryEyes,
+      //   'lossOfSmelltaste': lossOfSmelltaste,
+      //   'blurredVision': blurredVision,
+      //   'hallucinations': hallucinations,
+      //   'confusion': confusion,
+      //   'forgetfulness': forgetfulness,
+      //   'delayedThinking': delayedThinking,
+      //   'poorConcentration': poorConcentration,
+      //   'difficultSpeaking': difficultSpeaking,
+      //   'difficultSleeping': difficultSleeping,
+      //   'depressionAnxiety': depressionAnxiety,
+      //   'numbness': numbness,
+      //   'fatigue': fatigue,
+      //   'bodyPain': bodyPain,
+      //   'nausea': nausea,
+      //   'abdominalPain': abdominalPain,
+      //   'lossOfAppetite': lossOfAppetite,
+      //   'headAche': headAche
+      // });
       return true;
     } catch (e) {
       debugPrint('LoginCalled() called Error "$e"');

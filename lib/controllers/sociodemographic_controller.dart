@@ -27,17 +27,28 @@ class DemographicController extends GetxController {
       await FirebaseFirestore.instance
           .collection('users')
           .doc(currentUser!.uid)
-          .collection('socio_demographic')
-          .doc('data') //test result (do it)
-          .set({
-        'name': name,
-        'gender': gender,
-        'age': age,
-        'residence': residence,
-        'education': education,
-        'profession': profession,
-        'id': currentUser!.uid,
+          .update({
+        'socio_demographic': {
+          'name': name,
+          'gender': gender,
+          'age': age,
+          'residence': residence,
+          'education': education,
+          'profession': profession,
+          'id': currentUser!.uid,
+        }
       }).then((value) => Get.offAll(() => const MedicalHistoryScreen()));
+      //.collection('socio_demographic')
+      //.doc('data')
+      //     .set({
+      //   'name': name,
+      //   'gender': gender,
+      //   'age': age,
+      //   'residence': residence,
+      //   'education': education,
+      //   'profession': profession,
+      //   'id': currentUser!.uid,
+      // }).then((value) => Get.offAll(() => const MedicalHistoryScreen()));
     } catch (e) {
       debugPrint('LoginCalled() called Error "$e"');
       Get.snackbar(
