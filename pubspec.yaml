@@ -42,6 +42,9 @@ dependencies:
   cloud_firestore: ^4.8.0
   firebase_auth: ^4.6.2
   csv: ^5.0.2
+  permission_handler: ^10.4.3
+  path_provider: ^2.0.15
+  cr_file_saver: ^0.0.2+1
 
 dev_dependencies:
   flutter_test:
