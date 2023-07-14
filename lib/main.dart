@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:moca/views/signup_screen.dart';
 import 'package:moca/views/sociodemographic_sceen.dart';
-import 'package:moca/views/test/cube_3d_draw_test_screen.dart';
+import 'package:moca/views/test/cube_drawing_test_screen.dart';
 import 'package:moca/views/test/visuospatial_clock_test_screen.dart';
 import 'package:moca/views/test_main_screens.dart';
 import 'firebase_options.dart';
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const SignUpScreen(),
+      home: const DrawingScreen(),
 
     );
   }
