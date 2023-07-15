@@ -5,6 +5,7 @@ import 'package:cr_file_saver/file_saver.dart';
 import 'package:csv/csv.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -25,6 +26,9 @@ class AdminController extends GetxController {
 
   RxBool get userSearchIsLoading => _userSearchIsLoading;
   RxString _searchedUserName = RxString('notFound');
+
+  RxBool _userSearchStarted = RxBool(false);
+  Rx<bool> get userSearchStarted => _userSearchStarted;
 
   Rx<String> get searchedUserName => _searchedUserName;
   RxInt _searchedUserTotalScore = RxInt(0);
@@ -69,6 +73,7 @@ class AdminController extends GetxController {
 
   Future<void> getUserByEmail() async {
     _userSearchIsLoading.value = true;
+    _userSearchStarted.value = true;
     update();
     final searchedEmail = userSearchBar.text;
     debugPrint(searchedEmail);
@@ -116,23 +121,21 @@ class AdminController extends GetxController {
       /*var status = await Permission.manageExternalStorage.request();
 */
       Map<Permission, PermissionStatus> status = await [
-        Permission.storage,
         Permission.manageExternalStorage,
       ].request();
 
       //final permStatus = await Permission.storage.status;
 
-      if (status[Permission.storage]!.isDenied) {
-        Permission.storage.request();
+      if (status[Permission.manageExternalStorage]!.isDenied) {
+        await CRFileSaver.requestWriteExternalStoragePermission();
         debugPrint('Storage Permission denied');
-        //openAppSettings();
-      }
-      if(status[Permission.storage]!.isPermanentlyDenied) {
-        debugPrint('Storage Permission permanently denied');
 
+      }
+      if(status[Permission.manageExternalStorage]!.isPermanentlyDenied) {
+        debugPrint('Storage Permission permanently denied');
         openAppSettings();
       }
-      else if(status[Permission.storage]!.isGranted){
+      //else if(status[Permission.storage]!.isGranted){
 
       List<List<dynamic>> rows = [];
       List<dynamic> row = [];
@@ -163,19 +166,19 @@ class AdminController extends GetxController {
       for (String key in row) {
         userData.add(_userDoc?.docs.last[key]);
       }
+
       rows.add(userData);
       String csvData = const ListToCsvConverter().convert(rows);
-      String? dir = (await getApplicationDocumentsDirectory()).path;
-      if (dir != null) {
-        final filePath = '$dir/MOCA_${_userDoc?.docs
-            .last["user_info.email"]}.csv';
-        debugPrint(filePath);
-        // await CRFileSaver.requestWriteExternalStoragePermission();
-        File file = File(filePath);
-        await (await file.writeAsString(csvData)).open();
-        await file.open();
+      String? dir = "/storage/emulated/0/Download/";//(await getExternalStorageDirectory())?.path;
 
-      }
-    }
+      final filePath = '$dir/MOCA_${_userDoc?.docs
+          .last["user_info.email"]}.csv';
+
+      File file = File(filePath);
+      await file.writeAsString(csvData).whenComplete(() {
+        debugPrint('dir $dir');
+        Fluttertoast.showToast(msg: "file saved at: $dir");
+      });
+    //}
   }}
 }

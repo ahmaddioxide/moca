@@ -185,16 +185,24 @@ class AdminHomeScreen extends StatelessWidget {
                           padding: MaterialStateProperty.all<EdgeInsets>(
                               const EdgeInsets.symmetric(horizontal: 12)),
                           leading: const Icon(Icons.person_outline, size: 24),
-                          trailing:  [IconButton(onPressed: () async {await _adminController.getUserByEmail();}, icon: const Icon(Icons.search, size: 24,))],
+                          trailing: [
+                            IconButton(
+                                onPressed: () async {
+                                  await _adminController.getUserByEmail();
+                                },
+                                icon: const Icon(
+                                  Icons.search,
+                                  size: 24,
+                                ))
+                          ],
                           elevation: MaterialStateProperty.all(1),
                           controller: _adminController.userSearchBar,
                         ),
                       ),
-                      if (_adminController.userSearchIsLoading.value)...[
+                      if (_adminController.userSearchIsLoading.value) ...[
                         const CircularProgressIndicator(),
-                      ]
-                      else if (!_adminController.userSearchIsLoading.value &&
-                          _adminController.isUserSearchFound.value)...[
+                      ] else if (!_adminController.userSearchIsLoading.value &&
+                          _adminController.isUserSearchFound.value) ...[
                         Column(
                           children: [
                             Text(
@@ -226,9 +234,9 @@ class AdminHomeScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                      ]
-                      else if (!_adminController.userSearchIsLoading.value &&
-                          !_adminController.isUserSearchFound.value)... [
+                      ] else if (!_adminController.userSearchIsLoading.value &&
+                          !_adminController.isUserSearchFound.value &&
+                          _adminController.userSearchStarted.value) ...[
                         Text(
                           textAlign: TextAlign.left,
                           'User Not Found',
@@ -243,7 +251,9 @@ class AdminHomeScreen extends StatelessWidget {
                         height: 14,
                       ),
                       TextButton(
-                        onPressed:() async { _adminController.downloadSearchedUserCsv(); },
+                        onPressed: () async {
+                          _adminController.downloadSearchedUserCsv();
+                        },
                         style: TextButton.styleFrom(
                             padding: const EdgeInsets.fromLTRB(24, 10, 24, 10),
                             backgroundColor: const Color(0xFF6750a4),
