@@ -7,7 +7,7 @@ import 'package:moca/controllers/firebase_const.dart';
 
 class ConnectingDotsController extends GetxController {
   final CollectionReference _scoresCollection =
-  FirebaseFirestore.instance.collection('users');
+  FirebaseFirestore.instance.collection('test');
 
   RxInt remainingSeconds = 120.obs;
   var timerDuration = const Duration(seconds: 120);
@@ -23,20 +23,16 @@ class ConnectingDotsController extends GetxController {
   Future<void> updatetestScore(int score) async {
     try {
       await _scoresCollection.doc(currentUser!.uid)
-          .update({'connecting_dot_score': score});
+          .set({'connecting_dot_score': score});
     } catch (e) {
       debugPrint('Error updating score: $e');
       Get.snackbar(
         'Error',
-        'Some Error Occured! ',
+        'Some Error Occured!',
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.red,
         colorText: Colors.white,
       );
     }
   }
-
-
-
-
 }

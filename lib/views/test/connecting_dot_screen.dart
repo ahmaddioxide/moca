@@ -5,14 +5,14 @@ import 'dart:math';
 
 import '../../controllers/connecting_dots_controller.dart';
 
-class PatternLockScreen extends StatefulWidget {
-  const PatternLockScreen({super.key});
+class ConnectingDotsScreen extends StatefulWidget {
+  const ConnectingDotsScreen({super.key});
 
   @override
-  _PatternLockScreenState createState() => _PatternLockScreenState();
+  _DotScreenState createState() => _DotScreenState();
 }
 
-class _PatternLockScreenState extends State<PatternLockScreen> {
+class _DotScreenState extends State<ConnectingDotsScreen> {
   final ConnectingDotsController _controller =
       Get.put(ConnectingDotsController());
   List<int> selectedIndices = [];
@@ -76,7 +76,7 @@ class _PatternLockScreenState extends State<PatternLockScreen> {
     for (int i = 0; i < patternSequence.length; i++) {
       if (selectedValues[i] == patternSequence[i]) {
         score++;
-        print("score: $score");
+        // print("score: $score");
       } else {
         return;
       }
@@ -127,7 +127,12 @@ class _PatternLockScreenState extends State<PatternLockScreen> {
 
   Future<void> nextText() async {
     nextscreen = true;
-    await _controller.updatetestScore(score);
+    if(score == 10){
+      await _controller.updatetestScore(1);
+    }
+    else{
+      await _controller.updatetestScore(0);
+    }
     Future.delayed(const Duration(seconds: 3));
     {
       Get.offAll(() => const MemoryTestScreen());
