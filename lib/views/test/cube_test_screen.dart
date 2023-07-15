@@ -1,178 +1,264 @@
-import 'dart:io';
+import 'package:flutter/material.dart' hide Ink;
+import 'package:get/get.dart';
+import 'package:google_mlkit_digital_ink_recognition/google_mlkit_digital_ink_recognition.dart';
 
-import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:tflite_flutter/tflite_flutter.dart';
-
-class CatDogClassifier extends StatefulWidget {
-  // static const String id = 'catDogClassifier';
-
-  const CatDogClassifier({super.key});
-
+class DigitalInkView extends StatefulWidget {
   @override
-  _CatDogClassifierState createState() => _CatDogClassifierState();
+  State<DigitalInkView> createState() => _DigitalInkViewState();
 }
 
-class _CatDogClassifierState extends State<CatDogClassifier> {
-  bool _loading = true;
-  late File _image;
-  late List _output;
-  final picker = ImagePicker();
+class _DigitalInkViewState extends State<DigitalInkView> {
+  final DigitalInkRecognizerModelManager _modelManager =
+      DigitalInkRecognizerModelManager();
+  var _language = 'zxx-Zsym-x-autodraw';
 
-  pickImage() async {
-    var image = await picker.pickImage(source: ImageSource.camera);
-
-    if (image == null) return null;
-
-    setState(() {
-      _image = File(image.path);
-    });
-    classifyImage(_image);
-  }
-
-  pickGalleryImage() async {
-    var image = await picker.pickImage(source: ImageSource.gallery);
-
-    if (image == null) return null;
-
-    setState(() {
-      _image = File(image.path);
-    });
-    classifyImage(_image);
-  }
-
-  classifyImage(File image) async {
-    var interpreter = await Interpreter.fromAsset('assets/model.tflite');
-    // var labels = await File('assets/labels.txt').readAsString();
-    var input = image.readAsBytesSync();
-    var output = List.filled(1 * 2, 0).reshape([1, 2]);
-    interpreter.run(input, output );
-
-    // print(output);
-
-    setState(() {
-      _loading = false;
-      _output = output;
-    });
-  }
-
-  loadModel() async {
-    await Interpreter.fromAsset(
-        'assets/model.tflite',
-
-    );
-  }
+  // Codes from https://developers.google.com/ml-kit/vision/digital-ink-recognition/base-models?hl=en#text
+  final _languages = [
+    'zxx-Zsym-x-autodraw',
+  ];
+  var _digitalInkRecognizer =
+      DigitalInkRecognizer(languageCode: 'zxx-Zsym-x-autodraw');
+  final Ink _ink = Ink();
+  List<StrokePoint> _points = [];
+  String _recognizedText = '';
 
   @override
-  void initState() {
-    super.initState();
-    _loading = true;
-    loadModel().then((value) {});
+  void dispose() {
+    _digitalInkRecognizer.close();
+    super.dispose();
   }
 
-  // @override
-  // void dispose() {
-  //   Interpreter.close();
-  //   super.dispose();
-  // }
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.black87,
-        appBar: AppBar(
-          elevation: 2,
-          backgroundColor: Colors.deepOrangeAccent,
-          title: const Text(
-            'Pets Classification',
-            style: TextStyle(
-                color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
-          ),
-          iconTheme: const IconThemeData(
-              color: Colors.white
-          ),
-          centerTitle: false,
-          automaticallyImplyLeading: true,
-        ),
-        body: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              stops: [0.004, 1],
-              colors: [
-                Color(0xFF000000),
-                Color(0xFF3d3d3d),
-              ],
-            ),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              const SizedBox(
-                height: 40,
-              ),
-              const Center(
-                child: Text(
-                  'Detect Cats and Dogs',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 28),
-                ),
-              ),
-              const SizedBox(
-                height: 50,
-              ),
-              Center(
-                child: _loading
-                    ? SizedBox(
-                  width: 250,
-                  child: Column(
-                    children: <Widget>[
-                      Image.asset('assets/pic3.png'),
-                      const SizedBox(height: 50),
-                    ],
+    return Scaffold(
+      appBar: AppBar(title: const Text('Digital Ink Recognition')),
+      body: SafeArea(
+        child: Column(
+          children: [
+            SizedBox(height: 8),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  _buildDropdown(),
+                  ElevatedButton(
+                    onPressed: _isModelDownloaded,
+                    child: Text('Check Model'),
                   ),
-                )
-                    : Column(
-                      children: <Widget>[
-                        SizedBox(
-                          height: 250,
-                          child: Image.file(_image),
-                        ),
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        _output != null
-                            ? Container(
-                          padding: const EdgeInsets.symmetric(vertical: 10),
-                          child: Text('It\'s ${_output[0]['label']}',
-                              style: const TextStyle(
-                                  color: Colors.white, fontSize: 20.0)),
-                        )
-                            : Container(),
-                      ],
-                    ),
+                  ElevatedButton(
+                    onPressed: _downloadModel,
+                    child: Icon(Icons.download),
+                  ),
+                  ElevatedButton(
+                    onPressed: _deleteModel,
+                    child: Icon(Icons.delete),
+                  ),
+                ],
               ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                margin: const EdgeInsets.only(top: 10),
-                child: Column(
-                  children: <Widget>[
-                    ElevatedButton(onPressed: pickImage, child: const Text("From Camera")),
-                    const SizedBox(height: 15),
-                    ElevatedButton(onPressed: pickGalleryImage, child: const Text("From Gallery")),
-
-
-                  ],
+            ),
+            SizedBox(height: 8),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  ElevatedButton(
+                    onPressed: _recogniseText,
+                    child: Text('Read Text'),
+                  ),
+                  ElevatedButton(
+                    onPressed: _clearPad,
+                    child: Text('Clear Pad'),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: GestureDetector(
+                onPanStart: (DragStartDetails details) {
+                  _ink.strokes.add(Stroke());
+                },
+                onPanUpdate: (DragUpdateDetails details) {
+                  setState(() {
+                    final RenderObject? object = context.findRenderObject();
+                    final localPosition = (object as RenderBox?)
+                        ?.globalToLocal(details.localPosition);
+                    if (localPosition != null) {
+                      _points = List.from(_points)
+                        ..add(StrokePoint(
+                          x: localPosition.dx,
+                          y: localPosition.dy,
+                          t: DateTime.now().millisecondsSinceEpoch,
+                        ));
+                    }
+                    if (_ink.strokes.isNotEmpty) {
+                      _ink.strokes.last.points = _points.toList();
+                    }
+                  });
+                },
+                onPanEnd: (DragEndDetails details) {
+                  _points.clear();
+                  setState(() {});
+                },
+                child: CustomPaint(
+                  painter: Signature(ink: _ink),
+                  size: Size.infinite,
                 ),
               ),
-            ],
-          ),
+            ),
+            if (_recognizedText.isNotEmpty)
+              Text(
+                'Candidates: $_recognizedText',
+                style: TextStyle(fontSize: 23),
+              ),
+          ],
         ),
       ),
     );
   }
+
+  Widget _buildDropdown() => DropdownButton<String>(
+        value: _language,
+        icon: const Icon(Icons.arrow_downward),
+        elevation: 16,
+        style: const TextStyle(color: Colors.blue),
+        underline: Container(
+          height: 2,
+          color: Colors.blue,
+        ),
+        onChanged: (String? lang) {
+          if (lang != null) {
+            setState(() {
+              _language = lang;
+              _digitalInkRecognizer.close();
+              _digitalInkRecognizer =
+                  DigitalInkRecognizer(languageCode: _language);
+            });
+          }
+        },
+        items: _languages.map<DropdownMenuItem<String>>((lang) {
+          return DropdownMenuItem<String>(
+            value: lang,
+            child: Text(lang),
+          );
+        }).toList(),
+      );
+
+  void _clearPad() {
+    setState(() {
+      _ink.strokes.clear();
+      _points.clear();
+      _recognizedText = '';
+    });
+  }
+
+  Future<void> _isModelDownloaded() async {
+    // dialog box that show model is getting checked
+    showDialog(
+        context: context,
+        builder: (context) => const AlertDialog(
+              title: Text('Checking'),
+            ),
+        barrierDismissible: false);
+
+
+    _modelManager
+        .isModelDownloaded(_language)
+        .then((value) => value ? Get.snackbar('Downloaded',"You can use app") : Get.snackbar("Not Downloaded", "Download Model First ")).then((value)=>Navigator.pop(context) );
+    // Toast().show(
+    //     'Checking if model is downloaded...',
+    //
+    //     context,
+    //     this);
+  }
+
+  Future<void> _deleteModel() async {
+    // dialog box that show model is getting deleted
+    showDialog(
+        context: context,
+        builder: (context) => const AlertDialog(
+              title: Text('Deleting'),
+            ),
+        barrierDismissible: false);
+    _modelManager
+        .deleteModel(_language)
+        .then((value) => value ? 'success' : 'failed')
+        .then((value) => Navigator.pop(context));
+    // Toast().show(
+    //     'Deleting model...',
+    //     _modelManager
+    //         .deleteModel(_language)
+    //         .then((value) => value ? 'success' : 'failed'),
+    //     context,
+    //     this);
+  }
+
+  Future<void> _downloadModel() async {
+    // dialog box that show model is getting downloaded
+    showDialog(
+        context: context,
+        builder: (context) => const AlertDialog(
+              title: Text('Downloading'),
+            ),
+        barrierDismissible: false);
+    _modelManager
+        .downloadModel(_language)
+        .then((value) => value ? 'success' : 'failed')
+        .then((value) => Navigator.pop(context));
+
+    // Toast().show(
+    //     'Downloading model...',
+    //
+    //     context,
+    //     this);
+  }
+
+  Future<void> _recogniseText() async {
+    showDialog(
+        context: context,
+        builder: (context) => const AlertDialog(
+              title: Text('Recognizing'),
+            ),
+        barrierDismissible: true);
+    try {
+      final candidates = await _digitalInkRecognizer.recognize(_ink);
+      _recognizedText = '';
+      for (final candidate in candidates) {
+        _recognizedText += '\n${candidate.text}${candidate.score}';
+      }
+      setState(() {});
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(e.toString()),
+      ));
+    }
+    Navigator.pop(context);
+  }
+}
+
+class Signature extends CustomPainter {
+  Ink ink;
+
+  Signature({required this.ink});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final Paint paint = Paint()
+      ..color = Colors.blue
+      ..strokeCap = StrokeCap.round
+      ..strokeWidth = 4.0;
+
+    for (final stroke in ink.strokes) {
+      for (int i = 0; i < stroke.points.length - 1; i++) {
+        final p1 = stroke.points[i];
+        final p2 = stroke.points[i + 1];
+        canvas.drawLine(Offset(p1.x.toDouble(), p1.y.toDouble()),
+            Offset(p2.x.toDouble(), p2.y.toDouble()), paint);
+      }
+    }
+  }
+
+  @override
+  bool shouldRepaint(Signature oldDelegate) => true;
 }
