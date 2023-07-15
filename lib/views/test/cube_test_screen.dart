@@ -47,6 +47,7 @@ class _CatDogClassifierState extends State<CatDogClassifier> {
     var input = image.readAsBytesSync();
     var output = List.filled(1 * 2, 0).reshape([1, 2]);
     interpreter.run(input, output );
+
     // print(output);
 
     setState(() {
