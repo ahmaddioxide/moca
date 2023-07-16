@@ -2,11 +2,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:moca/views/signup_screen.dart';
-import 'package:moca/views/sociodemographic_sceen.dart';
-import 'package:moca/views/test/cube_drawing_test_screen.dart';
-import 'package:moca/views/test/visuospatial_clock_test_screen.dart';
-import 'package:moca/views/test_main_screens.dart';
+import 'package:moca/views/test/backward_test_screen.dart';
+import 'package:moca/views/test/delayRecall_test_screen.dart';
+import 'package:moca/views/test/forward_test_screen.dart';
+import 'package:moca/views/test/memory_test_screen.dart';
+import 'package:moca/views/test/sentence_repetition_screen.dart';
+import 'package:moca/views/test/serial7_test_screen.dart';
+import 'package:moca/views/test/connecting_dot_screen.dart';
+import 'package:moca/views/test/verbalfluency_test_screen.dart';
+
 import 'firebase_options.dart';
 
 void main() async {
@@ -14,12 +18,11 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   ).then((value) => debugPrint('Firebase initialized in main.dart'));
-
-  runApp(const MyApp());
+  runApp( MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+   MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,8 +34,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const DrawingScreen(),
+      home:  DelayRecallScreen(),
 
-    );
   }
 }

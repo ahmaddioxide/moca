@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:moca/views/test/abstraction_screen.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:avatar_glow/avatar_glow.dart';
+import 'package:language_tool/language_tool.dart' as langTool;
+import '../../controllers/fluency_test_controller.dart';
 
 class VocabularyScreen extends StatefulWidget {
   const VocabularyScreen({Key? key}) : super(key: key);
@@ -11,16 +15,16 @@ class VocabularyScreen extends StatefulWidget {
 }
 
 class _VocabularyScreenState extends State<VocabularyScreen> {
+  final FluencyTestController _controller = Get.put(FluencyTestController());
   SpeechToText speechToText = SpeechToText();
   FlutterTts flutterTts = FlutterTts();
-  bool isListening = false;
-  bool isTimerStarted = false;
-  var timerDuration = const Duration(seconds: 60);
-  int remainingSeconds = 60;
+  late langTool.LanguageTool _languageTool;
   var subjectWords = <String>[];
   String currentLetter = '';
+  bool isTimerStarted = false;
   String text = 'Hold the button and start speaking';
-  var Words = <String>[];
+  var words = <String>[];
+  var word;
   bool isSpeechAvailable = false;
   bool starttest = true;
 
@@ -28,6 +32,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
   void initState() {
     super.initState();
     speechToText.initialize();
+    _languageTool = langTool.LanguageTool();
   }
 
   @override
@@ -88,12 +93,14 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
                   style: const TextStyle(
                       fontSize: 18, fontWeight: FontWeight.bold),
                 ),
-                Text(
-                  '$remainingSeconds',
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.deepPurple,
+                Obx(
+                  () => Text(
+                    '${_controller.remainingSeconds}',
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.deepPurple,
+                    ),
                   ),
                 ),
               ],
@@ -101,9 +108,12 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
           ),
           SizedBox(height: MediaQuery.sizeOf(context).height * 0.2),
           Center(
-            child: Padding(padding: const EdgeInsets.only(left: 16, right: 16),
+            child: Padding(
+              padding: const EdgeInsets.only(left: 16, right: 16),
               child: Text(
-                starttest? "Double top the button to start test": "Hold the button and start speaking",
+                starttest
+                    ? "Double top the button to start test"
+                    : "Hold the button and start speaking",
                 style: const TextStyle(
                   fontSize: 18,
                   color: Colors.deepPurple,
@@ -114,10 +124,12 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
           const SizedBox(height: 20),
           Padding(
             padding: const EdgeInsets.only(left: 16, right: 16),
-            child: Text(
-              "${Words}",
-              style: const TextStyle(
-                fontSize: 18,
+            child: Center(
+              child: Text(
+                "$words",
+                style: const TextStyle(
+                  fontSize: 18,
+                ),
               ),
             ),
           )
@@ -125,7 +137,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: AvatarGlow(
-        animate: isListening,
+        animate: _controller.isListening.value,
         endRadius: 75,
         duration: const Duration(milliseconds: 2000),
         glowColor: Colors.deepPurple,
@@ -134,7 +146,9 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
         showTwoGlows: true,
         child: GestureDetector(
           onLongPress: () async {
-            if (!isListening && !starttest) {
+            if (!_controller.isListening.value &&
+                !starttest &&
+                isTimerStarted) {
               bool available = await speechToText.initialize();
               if (available) {
                 _startListening();
@@ -143,33 +157,46 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
               }
             }
           },
+          //allow double tap only once
           onDoubleTap: () {
-            setState(() {
-              starttest = false;
-            });
-            _startTest();
+            if (starttest) {
+              setState(() {
+                starttest = false;
+              });
+              _startTest();
+            }
           },
           onLongPressUp: _stopListening,
           child: CircleAvatar(
-            backgroundColor: Colors.deepPurple,
-            radius: 40,
-            child: Icon(
-              starttest? Icons.double_arrow_rounded:isListening ? Icons.mic : Icons.mic_none,
-              color: Colors.white,
-              size: 40,
+              backgroundColor: starttest
+                  ? Colors.deepPurple
+                  : isTimerStarted
+                      ? Colors.deepPurple
+                      : Colors.grey,
+              radius: 40,
+              child: Icon(
+                  starttest
+                      ? Icons.double_arrow_rounded
+                      : _controller.isListening.value
+                          ? Icons.mic
+                          : Icons.mic_none,
+                  color: Colors.white,
+                  size: 40,
+                ),
+              ),
             ),
           ),
-        ),
-      ),
+
+
     );
   }
 
   void _startTest() {
     setState(() {
       isTimerStarted = true;
-      remainingSeconds = timerDuration.inSeconds;
+      _controller.remainingSeconds.value = _controller.timerDuration.inSeconds;
       subjectWords.clear();
-      Words.clear(); // Clear the Words list
+      words.clear();
     });
 
     _countdownTimer();
@@ -177,16 +204,66 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
   }
 
   void _countdownTimer() async {
-    while (remainingSeconds > 0) {
+    while (_controller.remainingSeconds > 0) {
       await Future.delayed(const Duration(seconds: 1));
-      setState(() {
-        remainingSeconds--;
-      });
+      _controller.remainingSeconds--;
     }
-    speechToText.stop();
-    setState(() {
-      isListening = false;
+    isTimerStarted = false;
+    _stopListening();
+    _calculateScore();
+  }
+
+  Future<void> _calculateScore() async {
+    var score = 0;
+    if (words.length >= 5) {
+      score = 1;
+      await _controller.updateScore(score);
+    } else {
+      score = 0;
+      await _controller.updateScore(score);
+    }
+
+    Future.delayed(const Duration(seconds: 2), () {
+      _showDialog();
     });
+  }
+
+  void _showDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text(
+          'Test Completed',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: Colors.deepPurple,
+          ),
+        ),
+        content: const Text(
+          'You have successfully completed the Language test.',
+          style: TextStyle(
+            fontSize: 18,
+            color: Colors.deepPurple,
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Get.offAll(() => AbstractionScreen());
+            },
+            child: const Text(
+              'Next',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.deepPurple,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   void _speakRandomLetter() async {
@@ -205,31 +282,50 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
     speechToText.listen(
       onResult: (result) {
         if (result.finalResult) {
-          var word = result.recognizedWords.toLowerCase();
-          if (!_isInvalidWord(word)) {
-            setState(() {
-              subjectWords.add(word);
-              Words.add(word); // Store the spoken word in the Words list
-            });
+          word = result.recognizedWords.toLowerCase();
+          var spokenWords = word.split(' ');
+          for (var word in spokenWords) {
+            _checkAndAddWord(word.toLowerCase());
           }
         }
       },
     );
-    setState(() {
-      isListening = true;
-    });
+    _controller.isListening.value = true;
+  }
+
+  Future<void> _checkAndAddWord(String word) async {
+    if (await _isvalidWord(word)) {
+      //if words already contains the word then don't add it
+      if (words.contains(word)) {
+        return;
+      }
+      setState(() {
+        // subjectWords.add(word);
+        words.add(word);
+      });
+    }
+  }
+
+  Future<bool> _isvalidWord(String word) async {
+    // debugPrint('Word: ${word[0].toLowerCase() == currentLetter.toLowerCase()}');
+    // debugPrint('Word: ${word.toLowerCase()}');
+
+    if (word[0].toLowerCase() == currentLetter.toLowerCase()) {
+      final errors = await _languageTool.check(word);
+      // debugPrint('Errors: ${errors.isNotEmpty}}');
+
+      if (errors.isEmpty) {
+        return true;
+      } else {
+        return errors.isNotEmpty;
+      }
+    } else {
+      return false;
+    }
   }
 
   void _stopListening() {
     speechToText.stop();
-    setState(() {
-      isListening = false;
-    });
-  }
-
-  bool _isInvalidWord(String word) {
-    return word.isEmpty ||
-        word.startsWith(RegExp(r'[A-Z]')) || // Check for proper nouns
-        RegExp(r'^\d+$').hasMatch(word);
+    _controller.isListening.value = false;
   }
 }

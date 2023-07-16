@@ -57,6 +57,7 @@ dependencies:
   permission_handler: ^10.4.3
 
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -83,6 +84,7 @@ flutter:
   assets:
     - assets/illustrations/
     - assets/images/
+#    - assets/pic3.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

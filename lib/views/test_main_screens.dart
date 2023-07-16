@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:moca/views/animal_name_screen.dart';
-import 'package:moca/views/test/Backward_Digit_Span.dart';
-import 'package:moca/views/test/Forward_digit_span.dart';
+import 'package:moca/views/test/backward_test_screen.dart';
+import 'package:moca/views/test/forward_test_screen.dart';
 import 'package:moca/views/test/abstraction_screen.dart';
 import 'package:moca/views/test/memory_test_screen.dart';
 import 'package:moca/views/test/orientation_screen.dart';
-import 'package:moca/views/test/sentence_repetition.dart';
-import 'package:moca/views/test/serial7_test.dart';
-import 'package:moca/views/test/vigilance_test.dart';
+import 'package:moca/views/test/sentence_repetition_screen.dart';
+import 'package:moca/views/test/serial7_test_screen.dart';
+import 'package:moca/views/test/vigilance_test_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MainTestScreen extends StatefulWidget {

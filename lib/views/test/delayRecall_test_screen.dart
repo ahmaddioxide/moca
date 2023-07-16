@@ -1,20 +1,23 @@
-import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import 'package:avatar_glow/avatar_glow.dart';
+
 import 'package:moca/views/test/forward_test_screen.dart';
+import 'package:moca/views/test/orientation_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-import '../../controllers/memorytest_controller.dart';
+import '../../controllers/delayRecall_controller.dart';
 
-class MemoryTestScreen extends StatefulWidget {
-  const MemoryTestScreen({Key? key}) : super(key: key);
+class DelayRecallScreen extends StatefulWidget {
+  const DelayRecallScreen({Key? key}) : super(key: key);
 
   @override
-  MemoryTestScreenState createState() => MemoryTestScreenState();
+  DelayRecallScreenState createState() => DelayRecallScreenState();
 }
 
-class MemoryTestScreenState extends State<MemoryTestScreen> {
+class DelayRecallScreenState extends State<DelayRecallScreen> {
   late SharedPreferences sf;
 
   @override
@@ -40,17 +43,15 @@ class MemoryTestScreenState extends State<MemoryTestScreen> {
 
   List<String> recognizedWordsList = [];
   bool isSpeaking = true;
-  bool alert = false;
   bool isTimerStarted = false;
 
-  final MemoryTestController _controller = Get.put(MemoryTestController());
+  final DelayRecallController _controller = Get.put(DelayRecallController());
 
   void _startTest() {
     isTimerStarted = true;
     _controller.timeDuration();
     _countdownTimer();
-    _controller.disableMicButton();
-    speakWordList();
+
   }
 
   void _countdownTimer() async {
@@ -59,23 +60,20 @@ class MemoryTestScreenState extends State<MemoryTestScreen> {
       _controller.decrementSeconds();
     }
     isTimerStarted = false;
+    _calculateScore();
     _stopListening();
-    if (alert == false) {
-      alertdialog();
-    }
+    alertdialog();
+  }
+
+  void _calculateScore() {
+    int score = recognizedWordsList.length;
+
+    _controller.saveData(score);
   }
 
   void _stopListening() {
     speechToText.stop();
     _controller.isListening.value = false;
-  }
-
-  void resetScreen() {
-    _controller.remainingSeconds.value = 60;
-    _controller.isListening.value = false;
-    _controller.recognizedText.value = '';
-    _controller.spokenSentence.value = 'Hold the button and start speaking';
-    _controller.disableMicButton();
   }
 
   Future<void> initializeSpeechToText() async {
@@ -85,31 +83,22 @@ class MemoryTestScreenState extends State<MemoryTestScreen> {
     }
   }
 
-  void speakWordList() async {
-    for (String word in wordList) {
-      await flutterTts.speak(word);
-      await Future.delayed(const Duration(milliseconds: 1500));
-    }
-    _controller.enableMicButton();
-  }
-
   void alertdialog() {
-    alert = true;
     _controller.remainingSeconds.value = 1;
     showDialog(
       barrierDismissible: false,
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Memory Test Complete'),
+          title: const Text('Test Complete'),
           content: const Text(
-              'You will be asked to recall those words again at the end of the test.'),
+              'You have Successfully completed the Delay Recall test.'),
           actions: [
             TextButton(
               onPressed: () {
                 sf.setInt('nextGame', 4);
                 Navigator.of(context).pop();
-                Get.offAll(() => const ForwardDigitSpan());
+                Get.offAll(() => OrientationScreen());
               },
               child: const Text('Next'),
             ),
@@ -124,10 +113,8 @@ class MemoryTestScreenState extends State<MemoryTestScreen> {
     return _controller.recognizedText.value;
   }
 
-  var i = 0;
   @override
   Widget build(BuildContext context) {
-    debugPrint('Build method called ${++i} times');
     final double height = MediaQuery.sizeOf(context).height;
 
     return Scaffold(
@@ -143,7 +130,6 @@ class MemoryTestScreenState extends State<MemoryTestScreen> {
         child: GestureDetector(
           onTapDown: (details) async {
             if (!_controller.isListening.value &&
-                _controller.isMicEnabled.value &&
                 !_controller.starttest.value &&
                 isTimerStarted) {
               bool available = await speechToText.initialize();
@@ -161,25 +147,9 @@ class MemoryTestScreenState extends State<MemoryTestScreen> {
                         if (!recognizedWordsList.contains(spokenWord) &&
                             wordList.contains(spokenWord)) {
                           recognizedWordsList.add(spokenWord);
-                          // debugPrint("List: ${recognizedWordsList.toString()}");
                           _controller.incrementWordCount();
                         }
                       }
-                      if (_controller.currentTrial.value == 2) {
-                        _controller.saveData(wordList, recognizedWordsList);
-                        Future.delayed(const Duration(seconds: 3), () {
-                          alertdialog();
-                        });
-                      }
-                      if (_controller.currentTrial.value < 2) {
-                        _controller.recognizedText.value = '';
-                        Future.delayed(const Duration(seconds: 3), () {
-                          _controller.incrementTrial();
-                          resetScreen();
-                          speakWordList();
-                        });
-                      }
-                    } else {
                       _controller.recognizedText.value = result.recognizedWords;
                     }
                   },
@@ -201,11 +171,7 @@ class MemoryTestScreenState extends State<MemoryTestScreen> {
           },
           child: Obx(
             () => CircleAvatar(
-              backgroundColor: _controller.starttest.value
-                  ? Colors.deepPurple
-                  : _controller.isMicEnabled.value
-                      ? Colors.deepPurple
-                      : Colors.grey,
+              backgroundColor: Colors.deepPurple,
               radius: 40,
               child: Icon(
                 _controller.starttest.value
@@ -221,29 +187,22 @@ class MemoryTestScreenState extends State<MemoryTestScreen> {
         ),
       ),
       appBar: AppBar(
-        title: const Text('Memory Test',
+        title: const Text('Delay Recall Test',
             style: TextStyle(
-              fontSize: 28,
+              fontSize: 18,
               fontWeight: FontWeight.bold,
               color: Colors.deepPurple,
             )),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.only(left: 16, right: 16),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Obx(
-              () => Text(
-                "Trial ${_controller.currentTrial.value} of 2",
-                style:
-                    const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-            ),
             SizedBox(height: height * 0.01),
             const Text(
-              "This is a memory test. A list of words will be read to you that you will have to repeat and remember.",
+              "Some words were read to you earlier in Memory Test, which you were asked to remember. Tell as many of those words as you can remember",
               style: TextStyle(fontSize: 18, color: Colors.deepPurple),
             ),
             SizedBox(height: height * 0.01),
@@ -257,15 +216,15 @@ class MemoryTestScreenState extends State<MemoryTestScreen> {
             Padding(
               padding: const EdgeInsets.only(right: 16),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Obx(
-                    () => Text(
-                      'Words Matched: ${_controller.wordCount.value}',
-                      style: const TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-                  ),
+                  // Obx(
+                  //   () => Text(
+                  //     'Words Matched: ${_controller.wordCount.value}',
+                  //     style: const TextStyle(
+                  //         fontSize: 18, fontWeight: FontWeight.bold),
+                  //   ),
+                  // ),
                   Obx(
                     () => Text(
                       '${_controller.remainingSeconds}',

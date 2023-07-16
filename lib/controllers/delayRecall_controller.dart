@@ -3,12 +3,19 @@ import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:moca/controllers/firebase_const.dart';
 
-class SentenceController extends GetxController {
-  final CollectionReference _scoresCollection =
-  FirebaseFirestore.instance.collection('users');
 
-  RxInt Score = 0.obs;
+class DelayRecallController extends GetxController {
+
+  RxList<String> wordList = <String>[].obs;
+  RxList<String> recognizedWordsList = <String>[].obs;
+  RxBool isListening = false.obs;
+  RxBool starttest = true.obs;
   RxBool isMicEnabled = false.obs;
+  RxString recognizedText = ''.obs;
+  RxInt wordCount = 0.obs;
+  RxString spokenSentence = 'Hold the button and start speaking'.obs;
+  RxInt currentTrial = 1.obs;
+
   RxInt remainingSeconds = 60.obs;
   var timerDuration = const Duration(seconds: 60);
 
@@ -28,18 +35,22 @@ class SentenceController extends GetxController {
     isMicEnabled.value = false;
   }
 
-  void incrementScore() {
-    Score.value++;
-    _updateScore(Score.value);
+  void incrementWordCount() {
+    wordCount.value++;
+  }
+  void incrementTrial() {
+    currentTrial.value++;
   }
 
-  Future<void> _updateScore(int score) async {
+  void saveData(int score) async {
     try {
-      await _scoresCollection.doc(currentUser!.uid)
-          .collection('language_test')
-          .doc('SentenceRepetitionTest').set({'score': score});
+      await FirebaseFirestore.instance
+          .collection('test')
+          .doc(currentUser!.uid)
+          .update({'delayRecall_score': score});
+      debugPrint('Word list saved successfully');
     } catch (e) {
-      debugPrint('Error updating score: $e');
+      debugPrint('Error saving word list: $e');
       Get.snackbar(
         'Error',
         'Some Error Occured! ',
@@ -49,4 +60,6 @@ class SentenceController extends GetxController {
       );
     }
   }
+
+
 }
