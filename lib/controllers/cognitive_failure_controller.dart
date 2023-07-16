@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
+import 'package:moca/controllers/firebase_const.dart';
 
 class CognitiveFailureController extends GetxController {
   RxList<int> ratings = List<int>.filled(25, 0).obs;
@@ -10,23 +11,130 @@ class CognitiveFailureController extends GetxController {
   }
 
   Future<bool> submitSurvey() async {
-    const currentUser = 'current_user'; // Replace with the current user ID
+    //const currentUser = 'current_user'; // Replace with the current user ID
 
     // Create a new document for the current user
     final userDocRef =
-        FirebaseFirestore.instance.collection('users').doc(currentUser);
+        FirebaseFirestore.instance.collection('users').doc(currentUser!.uid);
 
     // Save the ratings to the Firestore document
-    for (int i = 0; i < ratings.length; i++) {
-      final rating = ratings[i];
-      await userDocRef.collection('survey_results').doc('question_$i').set({
-        'question': getQuestion(i),
-        'rating': rating,
-      }).onError((error, stackTrace) {
-        Get.snackbar('Error', 'Error saving survey results');
-        return false;
-      });
-    }
+    //for (int i = 0; i < ratings.length; i++) {
+    //final rating = ratings[i];
+    await userDocRef.update({
+      'survey_results': {
+        '0': {
+          'question': getQuestion(0),
+          'rating': ratings[0] + 1,
+        },
+        '1': {
+          'question': getQuestion(1),
+          'rating': ratings[1] + 1,
+        },
+        '2': {
+          'question': getQuestion(2),
+          'rating': ratings[2] + 1,
+        },
+        '3': {
+          'question': getQuestion(3),
+          'rating': ratings[3] + 1,
+        },
+        '4': {
+          'question': getQuestion(4),
+          'rating': ratings[4] + 1,
+        },
+        '5': {
+          'question': getQuestion(5),
+          'rating': ratings[5] + 1,
+        },
+        '6': {
+          'question': getQuestion(6),
+          'rating': ratings[6] + 1,
+        },
+        '7': {
+          'question': getQuestion(7),
+          'rating': ratings[7] + 1,
+        },
+        '8': {
+          'question': getQuestion(8),
+          'rating': ratings[8] + 1,
+        },
+        '9': {
+          'question': getQuestion(9),
+          'rating': ratings[9] + 1,
+        },
+        '10': {
+          'question': getQuestion(10),
+          'rating': ratings[10] + 1,
+        },
+        '11': {
+          'question': getQuestion(11),
+          'rating': ratings[11] + 1,
+        },
+        '12': {
+          'question': getQuestion(12),
+          'rating': ratings[12] + 1,
+        },
+        '13': {
+          'question': getQuestion(13),
+          'rating': ratings[13] + 1,
+        },
+        '14': {
+          'question': getQuestion(14),
+          'rating': ratings[14] + 1,
+        },
+        '15': {
+          'question': getQuestion(15),
+          'rating': ratings[15] + 1,
+        },
+        '16': {
+          'question': getQuestion(16),
+          'rating': ratings[16] + 1,
+        },
+        '17': {
+          'question': getQuestion(17),
+          'rating': ratings[17] + 1,
+        },
+        '18': {
+          'question': getQuestion(18),
+          'rating': ratings[18] + 1,
+        },
+        '19': {
+          'question': getQuestion(19),
+          'rating': ratings[19] + 1,
+        },
+        '20': {
+          'question': getQuestion(20),
+          'rating': ratings[20] + 1,
+        },
+        '21': {
+          'question': getQuestion(21),
+          'rating': ratings[21] + 1,
+        },
+        '22': {
+          'question': getQuestion(22),
+          'rating': ratings[2] + 1,
+        },
+        '23': {
+          'question': getQuestion(23),
+          'rating': ratings[23] + 1,
+        },
+        '24': {
+          'question': getQuestion(24),
+          'rating': ratings[24] + 1,
+        },
+      }
+    }).onError((error, stackTrace) {
+      Get.snackbar('Error', 'Error saving survey results');
+      return false;
+    });
+    // await userDocRef.collection('survey_results').doc('question_$i').set({
+    //   'question': getQuestion(i),
+    //   'rating': rating,
+    // }).onError((error, stackTrace) {
+    //   Get.snackbar('Error', 'Error saving survey results');
+    //   return false;
+    // });
+    //}
 
     // Reset the ratings after submission
     ratings.clear();

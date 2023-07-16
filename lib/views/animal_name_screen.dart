@@ -1,24 +1,17 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:moca/views/test_main_screens.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../constants/list.dart';
 import '../controllers/animal_name_controller.dart';
 
 class AnimalNameGuessScreen extends StatefulWidget {
   const AnimalNameGuessScreen({super.key});
-
   @override
   _AnimalNameGuessScreenState createState() => _AnimalNameGuessScreenState();
 }
 
 class _AnimalNameGuessScreenState extends State<AnimalNameGuessScreen> {
-
-
-
-
   final AnimalNameTestController _controller =
       Get.put(AnimalNameTestController());
   int currentPictureIndex = 0;
@@ -26,17 +19,15 @@ class _AnimalNameGuessScreenState extends State<AnimalNameGuessScreen> {
   TextEditingController guessController = TextEditingController();
   bool _isloading = false;
 
-
   late SharedPreferences sf;
   @override
-  initState()  {
+  initState() {
     super.initState();
     initalizeSharedPref();
-
   }
 
   Future<void> initalizeSharedPref() async {
-    sf=await SharedPreferences.getInstance();
+    sf = await SharedPreferences.getInstance();
   }
 
   void checkAnswer(String guess) {
@@ -84,12 +75,16 @@ class _AnimalNameGuessScreenState extends State<AnimalNameGuessScreen> {
                     )
                         .then((value) async {
                       if (value == true) {
+                        await sf.setInt('animalGameScore', score);
+                        int scoredata = sf.getInt('animalGameScore') ?? 0;
+                        debugPrint('scoredata:');
+                        debugPrint(scoredata.toString());
                         setState(() {
                           currentPictureIndex = 0;
                           score = 0;
                         });
                         await sf.setInt('nextGame', 3);
-                        Get.offAll(() =>  MainTestScreen());
+                        Get.offAll(() => const MainTestScreen());
                       }
                     });
                   } else {

@@ -52,6 +52,9 @@ dependencies:
   avatar_glow: ^2.0.2
   language_tool: ^2.2.0
   shared_preferences: ^2.2.0
+  flutter_signature_pad: ^3.0.1
+  image_gallery_saver: ^2.0.3
+  permission_handler: ^10.4.3
 
 
 

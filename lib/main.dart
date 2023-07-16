@@ -10,6 +10,7 @@ import 'package:moca/views/test/sentence_repetition_screen.dart';
 import 'package:moca/views/test/serial7_test_screen.dart';
 import 'package:moca/views/test/connecting_dot_screen.dart';
 import 'package:moca/views/test/verbalfluency_test_screen.dart';
+
 import 'firebase_options.dart';
 
 void main() async {
@@ -34,6 +35,6 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home:  DelayRecallScreen(),
-    );
+
   }
 }
