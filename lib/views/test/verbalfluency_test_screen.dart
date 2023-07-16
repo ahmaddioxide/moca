@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:avatar_glow/avatar_glow.dart';
+import 'package:language_tool/language_tool.dart' as langTool;
 
 class VocabularyScreen extends StatefulWidget {
   const VocabularyScreen({Key? key}) : super(key: key);
@@ -13,6 +14,7 @@ class VocabularyScreen extends StatefulWidget {
 class _VocabularyScreenState extends State<VocabularyScreen> {
   SpeechToText speechToText = SpeechToText();
   FlutterTts flutterTts = FlutterTts();
+  late langTool.LanguageTool _languageTool;
   bool isListening = false;
   bool isTimerStarted = false;
   var timerDuration = const Duration(seconds: 60);
@@ -29,9 +31,8 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
   void initState() {
     super.initState();
     speechToText.initialize();
+    _languageTool = langTool.LanguageTool();
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -188,7 +189,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
       isTimerStarted = true;
       remainingSeconds = timerDuration.inSeconds;
       subjectWords.clear();
-      words.clear(); // Clear the Words list
+      words.clear();
     });
 
     _countdownTimer();
@@ -223,11 +224,9 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
       onResult: (result) {
         if (result.finalResult) {
           word = result.recognizedWords.toLowerCase();
-          if (!_isInvalidWord(word)) {
-            setState(() {
-              subjectWords.add(word);
-              words.add(word); // Store the spoken word in the Words list
-            });
+          var spokenWords = word.split(' ');
+          for (var word in spokenWords) {
+            _checkAndAddWord(word.toLowerCase());
           }
         }
       },
@@ -237,16 +236,39 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
     });
   }
 
+  Future<void> _checkAndAddWord(String word) async {
+    if (await _isvalidWord(word)) {
+      debugPrint('valid word: $word');
+      setState(() {
+        subjectWords.add(word);
+        words.add(word);
+      });
+    }
+  }
+
+  Future<bool> _isvalidWord(String word) async {
+    // debugPrint('Word: ${word[0].toLowerCase() == currentLetter.toLowerCase()}');
+    // debugPrint('Word: ${word.toLowerCase()}');
+
+    if (word[0].toLowerCase() == currentLetter.toLowerCase()) {
+      final errors = await _languageTool.check(word);
+      // debugPrint('Errors: ${errors.isNotEmpty}}');
+
+      if (errors.isEmpty) {
+        return true;
+      } else {
+        return errors.isNotEmpty;
+      }
+    } else {
+      return false;
+    }
+
+  }
+
   void _stopListening() {
     speechToText.stop();
     setState(() {
       isListening = false;
     });
-  }
-
-  bool _isInvalidWord(String word) {
-    return word.isEmpty ||
-        word.startsWith(RegExp(r'[A-Z]')) || // Check for proper nouns
-        RegExp(r'^\d+$').hasMatch(word);
   }
 }

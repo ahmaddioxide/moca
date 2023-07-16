@@ -52,10 +52,7 @@ dependencies:
   avatar_glow: ^2.0.2
   language_tool: ^2.2.0
   shared_preferences: ^2.2.0
-  image_picker: ^1.0.1
-  tflite_flutter: ^0.10.1
-  image: ^4.0.17
-#  tflite: ^1.1.2
+
 
 
 dev_dependencies:
@@ -82,11 +79,9 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/model.tflite
-    - assets/labels.txt
     - assets/illustrations/
     - assets/images/
-    - assets/pic3.png
+#    - assets/pic3.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

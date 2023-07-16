@@ -3,12 +3,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:moca/views/test/backward_test_screen.dart';
-import 'package:moca/views/test/cube_test_screen.dart';
 import 'package:moca/views/test/forward_test_screen.dart';
 import 'package:moca/views/test/memory_test_screen.dart';
 import 'package:moca/views/test/sentence_repetition_screen.dart';
 import 'package:moca/views/test/serial7_test_screen.dart';
 import 'package:moca/views/test/connecting_dot_screen.dart';
+import 'package:moca/views/test/verbalfluency_test_screen.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:  CatDogClassifier(),
+      home:  VocabularyScreen(),
     );
   }
 }
