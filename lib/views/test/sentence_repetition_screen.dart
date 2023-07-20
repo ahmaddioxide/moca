@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:get/get.dart';
 import 'package:moca/views/test/verbalfluency_test_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
@@ -16,6 +17,7 @@ class SentenceRepetitionScreen extends StatefulWidget {
 }
 
 class SentenceRepetitionScreenState extends State<SentenceRepetitionScreen> {
+  late SharedPreferences sf;
   SpeechToText speechToText = SpeechToText();
   FlutterTts flutterTts = FlutterTts();
   final SentenceController _controller = Get.put(SentenceController());
@@ -42,6 +44,11 @@ class SentenceRepetitionScreenState extends State<SentenceRepetitionScreen> {
   void initState() {
     super.initState();
     initializeSpeechToText();
+    initalizeSharedPref();
+  }
+
+  Future<void> initalizeSharedPref() async {
+    sf = await SharedPreferences.getInstance();
   }
 
   void _startTest() {
@@ -76,6 +83,7 @@ class SentenceRepetitionScreenState extends State<SentenceRepetitionScreen> {
 
   void nextTest() {
     gotoNextScreen = true;
+    sf.setInt('nextGame', 11);
     _controller.remainingSeconds.value = 2;
     Future.delayed(const Duration(seconds: 3), () {
       Get.offAll(() => const VocabularyScreen());

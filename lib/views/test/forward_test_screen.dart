@@ -15,14 +15,20 @@ class ForwardDigitSpan extends StatefulWidget {
 }
 
 class _ForwardDigitState extends State<ForwardDigitSpan> {
+  late SharedPreferences sf;
   SpeechToText speechToText = SpeechToText();
   FlutterTts flutterTts = FlutterTts();
   final DigitSpanController _controller = Get.put(DigitSpanController());
   int score = 0;
   var numbers = ['2', '4', '5', '7', '9'];
-  late SharedPreferences sf;
   bool isTimerStarted = false;
   bool innNextScreen = false;
+
+  @override
+  void initState() {
+    super.initState();
+    initalizeSharedPref();
+  }
 
   void _startTest() {
     isTimerStarted = true;
@@ -55,6 +61,7 @@ class _ForwardDigitState extends State<ForwardDigitSpan> {
 
 
   void nextTest() {
+    sf.setInt('nextGame', 7);
     innNextScreen = true;
     _controller.remainingSeconds.value = 0;
     Get.offAll(() => const BackwardDigitSpan());

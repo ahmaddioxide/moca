@@ -1,6 +1,7 @@
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
@@ -15,6 +16,7 @@ class Serial7Screen extends StatefulWidget {
 }
 
 class _Serial7State extends State<Serial7Screen> {
+  late SharedPreferences sf;
   SpeechToText speechToText = SpeechToText();
   FlutterTts flutterTts = FlutterTts();
   final Serial7Controller _controller = Get.put(Serial7Controller());
@@ -35,6 +37,17 @@ class _Serial7State extends State<Serial7Screen> {
       _showPopup();
     }
   }
+
+  @override
+  void initState() {
+    super.initState();
+    initalizeSharedPref();
+  }
+
+  void initalizeSharedPref() async {
+    sf = await SharedPreferences.getInstance();
+  }
+
 
   void _startTest() {
     if (isTimerStarted == false) {
@@ -100,6 +113,7 @@ class _Serial7State extends State<Serial7Screen> {
   }
 
   void _showPopup() {
+
     alert = true;
     showDialog(
       context: context,
@@ -111,6 +125,7 @@ class _Serial7State extends State<Serial7Screen> {
           actions: [
             TextButton(
               onPressed: () {
+                sf.setInt('nextGame', 10);
                 Navigator.of(context).pop();
                 Get.offAll(() => const SentenceRepetitionScreen());
               },

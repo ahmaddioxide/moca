@@ -12,8 +12,7 @@ class VigilanceController extends GetxController {
   Future<void> saveScore(int scoreValue) async {
     try {
       await _collection.doc(currentUser!.uid)
-          .collection('attention_test')
-          .doc('vigilancetest').set({'score': scoreValue});
+          .update({"attention_test":{'vigilance_score': scoreValue}});
     } catch (e) {
       debugPrint('Error updating score: $e');
       Get.snackbar(
