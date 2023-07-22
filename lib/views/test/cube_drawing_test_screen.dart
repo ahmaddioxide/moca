@@ -80,34 +80,189 @@ class _DrawingScreenState extends State<DrawingScreen> {
     });
   }
 
+  // void _saveDrawing() async {
+  //   if (_points.isNotEmpty) {
+  //     try {
+  //       ui.PictureRecorder recorder = ui.PictureRecorder();
+  //       Canvas canvas = Canvas(recorder);
+  //
+  //       final paint = Paint()
+  //         ..color = Colors.black
+  //         ..strokeWidth = 10.0
+  //         ..strokeCap = StrokeCap.round;
+  //
+  //       for (int i = 0; i < _points.length - 1; i++) {
+  //         if (_points[i] != null && _points[i + 1] != null) {
+  //           canvas.drawLine(_points[i], _points[i + 1], paint);
+  //         }
+  //       }
+  //
+  //       ui.Picture picture = recorder.endRecording();
+  //       ui.Image image = await picture.toImage(
+  //         context.size!.width.toInt(),
+  //         context.size!.height.toInt(),
+  //       );
+  //       ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+  //
+  //       if (byteData != null) {
+  //         if (!kIsWeb) {
+  //           final directory = await getTemporaryDirectory();
+  //           final imagePath = '${directory.path}/drawing.jpg';
+  //           final File file = File(imagePath);
+  //           await file.writeAsBytes(byteData.buffer.asUint8List());
+  //
+  //           Navigator.push(
+  //             context,
+  //             MaterialPageRoute(
+  //               builder: (context) => CheckDrawingScreen(imagePath: imagePath),
+  //             ),
+  //           );
+  //         } else {
+  //           // final Uint8List bytes = byteData.buffer.asUint8List();
+  //           final filePath = 'drawing.png';
+  //
+  //           // Navigator.push(
+  //           //   context,
+  //           //   // MaterialPageRoute(
+  //           //   //   // builder: (context) => CheckDrawingScreen(bytes: bytes, filePath: filePath),
+  //           //   // ),
+  //           // );
+  //         }
+  //       }
+  //     } catch (e) {
+  //       print('Error saving drawing: $e');
+  //     }
+  //   }
+  // }
+
+
+  // void _saveDrawing() async {
+  //   if (_points.isNotEmpty) {
+  //     try {
+  //       ui.PictureRecorder recorder = ui.PictureRecorder();
+  //       Canvas canvas = Canvas(recorder);
+  //
+  //       final paint = Paint()
+  //         ..color = Colors.black
+  //         ..strokeWidth = 10.0
+  //         ..strokeCap = StrokeCap.round;
+  //
+  //       // Determine the dimensions of the image including the border
+  //       double canvasWidth = context.size!.width;
+  //       double canvasHeight = context.size!.height;
+  //       double borderWidth = 20.0; // Adjust this value as needed for the size of the border
+  //
+  //       Rect canvasRect = Rect.fromLTRB(
+  //         0.0, // Left
+  //         0.0, // Top
+  //         canvasWidth + 2 * borderWidth, // Right
+  //         canvasHeight + 2 * borderWidth, // Bottom
+  //       );
+  //
+  //       // Draw the blank border with the same color as the drawing
+  //       final blankPaint = Paint()..color = Colors.white;
+  //       canvas.drawRect(canvasRect, blankPaint);
+  //
+  //       // Translate the canvas to account for the border
+  //       canvas.translate(borderWidth, borderWidth);
+  //
+  //       // Draw the lines
+  //       for (int i = 0; i < _points.length - 1; i++) {
+  //         if (_points[i] != null && _points[i + 1] != null) {
+  //           canvas.drawLine(_points[i], _points[i + 1], paint);
+  //         }
+  //       }
+  //
+  //       // End the recording and get the image
+  //       ui.Picture picture = recorder.endRecording();
+  //       ui.Image image = await picture.toImage(
+  //         (canvasWidth + 2 * borderWidth).toInt(), // Include the border in the image dimensions
+  //         (canvasHeight + 1 * borderWidth).toInt(),
+  //       );
+  //       ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+  //
+  //       if (byteData != null) {
+  //         if (!kIsWeb) {
+  //           final directory = await getTemporaryDirectory();
+  //           final imagePath = '${directory.path}/drawing.png'; // Change the extension to .png
+  //           final File file = File(imagePath);
+  //           await file.writeAsBytes(byteData.buffer.asUint8List());
+  //
+  //           Navigator.push(
+  //             context,
+  //             MaterialPageRoute(
+  //               builder: (context) => CheckDrawingScreen(imagePath: imagePath),
+  //             ),
+  //           );
+  //         } else {
+  //           // If you are using this for web, you can convert ByteData directly to Uint8List
+  //           final Uint8List bytes = byteData.buffer.asUint8List();
+  //           final filePath = 'drawing.png';
+  //
+  //           // Process the bytes with the TFLite model or perform other tasks
+  //           // ...
+  //
+  //           // If needed, you can also convert it back to an Image
+  //           // ui.Image processedImage = await decodeImageFromList(bytes);
+  //           // ...
+  //         }
+  //       }
+  //     } catch (e) {
+  //       print('Error saving drawing: $e');
+  //     }
+  //   }
+  // }
+
   void _saveDrawing() async {
     if (_points.isNotEmpty) {
       try {
         ui.PictureRecorder recorder = ui.PictureRecorder();
+        double canvasWidth = context.size!.width;
+        double canvasHeight = context.size!.height;
+        double borderWidth = 20.0; // Adjust this value as needed for the size of the border
+        double drawingWidth = canvasWidth ;
+        double drawingHeight = canvasHeight;
+
+        // Create a new image with a white background
+        final ui.Image bgImage = await createBlankImage(
+          drawingWidth.toInt(),
+          drawingHeight.toInt(),
+          Colors.white,
+        );
+
         Canvas canvas = Canvas(recorder);
 
+        // Draw the background image
+        canvas.drawImage(bgImage, Offset.zero, Paint());
+
+        // Translate the canvas to center the drawing within the border
+        canvas.translate(borderWidth, borderWidth);
+
         final paint = Paint()
-          ..color = Colors.black
-          ..strokeWidth = 3.0
+          ..color = Colors.red
+          ..strokeWidth = 50.0
           ..strokeCap = StrokeCap.round;
 
+        // Draw the lines
         for (int i = 0; i < _points.length - 1; i++) {
           if (_points[i] != null && _points[i + 1] != null) {
             canvas.drawLine(_points[i], _points[i + 1], paint);
           }
         }
 
+        // End the recording and get the image
         ui.Picture picture = recorder.endRecording();
         ui.Image image = await picture.toImage(
-          context.size!.width.toInt(),
-          context.size!.height.toInt(),
+          drawingWidth.toInt(),
+          drawingHeight.toInt(),
         );
+
         ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
 
         if (byteData != null) {
           if (!kIsWeb) {
             final directory = await getTemporaryDirectory();
-            final imagePath = '${directory.path}/drawing.png';
+            final imagePath = '${directory.path}/drawing.png'; // Change the extension to .png
             final File file = File(imagePath);
             await file.writeAsBytes(byteData.buffer.asUint8List());
 
@@ -118,15 +273,16 @@ class _DrawingScreenState extends State<DrawingScreen> {
               ),
             );
           } else {
+            // If you are using this for web, you can convert ByteData directly to Uint8List
             final Uint8List bytes = byteData.buffer.asUint8List();
-            final filePath = 'drawing.png';
+            const filePath = 'drawing.png';
 
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => CheckDrawingScreen(bytes: bytes, filePath: filePath),
-              ),
-            );
+            // Process the bytes with the TFLite model or perform other tasks
+            // ...
+
+            // If needed, you can also convert it back to an Image
+            // ui.Image processedImage = await decodeImageFromList(bytes);
+            // ...
           }
         }
       } catch (e) {
@@ -134,6 +290,16 @@ class _DrawingScreenState extends State<DrawingScreen> {
       }
     }
   }
+
+  Future<ui.Image> createBlankImage(int width, int height, Color color) async {
+    final ui.PictureRecorder recorder = ui.PictureRecorder();
+    final Canvas canvas = Canvas(recorder);
+    final Paint paint = Paint()..color = color;
+    canvas.drawRect(Rect.fromLTWH(0, 0, width.toDouble(), height.toDouble()), paint);
+    return await recorder.endRecording().toImage(width, height);
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -194,8 +360,8 @@ class DrawingPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     Paint paint = Paint()
-      ..color = Colors.black
-      ..strokeWidth = 3.0
+      ..color = Colors.red
+      ..strokeWidth = 10.0
       ..strokeCap = StrokeCap.round;
 
     for (int i = 0; i < points.length - 1; i++) {
@@ -211,10 +377,11 @@ class DrawingPainter extends CustomPainter {
 
 class CheckDrawingScreen extends StatefulWidget {
   final String? imagePath;
-  final Uint8List? bytes;
-  final String? filePath;
+  // final Uint8List? bytes;
+  // final String? filePath;
 
-  CheckDrawingScreen({this.imagePath, this.bytes, this.filePath});
+  // CheckDrawingScreen({this.imagePath, this.bytes, this.filePath});
+  CheckDrawingScreen({super.key, this.imagePath});
 
   @override
   State<CheckDrawingScreen> createState() => _CheckDrawingScreenState();
@@ -222,11 +389,21 @@ class CheckDrawingScreen extends StatefulWidget {
 
 class _CheckDrawingScreenState extends State<CheckDrawingScreen> {
   final classifier = Classifier();
-
+   String result='Not Checked';
   Future<void> initialize() async {
     await classifier.loadModel();
   }
 
+  String processResult(List<dynamic> outputs) {
+   if(outputs[0][0]==1)
+     {
+       return 'Not A Cube';
+     }
+    else
+      {
+        return 'Cube';
+      }
+  }
 
   @override
   void initState() {
@@ -249,25 +426,30 @@ class _CheckDrawingScreenState extends State<CheckDrawingScreen> {
                 File(widget.imagePath!),
                 width: 200,
                 height: 200,
-              )
-            else if (widget.bytes != null)
-              Image.memory(
-                widget.bytes!,
-                width: 200,
-                height: 200,
               ),
+            // else if (widget.bytes != null)
+            //   Image.memory(
+            //     widget.bytes!,
+            //     width: 200,
+            //     height: 200,
+            //   ),
             const SizedBox(height: 16.0),
             ElevatedButton(
               onPressed: () async {
                 final imageFile=File(widget.imagePath!);
-                final result= await classifier.predict(
+                var results= await classifier.predict(
                   img.decodeImage(imageFile.readAsBytesSync())!,
                 );
-                print(result.toString());
+                print(results.toString());
+                setState(() {
+                  result=processResult(results);
+                });
 
               },
               child: Text('Check Drawing'),
             ),
+            
+            Text("Result : $result"),
           ],
         ),
       ),
