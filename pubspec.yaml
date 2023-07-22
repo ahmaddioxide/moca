@@ -55,7 +55,6 @@ dependencies:
   flutter_signature_pad: ^3.0.1
   image_gallery_saver: ^2.0.3
   permission_handler: ^10.4.3
-  google_mlkit_digital_ink_recognition: ^0.9.0
 
 
 

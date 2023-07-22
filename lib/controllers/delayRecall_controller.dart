@@ -3,9 +3,7 @@ import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:moca/controllers/firebase_const.dart';
 
-
 class DelayRecallController extends GetxController {
-
   RxList<String> wordList = <String>[].obs;
   RxList<String> recognizedWordsList = <String>[].obs;
   RxBool isListening = false.obs;
@@ -38,6 +36,7 @@ class DelayRecallController extends GetxController {
   void incrementWordCount() {
     wordCount.value++;
   }
+
   void incrementTrial() {
     currentTrial.value++;
   }
@@ -45,9 +44,11 @@ class DelayRecallController extends GetxController {
   void saveData(int score) async {
     try {
       await FirebaseFirestore.instance
-          .collection('test')
+          .collection('users')
           .doc(currentUser!.uid)
-          .update({'delayRecall_score': score});
+          .update({
+        "DelayedRecall_test": {'DelayRecall_test_score': score}
+      });
       debugPrint('Word list saved successfully');
     } catch (e) {
       debugPrint('Error saving word list: $e');
@@ -60,6 +61,4 @@ class DelayRecallController extends GetxController {
       );
     }
   }
-
-
 }

@@ -32,7 +32,7 @@ class DigitSpanController extends GetxController {
   Future<void> _updateScore(int score) async {
     try {
       await _scoresCollection.doc(currentUser!.uid).update({
-        "attention_test": {'digit_span_score': score}
+        "attention_test_1": {'digit_span_score': score}
       });
     } catch (e) {
       debugPrint('Error updating score: $e');
