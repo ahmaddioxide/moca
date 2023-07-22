@@ -4,6 +4,56 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/foundation.dart';
+import 'package:image/image.dart' as img;
+import 'package:tflite_flutter/tflite_flutter.dart';
+class Classifier {
+  /// Instance of Interpreter
+  late Interpreter _interpreter;
+
+  static const String modelFile = "assets/model_unquant.tflite";
+
+  /// Loads interpreter from asset
+  Future<void> loadModel({Interpreter? interpreter}) async {
+    try {
+      _interpreter = interpreter ??
+          await Interpreter.fromAsset(
+            "assets/model_unquant.tflite",
+            options: InterpreterOptions()..threads = 4,
+          );
+
+      _interpreter.allocateTensors();
+    } catch (e) {
+      print("Error while creating interpreter: $e");
+    }
+  }
+
+  /// Gets the interpreter instance
+  Interpreter get interpreter => _interpreter;
+
+   predict(img.Image image) async {
+    img.Image resizedImage = img.copyResize(image, width: 150, height: 150);
+
+    // Convert the resized image to a 1D Float32List.
+    Float32List inputBytes = Float32List(1 * 150 * 150 * 3);
+    int pixelIndex = 0;
+    for (int y = 0; y < resizedImage.height; y++) {
+      for (int x = 0; x < resizedImage.width; x++) {
+        int pixel = resizedImage.getPixel(x, y);
+        inputBytes[pixelIndex++] = img.getRed(pixel) / 127.5 - 1.0;
+        inputBytes[pixelIndex++] = img.getGreen(pixel) / 127.5 - 1.0;
+        inputBytes[pixelIndex++] = img.getBlue(pixel) / 127.5 - 1.0;
+      }
+    }
+
+    // Reshape to input format specific for model. 1 item in list with pixels 150x150 and 3 layers for RGB
+    final input = inputBytes.reshape([1, 150, 150, 3]);
+    final output = List.filled(1 * 2, 0).reshape([1, 2]);
+    interpreter.run(input, output);
+    print(output.toString());
+    return output;
+
+  }
+}
 
 
 class DrawingScreen extends StatefulWidget {
@@ -159,12 +209,30 @@ class DrawingPainter extends CustomPainter {
   bool shouldRepaint(DrawingPainter oldDelegate) => true;
 }
 
-class CheckDrawingScreen extends StatelessWidget {
+class CheckDrawingScreen extends StatefulWidget {
   final String? imagePath;
   final Uint8List? bytes;
   final String? filePath;
 
   CheckDrawingScreen({this.imagePath, this.bytes, this.filePath});
+
+  @override
+  State<CheckDrawingScreen> createState() => _CheckDrawingScreenState();
+}
+
+class _CheckDrawingScreenState extends State<CheckDrawingScreen> {
+  final classifier = Classifier();
+
+  Future<void> initialize() async {
+    await classifier.loadModel();
+  }
+
+
+  @override
+  void initState() {
+    super.initState();
+    initialize();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -176,22 +244,27 @@ class CheckDrawingScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            if (imagePath != null)
+            if (widget.imagePath != null)
               Image.file(
-                File(imagePath!),
+                File(widget.imagePath!),
                 width: 200,
                 height: 200,
               )
-            else if (bytes != null)
+            else if (widget.bytes != null)
               Image.memory(
-                bytes!,
+                widget.bytes!,
                 width: 200,
                 height: 200,
               ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             ElevatedButton(
-              onPressed: () {
-                // TODO: Implement AI model check here
+              onPressed: () async {
+                final imageFile=File(widget.imagePath!);
+                final result= await classifier.predict(
+                  img.decodeImage(imageFile.readAsBytesSync())!,
+                );
+                print(result.toString());
+
               },
               child: Text('Check Drawing'),
             ),
