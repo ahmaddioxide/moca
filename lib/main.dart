@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:moca/views/login_screen.dart';
 import 'package:moca/views/sociodemographic_sceen.dart';
 import 'package:moca/views/test/backward_test_screen.dart';
+import 'package:moca/views/test/cube_drawing_test_screen.dart';
 import 'package:moca/views/test/delayRecall_test_screen.dart';
 import 'package:moca/views/test/forward_test_screen.dart';
 import 'package:moca/views/test/memory_test_screen.dart';
@@ -36,8 +37,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:   ConnectingDotsScreen(),
-    );
 
+      home:  const DrawingScreen(),
+    );
   }
 }
