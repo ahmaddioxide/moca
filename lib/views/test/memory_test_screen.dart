@@ -107,7 +107,7 @@ class MemoryTestScreenState extends State<MemoryTestScreen> {
           actions: [
             TextButton(
               onPressed: () {
-                sf.setInt('nextGame', 4);
+                sf.setInt('nextGame', 6);
                 Navigator.of(context).pop();
                 Get.offAll(() => const ForwardDigitSpan());
               },

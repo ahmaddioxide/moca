@@ -7,7 +7,7 @@ import 'package:moca/controllers/firebase_const.dart';
 
 class ConnectingDotsController extends GetxController {
   final CollectionReference _scoresCollection =
-  FirebaseFirestore.instance.collection('test');
+  FirebaseFirestore.instance.collection('users');
 
   RxInt remainingSeconds = 120.obs;
   var timerDuration = const Duration(seconds: 120);
@@ -23,7 +23,7 @@ class ConnectingDotsController extends GetxController {
   Future<void> updatetestScore(int score) async {
     try {
       await _scoresCollection.doc(currentUser!.uid)
-          .set({'connecting_dot_score': score});
+          .update({'Viscospatial_test': {'connecting_dot_score': score}});
     } catch (e) {
       debugPrint('Error updating score: $e');
       Get.snackbar(

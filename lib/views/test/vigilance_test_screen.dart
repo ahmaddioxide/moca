@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../controllers/vigilancetest_controller.dart';
 import 'serial7_test_screen.dart';
 
@@ -13,6 +14,7 @@ class VigilanceScreen extends StatefulWidget {
 }
 
 class VigilanceScreenState extends State<VigilanceScreen> {
+  late SharedPreferences sf;
   FlutterTts flutterTts = FlutterTts();
   final VigilanceController _controller = Get.put(VigilanceController());
   int correct = 0;
@@ -63,6 +65,16 @@ class VigilanceScreenState extends State<VigilanceScreen> {
     super.dispose();
   }
 
+  @override
+  void initState() {
+    super.initState();
+    initalizeSharedPref();
+  }
+
+  void initalizeSharedPref() async {
+    sf = await SharedPreferences.getInstance();
+  }
+
   void _startSpeaking() {
     timer = Timer.periodic(const Duration(seconds: 3), (_) async {
       if (currentIndex < sequence.length) {
@@ -79,6 +91,7 @@ class VigilanceScreenState extends State<VigilanceScreen> {
         }
         if (currentIndex >= sequence.length) {
           timer?.cancel();
+          sf.setInt('nextGame', 9);
           await _calculateScore();
           Future.delayed(const Duration(seconds: 4), () {
             Get.offAll(() => const Serial7Screen());

@@ -31,9 +31,9 @@ class FluencyTestController extends GetxController {
 
   Future<void> updateScore(int score) async {
     try {
-      await _scoresCollection
-          .doc(currentUser!.uid)
-          .set({'fluency_test_score': score});
+      await _scoresCollection.doc(currentUser!.uid).update({
+        "language_test_2": {'fluency_test_sccore': score}
+      });
     } catch (e) {
       debugPrint('Error updating score: $e');
       Get.snackbar(

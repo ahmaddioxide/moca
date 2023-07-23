@@ -27,9 +27,9 @@ class Serial7Controller extends GetxController {
 
   Future<void> saveScore(int scoreValue) async {
     try {
-      await _collection.doc(currentUser!.uid)
-          .collection('attention_test')
-          .doc('serial7test').set({'score': scoreValue});
+      await _collection.doc(currentUser!.uid).update({
+        "attention_test_3": {'serial7_test_score': scoreValue}
+      });
     } catch (e) {
       debugPrint('Error updating score: $e');
       Get.snackbar(

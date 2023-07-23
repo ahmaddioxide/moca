@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:moca/views/login_screen.dart';
+import 'package:moca/views/sociodemographic_sceen.dart';
 import 'package:moca/views/test/backward_test_screen.dart';
 import 'package:moca/views/test/cube_drawing_test_screen.dart';
 import 'package:moca/views/test/delayRecall_test_screen.dart';
@@ -11,7 +13,7 @@ import 'package:moca/views/test/sentence_repetition_screen.dart';
 import 'package:moca/views/test/serial7_test_screen.dart';
 import 'package:moca/views/test/connecting_dot_screen.dart';
 import 'package:moca/views/test/verbalfluency_test_screen.dart';
-
+import 'package:moca/views/test_main_screens.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -35,6 +37,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
+
       home:  const DrawingScreen(),
     );
   }

@@ -2,6 +2,7 @@ import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:moca/controllers/digitspan_controller.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'vigilance_test_screen.dart';
@@ -14,6 +15,7 @@ class BackwardDigitSpan extends StatefulWidget {
 }
 
 class _BackDigitState extends State<BackwardDigitSpan> {
+  late SharedPreferences sf;
   SpeechToText speechToText = SpeechToText();
   FlutterTts flutterTts = FlutterTts();
   final DigitSpanController _controller = Get.put(DigitSpanController());
@@ -23,6 +25,14 @@ class _BackDigitState extends State<BackwardDigitSpan> {
   bool isTimerStarted = false;
   bool innNextScreen = false;
 
+  @override
+  void initState() {
+    super.initState();
+    initalizeSharedPref();
+  }
+  void initalizeSharedPref() async {
+    sf = await SharedPreferences.getInstance();
+  }
   void _startTest() {
     isTimerStarted = true;
     _controller.timeDuration();
@@ -58,6 +68,7 @@ class _BackDigitState extends State<BackwardDigitSpan> {
   }
 
   void nextTest() {
+    sf.setInt('nextGame', 8);
     innNextScreen = true;
     _controller.remainingSeconds.value = 0;
     Get.offAll(() => const VigilanceScreen());

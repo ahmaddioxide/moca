@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:moca/views/test/abstraction_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:avatar_glow/avatar_glow.dart';
@@ -15,6 +16,7 @@ class VocabularyScreen extends StatefulWidget {
 }
 
 class _VocabularyScreenState extends State<VocabularyScreen> {
+  late SharedPreferences sf;
   final FluencyTestController _controller = Get.put(FluencyTestController());
   SpeechToText speechToText = SpeechToText();
   FlutterTts flutterTts = FlutterTts();
@@ -31,8 +33,13 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
   @override
   void initState() {
     super.initState();
+    initalizeSharedPref();
     speechToText.initialize();
     _languageTool = langTool.LanguageTool();
+  }
+
+  Future<void> initalizeSharedPref() async {
+    sf = await SharedPreferences.getInstance();
   }
 
   @override
@@ -250,6 +257,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
         actions: [
           TextButton(
             onPressed: () {
+              sf.setInt('nextGame', 12);
               Get.offAll(() => AbstractionScreen());
             },
             child: const Text(

@@ -13,7 +13,6 @@ class DigitSpanController extends GetxController {
   RxBool isReading = true.obs;
   RxString text = "Hold the button and start speaking".obs;
 
-
   RxInt remainingSeconds = 60.obs;
   var timerDuration = const Duration(seconds: 60);
 
@@ -32,11 +31,9 @@ class DigitSpanController extends GetxController {
 
   Future<void> _updateScore(int score) async {
     try {
-      await _scoresCollection
-          .doc(currentUser!.uid)
-          .collection('attention_test')
-          .doc('ForwardandBackwardTest')
-          .set({'score': score});
+      await _scoresCollection.doc(currentUser!.uid).update({
+        "attention_test_1": {'digit_span_score': score}
+      });
     } catch (e) {
       debugPrint('Error updating score: $e');
       Get.snackbar(

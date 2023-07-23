@@ -3,9 +3,7 @@ import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:moca/controllers/firebase_const.dart';
 
-
 class MemoryTestController extends GetxController {
-
   RxList<String> wordList = <String>[].obs;
   RxList<String> recognizedWordsList = <String>[].obs;
   RxBool isListening = false.obs;
@@ -38,6 +36,7 @@ class MemoryTestController extends GetxController {
   void incrementWordCount() {
     wordCount.value++;
   }
+
   void incrementTrial() {
     currentTrial.value++;
   }
@@ -47,8 +46,12 @@ class MemoryTestController extends GetxController {
       await FirebaseFirestore.instance
           .collection('users')
           .doc(currentUser!.uid)
-          .collection('memory_test')
-          .doc('data').set({'WordList': wordList.toList(), 'RecognizedWordsList': recognizedWordsList.toList()});
+          .update({
+        'memory_test': {
+          'WordList': wordList.toList(),
+          'RecognizedWordList': recognizedWordsList.toList()
+        }
+      });
       debugPrint('Word list saved successfully');
     } catch (e) {
       debugPrint('Error saving word list: $e');
@@ -61,6 +64,4 @@ class MemoryTestController extends GetxController {
       );
     }
   }
-
-
 }
