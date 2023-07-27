@@ -23,7 +23,7 @@ class ConnectingDotsController extends GetxController {
   Future<void> updatetestScore(int score) async {
     try {
       await _scoresCollection.doc(currentUser!.uid)
-          .update({'Viscospatial_test': {'connecting_dot_score': score}});
+          .update({'Viscospatial_test_1': {'connecting_dot_score': score}});
     } catch (e) {
       debugPrint('Error updating score: $e');
       Get.snackbar(
