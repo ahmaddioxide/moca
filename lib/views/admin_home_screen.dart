@@ -99,14 +99,26 @@ class AdminHomeScreen extends StatelessWidget {
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    Text(
-                      '85',
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.roboto(
-                        fontSize: 32,
-                        fontWeight: FontWeight.w300,
-                      ),
-                    ),
+                    FutureBuilder<void>(
+                        future: _adminController.getAverageScore(),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<void> snapshot) {
+                          return Obx(() {
+                            if (!_adminController
+                                .isAverageScoreLoaded.value) {
+                              return const CircularProgressIndicator();
+                            } else {
+                              return Text(
+                                '≈${_adminController.averageScore.value}',
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.roboto(
+                                  fontSize: 32,
+                                  fontWeight: FontWeight.w300,
+                                ),
+                              );
+                            }
+                          });
+                        })
                   ],
                 ),
               ),

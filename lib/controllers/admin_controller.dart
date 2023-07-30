@@ -11,12 +11,18 @@ import 'package:permission_handler/permission_handler.dart';
 
 class AdminController extends GetxController {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  RxInt _totalSubmissionsCount = RxInt(0);
 
+  RxInt _totalSubmissionsCount = RxInt(0);
   Rx<int> get totalSubmissionCount => _totalSubmissionsCount;
   RxBool _isTotalSubmissionLoaded = RxBool(false);
-
   Rx<bool> get isTotalSubmissionLoaded => _isTotalSubmissionLoaded;
+
+
+  RxInt _averageScore = RxInt(0);
+  Rx<int> get averageScore => _averageScore;
+  RxBool _isAverageScoreLoaded = RxBool(false);
+  Rx<bool> get isAverageScoreLoaded => _isAverageScoreLoaded;
+
   TextEditingController userSearchBar = TextEditingController();
   RxBool _isUserSearchFound = RxBool(false);
 
@@ -167,6 +173,25 @@ class AdminController extends GetxController {
     });
   }
 
+  Future<void> getAverageScore() async {
+    final QuerySnapshot querySnapshot =
+    await _firestore.collection('users').get();
+    num sumOfScores = 0;
+    int numOfValidUsers = 0;
+
+    for(QueryDocumentSnapshot userDoc in querySnapshot.docs) {
+      try {
+        sumOfScores += userDoc["user_info.totalScore"];
+        numOfValidUsers++;
+      } catch (e) {
+        debugPrint("Invalid User does not have total Score: id = ${userDoc.id}\nError: $e");
+      }
+    }
+    _averageScore = (sumOfScores/numOfValidUsers).round().obs;
+    _isAverageScoreLoaded = true.obs;
+
+  }
+
   Future<void> getTotalSubmissions() async {
     final QuerySnapshot querySnapshot =
     await _firestore.collection('users').get();
@@ -192,12 +217,8 @@ class AdminController extends GetxController {
           .where('user_info.email', isEqualTo: searchedEmail)
           .get();
 
-      if (querySnapshot == null) {
-        querySnapshot.printError();
-        debugPrint('userEmailQuery is null or undefined');
-        _isUserSearchFound.value = false;
-      }
-      else if (querySnapshot.docs.isNotEmpty) {
+
+      if (querySnapshot.docs.isNotEmpty) {
         debugPrint(
             "${querySnapshot.docs.last['user_info']['name']} ${querySnapshot
                 .docs.last['user_info']['email']} ${querySnapshot.docs
