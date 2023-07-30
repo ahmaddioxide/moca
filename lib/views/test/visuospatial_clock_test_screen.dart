@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:moca/controllers/clock_test_controller.dart';
 
+import '../animal_name_screen.dart';
+
 
 
 class ClockTestScreen extends StatelessWidget {
@@ -49,7 +51,7 @@ class ClockTestScreen extends StatelessWidget {
             const SizedBox(height: 20),
             Obx(
                   () => _controller.isLoading.value
-                  ? CircularProgressIndicator(
+                  ? const CircularProgressIndicator(
                 valueColor: AlwaysStoppedAnimation<Color>(Colors.deepPurple),
               )
                   : DecoratedBox(
@@ -64,7 +66,7 @@ class ClockTestScreen extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.deepPurple,
                     ),
-                    onPressed: () {
+                    onPressed: () async {
                       if (_controller.selectedTime != null) {
                         _controller.increaseScore();
                         if (_controller.selectedTime!.hour == 11) {
@@ -74,7 +76,8 @@ class ClockTestScreen extends StatelessWidget {
                           _controller.increaseScore();
                         }
                       }
-                      _controller.saveScoreToFirestore();
+                      await _controller.saveScoreToFirestore();
+                      Get.offAll(() => const AnimalNameGuessScreen());
                     },
                     child: const Text(
                       'Submit',

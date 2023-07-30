@@ -15,10 +15,10 @@ class AbstractionController extends GetxController {
       final CollectionReference userCollection =
       FirebaseFirestore.instance.collection('users');
       final DocumentReference userDoc = userCollection.doc(currentUser.uid);
-      final CollectionReference resultsCollection =
-      userDoc.collection('abstraction_results');
+      // final CollectionReference resultsCollection =
+      // userDoc.collection('abstraction_results');
 
-      await resultsCollection.add({'taskResults': taskResults}).then((value) {
+      await userDoc.update({'abstraction_results':{'taskResults': taskResults}}).then((value) {
         Get.snackbar('Success', "Task results saved successfully.",
             backgroundColor: Colors.green,
             colorText: Colors.white,

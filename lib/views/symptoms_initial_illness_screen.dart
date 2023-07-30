@@ -16,7 +16,7 @@ class _SymptomsInitialIllnessScreenState
   bool _isloading = false;
   // Create an instance of the controller
   final SymptomsInitialIllnessController _controller =
-      Get.put(SymptomsInitialIllnessController());
+  Get.put(SymptomsInitialIllnessController());
 
   @override
   Widget build(BuildContext context) {
@@ -24,13 +24,13 @@ class _SymptomsInitialIllnessScreenState
       appBar: AppBar(
         title: const Center(
             child: Text(
-          'COVID-19 SYMPTOMS',
-          style: TextStyle(
-            fontSize: 28,
-            fontWeight: FontWeight.bold,
-            color: Colors.deepPurple,
-          ),
-        )),
+              'COVID-19 SYMPTOMS',
+              style: TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+                color: Colors.deepPurple,
+              ),
+            )),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -83,7 +83,7 @@ class _SymptomsInitialIllnessScreenState
                           value: _controller.fever,
                           onChanged: (value) {
                             setState(
-                              () {
+                                  () {
                                 _controller.fever = value!;
                               },
                             );
@@ -151,7 +151,7 @@ class _SymptomsInitialIllnessScreenState
                           value: _controller.cough,
                           onChanged: (value) {
                             setState(
-                              () {
+                                  () {
                                 _controller.cough = value!;
                               },
                             );
@@ -219,7 +219,7 @@ class _SymptomsInitialIllnessScreenState
                           value: _controller.stuffyNose,
                           onChanged: (value) {
                             setState(
-                              () {
+                                  () {
                                 _controller.stuffyNose = value!;
                               },
                             );
@@ -287,7 +287,7 @@ class _SymptomsInitialIllnessScreenState
                           value: _controller.soreThroat,
                           onChanged: (value) {
                             setState(
-                              () {
+                                  () {
                                 _controller.soreThroat = value!;
                               },
                             );
@@ -355,7 +355,7 @@ class _SymptomsInitialIllnessScreenState
                           value: _controller.breathingIssues,
                           onChanged: (value) {
                             setState(
-                              () {
+                                  () {
                                 _controller.breathingIssues = value!;
                               },
                             );
@@ -423,7 +423,7 @@ class _SymptomsInitialIllnessScreenState
                           value: _controller.chestPain,
                           onChanged: (value) {
                             setState(
-                              () {
+                                  () {
                                 _controller.chestPain = value!;
                               },
                             );
@@ -491,7 +491,7 @@ class _SymptomsInitialIllnessScreenState
                           value: _controller.irregularPulse,
                           onChanged: (value) {
                             setState(
-                              () {
+                                  () {
                                 _controller.irregularPulse = value!;
                               },
                             );
@@ -536,7 +536,7 @@ class _SymptomsInitialIllnessScreenState
                         color: Colors.deepPurple,
                       ),
                     ),
-                    const SizedBox(width: 20),
+                    const SizedBox(width: 10),
                     DecoratedBox(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
@@ -559,7 +559,7 @@ class _SymptomsInitialIllnessScreenState
                           value: _controller.itchyRedDryEyes,
                           onChanged: (value) {
                             setState(
-                              () {
+                                  () {
                                 _controller.itchyRedDryEyes = value!;
                               },
                             );
@@ -627,7 +627,7 @@ class _SymptomsInitialIllnessScreenState
                           value: _controller.headAches,
                           onChanged: (value) {
                             setState(
-                              () {
+                                  () {
                                 _controller.headAches = value!;
                               },
                             );
@@ -672,7 +672,7 @@ class _SymptomsInitialIllnessScreenState
                         color: Colors.deepPurple,
                       ),
                     ),
-                    const SizedBox(width: 20),
+                    const SizedBox(width: 10),
                     DecoratedBox(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
@@ -695,7 +695,7 @@ class _SymptomsInitialIllnessScreenState
                           value: _controller.lossOfSmelltaste,
                           onChanged: (value) {
                             setState(
-                              () {
+                                  () {
                                 _controller.lossOfSmelltaste = value!;
                               },
                             );
@@ -763,7 +763,7 @@ class _SymptomsInitialIllnessScreenState
                           value: _controller.blurredVision,
                           onChanged: (value) {
                             setState(
-                              () {
+                                  () {
                                 _controller.blurredVision = value!;
                               },
                             );
@@ -831,7 +831,7 @@ class _SymptomsInitialIllnessScreenState
                           value: _controller.hallucinations,
                           onChanged: (value) {
                             setState(
-                              () {
+                                  () {
                                 _controller.hallucinations = value!;
                               },
                             );
@@ -899,7 +899,7 @@ class _SymptomsInitialIllnessScreenState
                           value: _controller.confusion,
                           onChanged: (value) {
                             setState(
-                              () {
+                                  () {
                                 _controller.confusion = value!;
                               },
                             );
@@ -967,7 +967,7 @@ class _SymptomsInitialIllnessScreenState
                           value: _controller.difficultSleepy,
                           onChanged: (value) {
                             setState(
-                              () {
+                                  () {
                                 _controller.difficultSleepy = value!;
                               },
                             );
@@ -1012,7 +1012,7 @@ class _SymptomsInitialIllnessScreenState
                         color: Colors.deepPurple,
                       ),
                     ),
-                    const SizedBox(width: 20),
+                    const SizedBox(width: 10),
                     DecoratedBox(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
@@ -1035,7 +1035,7 @@ class _SymptomsInitialIllnessScreenState
                           value: _controller.depressionAnxiety,
                           onChanged: (value) {
                             setState(
-                              () {
+                                  () {
                                 _controller.depressionAnxiety = value!;
                               },
                             );
@@ -1080,7 +1080,7 @@ class _SymptomsInitialIllnessScreenState
                         color: Colors.deepPurple,
                       ),
                     ),
-                    const SizedBox(width: 20),
+                    const SizedBox(width: 10),
                     DecoratedBox(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
@@ -1103,7 +1103,7 @@ class _SymptomsInitialIllnessScreenState
                           value: _controller.numbness,
                           onChanged: (value) {
                             setState(
-                              () {
+                                  () {
                                 _controller.numbness = value!;
                               },
                             );
@@ -1148,7 +1148,7 @@ class _SymptomsInitialIllnessScreenState
                         color: Colors.deepPurple,
                       ),
                     ),
-                    const SizedBox(width: 20),
+                    const SizedBox(width: 10),
                     DecoratedBox(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
@@ -1171,7 +1171,7 @@ class _SymptomsInitialIllnessScreenState
                           value: _controller.fatigue,
                           onChanged: (value) {
                             setState(
-                              () {
+                                  () {
                                 _controller.fatigue = value!;
                               },
                             );
@@ -1216,7 +1216,7 @@ class _SymptomsInitialIllnessScreenState
                         color: Colors.deepPurple,
                       ),
                     ),
-                    const SizedBox(width: 20),
+                    const SizedBox(width: 10),
                     DecoratedBox(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
@@ -1239,7 +1239,7 @@ class _SymptomsInitialIllnessScreenState
                           value: _controller.bodyPain,
                           onChanged: (value) {
                             setState(
-                              () {
+                                  () {
                                 _controller.bodyPain = value!;
                               },
                             );
@@ -1284,7 +1284,7 @@ class _SymptomsInitialIllnessScreenState
                         color: Colors.deepPurple,
                       ),
                     ),
-                    const SizedBox(width: 20),
+                    const SizedBox(width: 10),
                     DecoratedBox(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
@@ -1307,7 +1307,7 @@ class _SymptomsInitialIllnessScreenState
                           value: _controller.nausea,
                           onChanged: (value) {
                             setState(
-                              () {
+                                  () {
                                 _controller.nausea = value!;
                               },
                             );
@@ -1352,7 +1352,7 @@ class _SymptomsInitialIllnessScreenState
                         color: Colors.deepPurple,
                       ),
                     ),
-                    const SizedBox(width: 20),
+                    const SizedBox(width: 10),
                     DecoratedBox(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
@@ -1375,7 +1375,7 @@ class _SymptomsInitialIllnessScreenState
                           value: _controller.vomiting,
                           onChanged: (value) {
                             setState(
-                              () {
+                                  () {
                                 _controller.vomiting = value!;
                               },
                             );
@@ -1420,7 +1420,7 @@ class _SymptomsInitialIllnessScreenState
                         color: Colors.deepPurple,
                       ),
                     ),
-                    const SizedBox(width: 20),
+                    const SizedBox(width: 10),
                     DecoratedBox(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
@@ -1443,7 +1443,7 @@ class _SymptomsInitialIllnessScreenState
                           value: _controller.diarrhea,
                           onChanged: (value) {
                             setState(
-                              () {
+                                  () {
                                 _controller.diarrhea = value!;
                               },
                             );
@@ -1488,7 +1488,7 @@ class _SymptomsInitialIllnessScreenState
                         color: Colors.deepPurple,
                       ),
                     ),
-                    const SizedBox(width: 20),
+                    const SizedBox(width: 10),
                     DecoratedBox(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
@@ -1511,7 +1511,7 @@ class _SymptomsInitialIllnessScreenState
                           value: _controller.abdominalPain,
                           onChanged: (value) {
                             setState(
-                              () {
+                                  () {
                                 _controller.abdominalPain = value!;
                               },
                             );
@@ -1556,7 +1556,7 @@ class _SymptomsInitialIllnessScreenState
                         color: Colors.deepPurple,
                       ),
                     ),
-                    const SizedBox(width: 20),
+                    const SizedBox(width: 10),
                     DecoratedBox(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
@@ -1579,7 +1579,7 @@ class _SymptomsInitialIllnessScreenState
                           value: _controller.lossOfAppetite,
                           onChanged: (value) {
                             setState(
-                              () {
+                                  () {
                                 _controller.lossOfAppetite = value!;
                               },
                             );
@@ -1624,7 +1624,7 @@ class _SymptomsInitialIllnessScreenState
                         color: Colors.deepPurple,
                       ),
                     ),
-                    const SizedBox(width: 20),
+                    const SizedBox(width: 10),
                     DecoratedBox(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
@@ -1647,7 +1647,7 @@ class _SymptomsInitialIllnessScreenState
                           value: _controller.hotFlashes,
                           onChanged: (value) {
                             setState(
-                              () {
+                                  () {
                                 _controller.hotFlashes = value!;
                               },
                             );
@@ -1692,7 +1692,7 @@ class _SymptomsInitialIllnessScreenState
                         color: Colors.deepPurple,
                       ),
                     ),
-                    const SizedBox(width: 20),
+                    const SizedBox(width: 10),
                     DecoratedBox(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
@@ -1715,7 +1715,7 @@ class _SymptomsInitialIllnessScreenState
                           value: _controller.rash,
                           onChanged: (value) {
                             setState(
-                              () {
+                                  () {
                                 _controller.rash = value!;
                               },
                             );
@@ -1788,7 +1788,7 @@ class _SymptomsInitialIllnessScreenState
                                 confusion: _controller.confusion,
                                 difficultSleepy: _controller.difficultSleepy,
                                 depressionAnxiety:
-                                    _controller.depressionAnxiety,
+                                _controller.depressionAnxiety,
                                 numbness: _controller.numbness,
                                 fatigue: _controller.fatigue,
                                 bodyPain: _controller.bodyPain,
@@ -1806,7 +1806,7 @@ class _SymptomsInitialIllnessScreenState
                                     _isloading = false;
                                   });
                                   Get.offAll(
-                                    () => const SymptomsOnGoingIllnessScreen(),
+                                        () => const SymptomsOnGoingIllnessScreen(),
                                   );
                                 }
                               });
@@ -1831,39 +1831,39 @@ class _SymptomsInitialIllnessScreenState
                         },
                         child: _isloading == true
                             ? const Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text(
-                                    "Loading",
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  SizedBox(
-                                    height: 20,
-                                    width: 20,
-                                    child: CircularProgressIndicator(
-                                      valueColor:
-                                          AlwaysStoppedAnimation(Colors.white),
-                                      backgroundColor: Colors.blue,
-                                      strokeWidth: 4,
-                                    ),
-                                  )
-                                ],
-                              )
-                            : const Text(
-                                'Submit',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.white,
-                                ),
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              "Loading",
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
                               ),
+                            ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            SizedBox(
+                              height: 20,
+                              width: 20,
+                              child: CircularProgressIndicator(
+                                valueColor:
+                                AlwaysStoppedAnimation(Colors.white),
+                                backgroundColor: Colors.blue,
+                                strokeWidth: 4,
+                              ),
+                            )
+                          ],
+                        )
+                            : const Text(
+                          'Submit',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.white,
+                          ),
+                        ),
                       ),
                     ),
                   ),

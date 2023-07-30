@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:moca/views/animal_name_screen.dart';
+import 'package:moca/views/test_main_screens.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../controllers/cognitive_failure_controller.dart';
@@ -150,7 +151,7 @@ class _CognitiveFailureState extends State<CognitiveFailure> {
                                 setState(() {
                                   _isloading = false;
                                 });
-                                Get.offAll(() => const AnimalNameGuessScreen());
+                                Get.offAll(() => const MainTestScreen());
                               }
                             });
                           },

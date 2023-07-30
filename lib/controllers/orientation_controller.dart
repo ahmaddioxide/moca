@@ -26,16 +26,16 @@ class OreientationController extends GetxController {
         final CollectionReference userCollection =
         FirebaseFirestore.instance.collection('users');
         final DocumentReference userDoc = userCollection.doc(currentUser.uid);
-        final CollectionReference resultsCollection =
-        userDoc.collection('date_verification_results');
+        // final CollectionReference resultsCollection =
+        // userDoc.collection('date_verification_results');
 
-        final DocumentReference resultDoc = resultsCollection.doc('result'); // Use 'result' as the document name
+        // final DocumentReference resultDoc = resultsCollection.doc('result'); // Use 'result' as the document name
 
-        await resultDoc.set({
+        await userDoc.update({'date_verification_results':{
           'isDayCorrect': isDayCorrect.value,
           'isPlaceCorrect': isPlaceCorrect.value,
           'isCityCorrect': isCityCorrect.value,
-        });
+        }});
       } catch (error) {
         // Handle Firestore error
         debugPrint('Firestore error: $error');

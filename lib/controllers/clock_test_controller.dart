@@ -29,13 +29,13 @@ class ClockTestController extends GetxController {
       final CollectionReference userCollection =
       FirebaseFirestore.instance.collection('users');
       final DocumentReference userDoc = userCollection.doc(currentUser.uid);
-      final CollectionReference clockTestCollection =
-      userDoc.collection('visuospatial_draw_clock');
-      final DocumentReference dataDoc = clockTestCollection.doc('data');
+      // final CollectionReference clockTestCollection =
+      // userDoc.collection('visuospatial_draw_clock');
+      // final DocumentReference dataDoc = clockTestCollection.doc('data');
 
       isLoading.value = true;
 
-      await dataDoc.set({'score': score.value}).then((_) {
+      await userDoc.update({'visuospatial_draw_clock':{'score': score.value}}).then((_) {
         debugPrint('Score saved to Firestore: ${score.value}');
       }).catchError((error) {
         debugPrint('Error saving score to Firestore: $error');
