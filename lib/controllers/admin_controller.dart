@@ -7,7 +7,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class AdminController extends GetxController {
@@ -42,6 +41,7 @@ class AdminController extends GetxController {
 
 
   Future<String> convertDataToCSV() async {
+
     final List<List<dynamic>> csvData = [];
     final List<dynamic> headers = [
       "Name", "Age", "other Details",
@@ -54,7 +54,117 @@ class AdminController extends GetxController {
   }
 
   Future<void> downloadCSV() async {
+    final QuerySnapshot querySnapshot =
+    await _firestore.collection('users').get();
 
+    List<List<dynamic>> rows = [];
+    List<dynamic> row = [];
+
+    /* User Info Headers */
+    row.add ("user_info.name");
+    row.add("user_info.email");
+    row.add("user_info.totalScore");
+
+    /* Social Demographic Headers */
+    row.add("socio_demographic.age");
+    row.add("socio_demographic.education");
+    row.add("socio_demographic.gender");
+    row.add("socio_demographic.profession");
+    row.add("socio_demographic.residence");
+
+    /* Medical History Headers */
+    row.add("medical_history.diet");
+    row.add("medical_history.medicalCondition");
+    row.add("medical_history.physicalActivity");
+    row.add("medical_history.smoke");
+
+    /* Covid Experience Headers */
+    row.add("covid_experience.covid");
+    row.add("covid_experience.duration");
+    row.add("covid_experience.first4weeks");
+    row.add("covid_experience.pcrTest");
+    row.add("covid_experience.pcrTestDetails");
+    row.add("covid_experience.results");
+    row.add("covid_experience.week4Experience");
+
+    /* Initial Illness Symptom */
+    row.add("symptoms_initial_illness.abdominalPain");
+    row.add("symptoms_initial_illness.blurredVision");
+    row.add("symptoms_initial_illness.bodyPain");
+    row.add("symptoms_initial_illness.breathingIssues");
+    row.add("symptoms_initial_illness.chestPain");
+    row.add("symptoms_initial_illness.confusion");
+    row.add("symptoms_initial_illness.cough");
+    row.add("symptoms_initial_illness.depressionAnxiety");
+    row.add("symptoms_initial_illness.diarrhea");
+    row.add("symptoms_initial_illness.difficultSleepy");
+    row.add("symptoms_initial_illness.fatigue");
+    row.add("symptoms_initial_illness.fever");
+    row.add("symptoms_initial_illness.hallucinations");
+    row.add("symptoms_initial_illness.headAches");
+    row.add("symptoms_initial_illness.hotFlashes");
+    row.add("symptoms_initial_illness.irregularPulse");
+    row.add("symptoms_initial_illness.itchyRedDryEyes");
+    row.add("symptoms_initial_illness.lossOfAppetite");
+    row.add("symptoms_initial_illness.lossOfSmelltaste");
+    row.add("symptoms_initial_illness.nausea");
+    row.add("symptoms_initial_illness.numbness");
+    row.add("symptoms_initial_illness.rash");
+    row.add("symptoms_initial_illness.soreThroat");
+    row.add("symptoms_initial_illness.stuffyNose");
+    row.add("symptoms_initial_illness.vomiting");
+
+    /* Initial Illness Symptom */
+    row.add("symptoms_ongoing_illness.abdominalPain");
+    row.add("symptoms_ongoing_illness.blurredVision");
+    row.add("symptoms_ongoing_illness.bodyPain");
+    row.add("symptoms_ongoing_illness.breathingIssues");
+    row.add("symptoms_ongoing_illness.chestPain");
+    row.add("symptoms_ongoing_illness.confusion");
+    row.add("symptoms_ongoing_illness.cough");
+    row.add("symptoms_ongoing_illness.delayedThinking");
+    row.add("symptoms_ongoing_illness.depressionAnxiety");
+    row.add("symptoms_ongoing_illness.difficultSleeping");
+    row.add("symptoms_ongoing_illness.difficultSpeaking");
+    row.add("symptoms_ongoing_illness.fatigue");
+    row.add("symptoms_ongoing_illness.forgetfulness");
+    row.add("symptoms_ongoing_illness.hallucinations");
+    row.add("symptoms_ongoing_illness.headAche");
+    row.add("symptoms_ongoing_illness.irregularPulse");
+    row.add("symptoms_ongoing_illness.itchyRedDryEyes");
+    row.add("symptoms_ongoing_illness.lossOfAppetite");
+    row.add("symptoms_ongoing_illness.lossOfSmelltaste");
+    row.add("symptoms_ongoing_illness.nausea");
+    row.add("symptoms_ongoing_illness.numbness");
+    row.add("symptoms_ongoing_illness.poorConcentration");
+
+    rows.add(row);
+
+    for(QueryDocumentSnapshot userDoc in querySnapshot.docs) {
+      List<dynamic> userData = [];
+
+      for (String key in row) {
+        dynamic data = "null";
+        try {
+          data = userDoc[key];
+        } catch (e) {
+          data = "null";
+        }
+        userData.add(data);
+      }
+      rows.add(userData);
+    }
+
+    String csvData = const ListToCsvConverter().convert(rows);
+    String? dir = "/storage/emulated/0/Download/";//(await getExternalStorageDirectory())?.path;
+
+    final filePath = '$dir/MOCA_Users_Data.csv';
+
+    File file = File(filePath);
+    await file.writeAsString(csvData).whenComplete(() {
+      debugPrint('dir $dir');
+      Fluttertoast.showToast(msg: "file saved at: $filePath");
+    });
   }
 
   Future<void> getTotalSubmissions() async {

@@ -140,7 +140,7 @@ class AdminHomeScreen extends StatelessWidget {
                       height: 14,
                     ),
                     TextButton(
-                      onPressed: _adminController.downloadCSV,
+                      onPressed: () async {await _adminController.downloadCSV();},
                       style: TextButton.styleFrom(
                           padding: const EdgeInsets.fromLTRB(24, 10, 24, 10),
                           backgroundColor: const Color(0xFF6750a4),
