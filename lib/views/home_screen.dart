@@ -14,7 +14,7 @@ class HomeScreen extends StatelessWidget {
         fontSize: 20,
       ),
       content: const Text(
-        'MOCA is a mobile application that aims to help the medical professionals to collect data from patients in a more efficient way. It is a digital version of the paper-based questionnaire that is used to collect data from patients. The app is developed by the students of the Air University as a part of the final year project.',
+        'Details: \n MOCA is a mobile application that aims to help the medical professionals to collect data from patients in a more efficient way. Information: \n It is a digital version of the paper-based questionnaire that is used to collect data from patients. The app is developed by the students of the Air University as a part of the final year project.',
         style: TextStyle(
           color: Colors.black,
           fontSize: 16,
