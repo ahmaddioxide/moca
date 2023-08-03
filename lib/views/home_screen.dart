@@ -5,7 +5,7 @@ class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   //alert dialog which shows the information about the app
-  void _showAlert(){
+  void _showAlert() {
     Get.defaultDialog(
       title: 'About MOCA',
       titleStyle: const TextStyle(
@@ -26,7 +26,6 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.sizeOf(context).height;
@@ -34,7 +33,11 @@ class HomeScreen extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
-          title: const Text('MOCA', style: TextStyle(color: Colors.deepPurple, fontWeight: FontWeight.bold),),
+          title: const Text(
+            'MOCA',
+            style: TextStyle(
+                color: Colors.deepPurple, fontWeight: FontWeight.bold),
+          ),
           centerTitle: true,
           actions: [
             Padding(
@@ -83,7 +86,11 @@ class HomeScreen extends StatelessWidget {
                       child: Row(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(left: 16, top: 16, bottom: 16,),
+                            padding: const EdgeInsets.only(
+                              left: 16,
+                              top: 16,
+                              bottom: 16,
+                            ),
                             child: SizedBox(
                               height: height * .2,
                               width: width * .2,
@@ -101,7 +108,11 @@ class HomeScreen extends StatelessWidget {
                           ),
                           const Expanded(
                             child: Padding(
-                              padding: EdgeInsets.only(right: 10.0, top: 10.0, bottom: 10.0,),
+                              padding: EdgeInsets.only(
+                                right: 10.0,
+                                top: 10.0,
+                                bottom: 10.0,
+                              ),
                               child: Text(
                                 'SOCIO-DEMOGRAPHIC DATA',
                                 style: TextStyle(
@@ -145,7 +156,11 @@ class HomeScreen extends StatelessWidget {
                       child: Row(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(left: 16, top: 16, bottom: 16,),
+                            padding: const EdgeInsets.only(
+                              left: 16,
+                              top: 16,
+                              bottom: 16,
+                            ),
                             child: SizedBox(
                               height: height * .2,
                               width: width * .2,
@@ -164,7 +179,11 @@ class HomeScreen extends StatelessWidget {
                           const Expanded(
                             // Use Expanded widget here to fill the remaining width
                             child: Padding(
-                              padding: EdgeInsets.only(right: 10.0, top: 10.0, bottom: 10.0,),
+                              padding: EdgeInsets.only(
+                                right: 10.0,
+                                top: 10.0,
+                                bottom: 10.0,
+                              ),
                               child: Text(
                                 'MEDICAL HISTORY AND HEALTH-RELATED BEHAVIOURS ',
                                 style: TextStyle(
@@ -208,7 +227,11 @@ class HomeScreen extends StatelessWidget {
                       child: Row(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(left: 16, top: 16, bottom: 16,),
+                            padding: const EdgeInsets.only(
+                              left: 16,
+                              top: 16,
+                              bottom: 16,
+                            ),
                             child: SizedBox(
                               height: height * .2,
                               width: width * .2,
@@ -226,7 +249,11 @@ class HomeScreen extends StatelessWidget {
                           ),
                           const Expanded(
                             child: Padding(
-                              padding: EdgeInsets.only(right: 10.0, top: 10.0, bottom: 10.0,),
+                              padding: EdgeInsets.only(
+                                right: 10.0,
+                                top: 10.0,
+                                bottom: 10.0,
+                              ),
                               child: Text(
                                 'MONTREAL COGNITIVE ASSESSMENT (MoCA)',
                                 style: TextStyle(
