@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:moca/views/home_screen.dart';
 import 'package:moca/views/login_screen.dart';
+import 'package:moca/views/on_boarding_screens/on_boarding_screen.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
 
-      home:  const HomeScreen(),
+      home:  const OnBoardingPage(),
     );
   }
 }
