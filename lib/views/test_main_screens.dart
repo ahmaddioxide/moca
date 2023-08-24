@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:moca/constants/list.dart';
 import 'package:moca/views/animal_name_screen.dart';
 import 'package:moca/views/test/backward_test_screen.dart';
 import 'package:moca/views/test/connecting_dot_screen.dart';
@@ -24,29 +25,30 @@ class MainTestScreen extends StatefulWidget {
 }
 
 class _MainTestScreenState extends State<MainTestScreen> {
+  late int gameNumber;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     SharedPreferences.getInstance().then((prefs) {
       setState(() {
-        _unlockedGames = prefs.getInt('nextGame') ?? 1;
+        _unlockedGames = prefs.getInt('nextGame')!;
       });
     });
   }
-  int _unlockedGames=1;
 
-  void _playGame(int gameNumber) {
+  int _unlockedGames = 1;
+
+  void _playGame(gameNumber) {
     if (gameNumber == _unlockedGames) {
       switch (gameNumber) {
         case 1:
           Get.offAll(() => const ConnectingDotsScreen());
           break;
         case 2:
-          // Get.offAll(() => const DrawingScreen());
+          Get.offAll(() => const DrawingScreen());
           break;
         case 3:
-          // Get.offAll(() =>  ClockTestScreen());
+          Get.offAll(() => const ClockTestScreen());
           break;
         case 4:
           Get.offAll(() => const AnimalNameGuessScreen());
@@ -72,16 +74,16 @@ class _MainTestScreenState extends State<MainTestScreen> {
           Get.offAll(() => const VocabularyScreen());
           break;
         case 12:
-          Get.offAll(() =>  AbstractionScreen());
+          Get.offAll(() => const AbstractionScreen());
           break;
         case 13:
           Get.offAll(() => const DelayRecallScreen());
         case 14:
-          Get.offAll(() =>  OrientationScreen());
+          Get.offAll(() => OrientationScreen());
           break;
 
-        default:
-          Navigator.pushNamed(context, '/animal_name_screen');
+        // default:
+        //   Navigator.pushNamed(context, '/animal_name_screen');
       }
     } else {
       // Show a message that the game is locked
@@ -105,7 +107,15 @@ class _MainTestScreenState extends State<MainTestScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Main Test Screen'),
+        title: const Center(
+            child: Text(
+          'Main Test Screen',
+          style: TextStyle(
+            fontSize: 28,
+            fontWeight: FontWeight.bold,
+            color: Colors.deepPurple,
+          ),
+        )),
       ),
       body: Center(
         child: GridView.count(
@@ -120,12 +130,18 @@ class _MainTestScreenState extends State<MainTestScreen> {
             return ElevatedButton(
               onPressed: () => _playGame(gameNumber),
               style: ElevatedButton.styleFrom(
-                textStyle: const TextStyle(fontSize: 18.0, color: Colors.white),
+                shadowColor: Colors.deepPurple,
+                elevation: 10,
+                side: const BorderSide(color: Colors.black, width: 2),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16.0),
+                ),
+                textStyle: const TextStyle(fontSize: 25.0, color: Colors.white),
                 backgroundColor: isLocked ? Colors.grey : Colors.deepPurple,
-                minimumSize: const Size(120, 120),
+                minimumSize: const Size(100, 120),
               ),
               child: Text(
-                'Game $gameNumber',
+                "Game ${gameNameList[gameNumber - 1]}",
                 textAlign: TextAlign.center,
                 style: const TextStyle(color: Colors.white),
               ),
@@ -136,5 +152,3 @@ class _MainTestScreenState extends State<MainTestScreen> {
     );
   }
 }
-
-
