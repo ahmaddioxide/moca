@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:moca/controllers/abstraction_controller.dart';
 
 class AbstractionScreen extends StatefulWidget {
+  const AbstractionScreen({super.key});
+
   @override
   _AbstractionScreenState createState() => _AbstractionScreenState();
 }
@@ -110,7 +112,8 @@ class TaskItem extends StatefulWidget {
   final String result;
   final ValueChanged<bool> onChanged;
 
-  TaskItem({
+  const TaskItem({
+    super.key,
     required this.statement,
     required this.options,
     required this.result,
