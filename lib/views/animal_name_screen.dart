@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:moca/views/test/memory_test_screen.dart';
-import 'package:moca/views/test_main_screens.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../constants/list.dart';
 import '../controllers/animal_name_controller.dart';
@@ -14,7 +13,7 @@ class AnimalNameGuessScreen extends StatefulWidget {
 
 class _AnimalNameGuessScreenState extends State<AnimalNameGuessScreen> {
   final AnimalNameTestController _controller =
-  Get.put(AnimalNameTestController());
+      Get.put(AnimalNameTestController());
   int currentPictureIndex = 0;
   int score = 0;
   TextEditingController guessController = TextEditingController();
@@ -112,13 +111,13 @@ class _AnimalNameGuessScreenState extends State<AnimalNameGuessScreen> {
       appBar: AppBar(
         title: const Center(
             child: Text(
-              'Guess The Picture',
-              style: TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-                color: Colors.deepPurple,
-              ),
-            )),
+          'Guess The Picture',
+          style: TextStyle(
+            fontSize: 28,
+            fontWeight: FontWeight.bold,
+            color: Colors.deepPurple,
+          ),
+        )),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -203,38 +202,38 @@ class _AnimalNameGuessScreenState extends State<AnimalNameGuessScreen> {
                 },
                 child: _isloading == true
                     ? const Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      "Loading",
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    SizedBox(
-                      height: 20,
-                      width: 20,
-                      child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation(Colors.white),
-                        backgroundColor: Colors.blue,
-                        strokeWidth: 4,
-                      ),
-                    )
-                  ],
-                )
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            "Loading",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          SizedBox(
+                            height: 20,
+                            width: 20,
+                            child: CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation(Colors.white),
+                              backgroundColor: Colors.blue,
+                              strokeWidth: 4,
+                            ),
+                          )
+                        ],
+                      )
                     : const Text(
-                  'Submit',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.white,
-                  ),
-                ),
+                        'Submit',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white,
+                        ),
+                      ),
               ),
               const SizedBox(height: 20),
             ],
