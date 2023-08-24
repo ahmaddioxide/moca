@@ -1,9 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:moca/controllers/homescreen_controller%20.dart';
+import 'package:moca/views/covidexperience_sceen.dart';
+import 'package:moca/views/medicalhistory_sceen.dart';
+import 'package:moca/views/sociodemographic_sceen.dart';
+import 'package:moca/views/symptoms_initial_illness_screen.dart';
+import 'package:moca/views/symptoms_ongoing_illness_screen.dart';
+import 'package:moca/views/test_main_screens.dart';
 
-class HomeScreen extends StatelessWidget {
+import 'cognitive_failure_screen.dart';
+
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final HomeScreenController _controller = Get.put(HomeScreenController());
   //alert dialog which shows the information about the app
   void _showAlert() {
     Get.defaultDialog(
@@ -64,67 +79,97 @@ class HomeScreen extends StatelessWidget {
                       left: 16.0,
                       right: 16.0,
                     ),
-                    child: Container(
-                      height: height * .25,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.white,
-                          width: 2,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
                         ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.deepPurple.withOpacity(0.4),
-                            spreadRadius: 2,
-                            blurRadius: 2,
-                            offset: const Offset(
-                                0, 3), // changes position of shadow
-                          ),
-                        ],
-                        // color: Colors.black26,
-                        borderRadius: BorderRadius.circular(20),
                       ),
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              left: 16,
-                              top: 16,
-                              bottom: 16,
+                      onPressed: () async {
+                        try {
+                          if (await _controller.checkIfSocioDemoGraphExists() !=
+                              true) {
+                            Get.offAll(() => const SocioDemographicScreen());
+                          } else {
+                            Get.snackbar(
+                              'Attention!',
+                              'The Form is already Filled!',
+                              snackPosition: SnackPosition.BOTTOM,
+                              backgroundColor: Colors.blueAccent,
+                              colorText: Colors.white,
+                            );
+                          }
+                        } catch (e) {
+                          Get.snackbar(
+                            'Attention!',
+                            'Error Occured!',
+                            snackPosition: SnackPosition.BOTTOM,
+                            backgroundColor: Colors.red,
+                            colorText: Colors.white,
+                          );
+                        }
+                      },
+                      child: Container(
+                        height: height * .25,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.white,
+                            width: 2,
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.deepPurple.withOpacity(0.4),
+                              spreadRadius: 2,
+                              blurRadius: 2,
+                              offset: const Offset(
+                                  0, 3), // changes position of shadow
                             ),
-                            child: SizedBox(
-                              height: height * .2,
-                              width: width * .2,
-                              child: Image.asset(
-                                'assets/images/personal.png',
+                          ],
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                left: 16,
+                                top: 16,
+                                bottom: 16,
+                              ),
+                              child: SizedBox(
                                 height: height * .2,
                                 width: width * .2,
-                                fit: BoxFit
-                                    .contain, // Make sure the image fits within the available space
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: width * .05,
-                          ),
-                          const Expanded(
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                right: 10.0,
-                                top: 10.0,
-                                bottom: 10.0,
-                              ),
-                              child: Text(
-                                'SOCIO-DEMOGRAPHIC DATA',
-                                style: TextStyle(
-                                  overflow: TextOverflow.visible,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
+                                child: Image.asset(
+                                  'assets/images/personal.png',
+                                  height: height * .2,
+                                  width: width * .2,
+                                  fit: BoxFit
+                                      .contain, // Make sure the image fits within the available space
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                            SizedBox(
+                              width: width * .05,
+                            ),
+                            const Expanded(
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                  right: 10.0,
+                                  top: 10.0,
+                                  bottom: 10.0,
+                                ),
+                                child: Text(
+                                  'SOCIO-DEMOGRAPHIC DATA',
+                                  style: TextStyle(
+                                    overflow: TextOverflow.visible,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -134,68 +179,117 @@ class HomeScreen extends StatelessWidget {
                       left: 16.0,
                       right: 16.0,
                     ),
-                    child: Container(
-                      height: height * .25,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.white,
-                          width: 2,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
                         ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.deepOrange.withOpacity(0.4),
-                            spreadRadius: 2,
-                            blurRadius: 2,
-                            offset: const Offset(
-                                0, 3), // changes position of shadow
-                          ),
-                        ],
-                        // color: Colors.black26,
-                        borderRadius: BorderRadius.circular(20),
                       ),
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              left: 16,
-                              top: 16,
-                              bottom: 16,
+                      onPressed: () async {
+                        try {
+                          if (await _controller.checkIfMedicalHistoryExists() !=
+                              true) {
+                            Get.offAll(() => const MedicalHistoryScreen());
+                          } else if (await _controller
+                                  .checkIfCovidExperienceExists() !=
+                              true) {
+                            Get.offAll(() => const CovidExperienceScreen());
+                          } else if (await _controller
+                                  .checkIfInitialIllnessExists() !=
+                              true) {
+                            Get.offAll(
+                                () => const SymptomsInitialIllnessScreen());
+                          } else if (await _controller
+                                  .checkIfOngoingIllnessExists() !=
+                              true) {
+                            Get.offAll(
+                                () => const SymptomsOnGoingIllnessScreen());
+                          } else if (await _controller
+                                  .checkIfCognitiveExists() !=
+                              true) {
+                            Get.offAll(() => const CognitiveFailure());
+                          } else {
+                            Get.snackbar(
+                              'Attention!',
+                              'The Form is already Filled!',
+                              snackPosition: SnackPosition.BOTTOM,
+                              backgroundColor: Colors.blueAccent,
+                              colorText: Colors.white,
+                            );
+                          }
+                        } catch (e) {
+                          Get.snackbar(
+                            'Attention!',
+                            'Error Occured!',
+                            snackPosition: SnackPosition.BOTTOM,
+                            backgroundColor: Colors.red,
+                            colorText: Colors.white,
+                          );
+                        }
+                      },
+                      child: Container(
+                        height: height * .25,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.white,
+                            width: 2,
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.deepOrange.withOpacity(0.4),
+                              spreadRadius: 2,
+                              blurRadius: 2,
+                              offset: const Offset(
+                                  0, 3), // changes position of shadow
                             ),
-                            child: SizedBox(
-                              height: height * .2,
-                              width: width * .2,
-                              child: Image.asset(
-                                'assets/images/health.png',
+                          ],
+                          // color: Colors.black26,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                left: 16,
+                                top: 16,
+                                bottom: 16,
+                              ),
+                              child: SizedBox(
                                 height: height * .2,
                                 width: width * .2,
-                                fit: BoxFit
-                                    .contain, // Make sure the image fits within the available space
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: width * .05,
-                          ),
-                          const Expanded(
-                            // Use Expanded widget here to fill the remaining width
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                right: 10.0,
-                                top: 10.0,
-                                bottom: 10.0,
-                              ),
-                              child: Text(
-                                'MEDICAL HISTORY AND HEALTH-RELATED BEHAVIOURS ',
-                                style: TextStyle(
-                                  overflow: TextOverflow.visible,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
+                                child: Image.asset(
+                                  'assets/images/health.png',
+                                  height: height * .2,
+                                  width: width * .2,
+                                  fit: BoxFit
+                                      .contain, // Make sure the image fits within the available space
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                            SizedBox(
+                              width: width * .05,
+                            ),
+                            const Expanded(
+                              // Use Expanded widget here to fill the remaining width
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                  right: 10.0,
+                                  top: 10.0,
+                                  bottom: 10.0,
+                                ),
+                                child: Text(
+                                  'MEDICAL HISTORY AND HEALTH-RELATED BEHAVIOURS ',
+                                  style: TextStyle(
+                                    overflow: TextOverflow.visible,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -205,67 +299,82 @@ class HomeScreen extends StatelessWidget {
                       left: 16.0,
                       right: 16.0,
                     ),
-                    child: Container(
-                      height: height * .25,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.white,
-                          width: 2,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
                         ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.pink.withOpacity(0.4),
-                            spreadRadius: 2,
-                            blurRadius: 2,
-                            offset: const Offset(
-                                0, 3), // changes position of shadow
-                          ),
-                        ],
-                        // color: Colors.black26,
-                        borderRadius: BorderRadius.circular(20),
                       ),
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              left: 16,
-                              top: 16,
-                              bottom: 16,
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const MainTestScreen(),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        height: height * .25,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.white,
+                            width: 2,
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.pink.withOpacity(0.4),
+                              spreadRadius: 2,
+                              blurRadius: 2,
+                              offset: const Offset(
+                                  0, 3), // changes position of shadow
                             ),
-                            child: SizedBox(
-                              height: height * .2,
-                              width: width * .2,
-                              child: Image.asset(
-                                'assets/images/bacteria.png',
+                          ],
+                          // color: Colors.black26,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                left: 16,
+                                top: 16,
+                                bottom: 16,
+                              ),
+                              child: SizedBox(
                                 height: height * .2,
                                 width: width * .2,
-                                fit: BoxFit
-                                    .contain, // Make sure the image fits within the available space
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: width * .05,
-                          ),
-                          const Expanded(
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                right: 10.0,
-                                top: 10.0,
-                                bottom: 10.0,
-                              ),
-                              child: Text(
-                                'MONTREAL COGNITIVE ASSESSMENT (MoCA)',
-                                style: TextStyle(
-                                  overflow: TextOverflow.visible,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
+                                child: Image.asset(
+                                  'assets/images/bacteria.png',
+                                  height: height * .2,
+                                  width: width * .2,
+                                  fit: BoxFit
+                                      .contain, // Make sure the image fits within the available space
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                            SizedBox(
+                              width: width * .05,
+                            ),
+                            const Expanded(
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                  right: 10.0,
+                                  top: 10.0,
+                                  bottom: 10.0,
+                                ),
+                                child: Text(
+                                  'MONTREAL COGNITIVE ASSESSMENT (MoCA)',
+                                  style: TextStyle(
+                                    overflow: TextOverflow.visible,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
