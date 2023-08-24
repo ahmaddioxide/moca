@@ -1556,7 +1556,7 @@ class _SymptomsOnGoingIllnessScreenState
                       ),
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          primary: Colors.deepPurple,
+                          backgroundColor: Colors.deepPurple,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
@@ -1602,7 +1602,7 @@ class _SymptomsOnGoingIllnessScreenState
                                     _isloading = false;
                                   });
                                   Get.offAll(
-                                    () => CognitiveFailure(),
+                                    () => const CognitiveFailure(),
                                   );
                                 }
                               });
