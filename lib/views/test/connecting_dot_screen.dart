@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:moca/views/animal_name_screen.dart';
 import 'package:moca/views/test/cube_drawing_test_screen.dart';
-import 'package:moca/views/test/memory_test_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:math';
 
@@ -20,6 +18,19 @@ class _DotScreenState extends State<ConnectingDotsScreen> {
       Get.put(ConnectingDotsController());
   List<int> selectedIndices = [];
   late SharedPreferences sf;
+  @override
+  void initState() {
+    super.initState();
+    initalizeSharedPref();
+    Future.delayed(const Duration(seconds: 2), () {
+      _countdownTimer();
+    });
+  }
+
+  Future<void> initalizeSharedPref() async {
+    sf = await SharedPreferences.getInstance();
+  }
+
   bool nextscreen = false;
   final List<dynamic> patternSequence = [
     1,
@@ -68,18 +79,6 @@ class _DotScreenState extends State<ConnectingDotsScreen> {
     });
   }
 
-  @override
-  void initState() {
-    super.initState();
-    initalizeSharedPref();
-    Future.delayed(const Duration(seconds: 2), () {
-      _countdownTimer();
-    });
-  }
-
-  Future<void> initalizeSharedPref() async {
-    sf = await SharedPreferences.getInstance();
-  }
   void _validatePattern() {
     for (int i = 0; i < patternSequence.length; i++) {
       if (selectedValues[i] == patternSequence[i]) {
@@ -135,16 +134,16 @@ class _DotScreenState extends State<ConnectingDotsScreen> {
 
   Future<void> nextText() async {
     nextscreen = true;
-    sf.setInt('nextGame', 4);
-    if(score == 10){
+
+    if (score == 10) {
       await _controller.updatetestScore(1);
-    }
-    else{
+    } else {
       await _controller.updatetestScore(0);
     }
     Future.delayed(const Duration(seconds: 3));
     {
-      Get.offAll(() => const AnimalNameGuessScreen());
+      sf.setInt('nextGame', 1);
+      Get.offAll(() => const DrawingScreen());
     }
   }
 
