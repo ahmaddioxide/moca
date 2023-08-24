@@ -1,23 +1,28 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:moca/views/home_screen.dart';
 
-
+import '../../signup_screen.dart';
 import 'onboard_content.dart';
+
 const List<Map<String, String>> onboardData = [
   {
-    'text': "Welcome to CineMate! We're excited to help you plan the perfect movie night for you and your friends.",
+    'text':
+        "Welcome to CineMate! We're excited to help you plan the perfect movie night for you and your friends.",
     'image': 'assets/illustrations/Signup.png',
-    'heading':'Introduction'
+    'heading': 'Introduction'
   },
   {
-    'text': "Can't remember the name of that movie you loved? Or maybe you're looking for something new to watch that fits your mood. With Movie Night Planner, you can easily search for movies by keywords",
+    'text':
+        "Can't remember the name of that movie you loved? Or maybe you're looking for something new to watch that fits your mood. With Movie Night Planner, you can easily search for movies by keywords",
     'image': 'assets/illustrations/Signup.png',
-    'heading':'Search Movies'
+    'heading': 'Search Movies'
   },
   {
-    'text': "Can't decide what to watch? Let Movie Night Planner help you discover the best movies of the moment. Whether you're looking for the latest blockbusters, the most critically acclaimed indie films, or the hottest streaming trends, we've got you covered.",
+    'text':
+        "Can't decide what to watch? Let Movie Night Planner help you discover the best movies of the moment. Whether you're looking for the latest blockbusters, the most critically acclaimed indie films, or the hottest streaming trends, we've got you covered.",
     'image': 'assets/illustrations/Signup.png',
-    'heading':'Explore'
+    'heading': 'Explore'
   },
 ];
 
@@ -29,6 +34,7 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  User? user = FirebaseAuth.instance.currentUser;
   int _currentPage = 0;
   late PageController _controller;
 
@@ -68,7 +74,9 @@ class _BodyState extends State<Body> {
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const HomeScreen(),
+                            builder: (context) => user != null
+                                ? const HomeScreen()
+                                : const SignUpScreen(),
                           ),
                         );
                       },
