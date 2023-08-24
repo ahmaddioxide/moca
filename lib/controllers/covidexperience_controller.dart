@@ -23,6 +23,14 @@ class CovidExperienceController extends GetxController {
   }) async {
     debugPrint('submitForm() called');
     try {
+      ///storing page info if page has been used of user in firestore
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(currentUser!.uid)
+          .set({
+        'pages': FieldValue.arrayUnion(['covid_experience']),
+      }, SetOptions(merge: true));
+      ////storing data of user in firestore
       await FirebaseFirestore.instance
           .collection('users')
           .doc(currentUser!.uid)
