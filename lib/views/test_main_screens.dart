@@ -31,12 +31,12 @@ class _MainTestScreenState extends State<MainTestScreen> {
     super.initState();
     SharedPreferences.getInstance().then((prefs) {
       setState(() {
-        _unlockedGames = prefs.getInt('nextGame')!;
+        _unlockedGames = prefs.getInt('nextGame');
       });
     });
   }
 
-  int _unlockedGames = 1;
+  int? _unlockedGames = 1;
 
   void _playGame(gameNumber) {
     if (gameNumber == _unlockedGames) {
@@ -91,7 +91,7 @@ class _MainTestScreenState extends State<MainTestScreen> {
         context: context,
         builder: (context) => AlertDialog(
           title: const Text('Game Locked'),
-          content: Text('You need to complete Game ${gameNumber - 1} first.'),
+          content: Text('You need to complete Game $_unlockedGames  first.'),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
