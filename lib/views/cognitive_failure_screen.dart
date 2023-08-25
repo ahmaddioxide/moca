@@ -155,7 +155,16 @@ class _CognitiveFailureState extends State<CognitiveFailure> {
                                 }
                               });
                             } catch (e) {
-                              print(e);
+                              setState(() {
+                                _isloading = false;
+                              });
+                              Get.snackbar(
+                                'Error',
+                                'Something went wrong',
+                                snackPosition: SnackPosition.BOTTOM,
+                                backgroundColor: Colors.red,
+                                colorText: Colors.white,
+                              );
                             }
                           },
                           child: _isloading == true
