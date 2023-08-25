@@ -29,7 +29,10 @@ class Classifier {
 
       _interpreter.allocateTensors();
     } catch (e) {
-      print("Error while creating interpreter: $e");
+      Get.snackbar('Error', "Error loading model",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.red,
+          colorText: Colors.white);
     }
   }
 
@@ -55,7 +58,6 @@ class Classifier {
     final input = inputBytes.reshape([1, 150, 150, 3]);
     final output = List.filled(1 * 2, 0).reshape([1, 2]);
     interpreter.run(input, output);
-    print(output.toString());
     return output;
   }
 }
@@ -171,10 +173,10 @@ class _DrawingScreenState extends State<DrawingScreen> {
             var results = await classifier.predict(
               img.decodeImage(imageFile.readAsBytesSync())!,
             );
-            print(results.toString());
+
             processResult(results);
             sf.setInt('nextGame', 3);
-            Get.to(() => ClockTestScreen());
+            Get.to(() => const ClockTestScreen());
             // Navigator.push(
             //   context,
             //   MaterialPageRoute(
@@ -188,7 +190,10 @@ class _DrawingScreenState extends State<DrawingScreen> {
           }
         }
       } catch (e) {
-        print('Error saving drawing: $e');
+        Get.snackbar('Error', "Error saving drawing",
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.red,
+            colorText: Colors.white);
       }
     }
   }
