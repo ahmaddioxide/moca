@@ -26,17 +26,16 @@ class MainTestScreen extends StatefulWidget {
 
 class _MainTestScreenState extends State<MainTestScreen> {
   late int gameNumber;
+  late int _unlockedGames = 1;
   @override
   void initState() {
     super.initState();
     SharedPreferences.getInstance().then((prefs) {
       setState(() {
-        _unlockedGames = prefs.getInt('nextGame');
+        _unlockedGames = prefs.getInt('nextGame') ?? 1;
       });
     });
   }
-
-  int? _unlockedGames = 1;
 
   void _playGame(gameNumber) {
     if (gameNumber == _unlockedGames) {
