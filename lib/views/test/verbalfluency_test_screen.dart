@@ -175,26 +175,24 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
           },
           onLongPressUp: _stopListening,
           child: CircleAvatar(
-              backgroundColor: starttest
-                  ? Colors.deepPurple
-                  : isTimerStarted
-                      ? Colors.deepPurple
-                      : Colors.grey,
-              radius: 40,
-              child: Icon(
-                  starttest
-                      ? Icons.double_arrow_rounded
-                      : _controller.isListening.value
-                          ? Icons.mic
-                          : Icons.mic_none,
-                  color: Colors.white,
-                  size: 40,
-                ),
-              ),
+            backgroundColor: starttest
+                ? Colors.deepPurple
+                : isTimerStarted
+                    ? Colors.deepPurple
+                    : Colors.grey,
+            radius: 40,
+            child: Icon(
+              starttest
+                  ? Icons.double_arrow_rounded
+                  : _controller.isListening.value
+                      ? Icons.mic
+                      : Icons.mic_none,
+              color: Colors.white,
+              size: 40,
             ),
           ),
-
-
+        ),
+      ),
     );
   }
 
@@ -258,7 +256,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
           TextButton(
             onPressed: () {
               sf.setInt('nextGame', 12);
-              Get.offAll(() => AbstractionScreen());
+              Get.offAll(() => const AbstractionScreen());
             },
             child: const Text(
               'Next',
