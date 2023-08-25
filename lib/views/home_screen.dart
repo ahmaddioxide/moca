@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:moca/controllers/homescreen_controller%20.dart';
@@ -9,6 +10,7 @@ import 'package:moca/views/symptoms_ongoing_illness_screen.dart';
 import 'package:moca/views/test_main_screens.dart';
 
 import 'cognitive_failure_screen.dart';
+import 'on_boarding_screens/on_boarding_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -18,7 +20,10 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   final HomeScreenController _controller = Get.put(HomeScreenController());
+  ////signout button
+
   //alert dialog which shows the information about the app
   void _showAlert() {
     Get.defaultDialog(
@@ -56,12 +61,23 @@ class _HomeScreenState extends State<HomeScreen> {
           centerTitle: true,
           actions: [
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.fromLTRB(8.0, 0.0, 1.0, 0.0),
               child: IconButton(
                 onPressed: () {
                   _showAlert();
                 },
                 icon: const Icon(Icons.info_outlined),
+                color: Colors.deepPurple,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(1.0, 0.0, 2.0, 0.0),
+              child: IconButton(
+                onPressed: () async {
+                  await _auth.signOut();
+                  Get.offAll(() => const OnBoardingPage());
+                },
+                icon: const Icon(Icons.exit_to_app),
                 color: Colors.deepPurple,
               ),
             ),
