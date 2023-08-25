@@ -89,7 +89,7 @@ class _ClockTestScreenState extends State<ClockTestScreen> {
                                 _controller.increaseScore();
                               }
                             }
-                            await sf.setInt('nextGame', 3);
+                            await sf.setInt('nextGame', 4);
                             await _controller.saveScoreToFirestore();
                             Get.offAll(() => const AnimalNameGuessScreen());
                           },
