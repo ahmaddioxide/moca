@@ -142,7 +142,7 @@ class _DotScreenState extends State<ConnectingDotsScreen> {
     }
     Future.delayed(const Duration(seconds: 3));
     {
-      sf.setInt('nextGame', 1);
+      sf.setInt('nextGame', 2);
       Get.offAll(() => const DrawingScreen());
     }
   }
