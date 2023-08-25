@@ -134,9 +134,7 @@ class CognitiveFailureController extends GetxController {
         }
       });
     } catch (e) {
-      print("congnitive failure error controller");
-      print(e);
-      Get.snackbar("error", e.toString());
+      Get.snackbar("error", "An error occurred while submitting the survey");
     }
     // Reset the ratings after submission
     ratings.clear();
