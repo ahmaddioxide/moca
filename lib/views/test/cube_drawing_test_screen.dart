@@ -7,6 +7,7 @@ import 'package:moca/views/test/visuospatial_clock_test_screen.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:image/image.dart' as img;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
 
 import '../../controllers/cube_drawing_controller.dart';
@@ -67,6 +68,17 @@ class DrawingScreen extends StatefulWidget {
 }
 
 class _DrawingScreenState extends State<DrawingScreen> {
+  late SharedPreferences sf;
+  @override
+  void initState() {
+    super.initState();
+    initalizeSharedPref();
+  }
+
+  Future<void> initalizeSharedPref() async {
+    sf = await SharedPreferences.getInstance();
+  }
+
   List<Offset> _points = <Offset>[];
 
   final classifier = Classifier();
@@ -161,6 +173,7 @@ class _DrawingScreenState extends State<DrawingScreen> {
             );
             print(results.toString());
             processResult(results);
+            sf.setInt('nextGame', 3);
             Get.to(() => ClockTestScreen());
             // Navigator.push(
             //   context,
