@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:moca/views/test/backward_test_screen.dart';
+import 'package:moca/views/test/forward_test_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -205,67 +207,72 @@ class HomeScreen extends StatelessWidget {
                       left: 16.0,
                       right: 16.0,
                     ),
-                    child: Container(
-                      height: height * .25,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.white,
-                          width: 2,
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.pink.withOpacity(0.4),
-                            spreadRadius: 2,
-                            blurRadius: 2,
-                            offset: const Offset(
-                                0, 3), // changes position of shadow
+                    child: GestureDetector(
+                      onTap: (){
+                        Get.to(() => const BackwardDigitSpan());
+                      },
+                      child: Container(
+                        height: height * .25,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.white,
+                            width: 2,
                           ),
-                        ],
-                        // color: Colors.black26,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              left: 16,
-                              top: 16,
-                              bottom: 16,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.pink.withOpacity(0.4),
+                              spreadRadius: 2,
+                              blurRadius: 2,
+                              offset: const Offset(
+                                  0, 3), // changes position of shadow
                             ),
-                            child: SizedBox(
-                              height: height * .2,
-                              width: width * .2,
-                              child: Image.asset(
-                                'assets/images/bacteria.png',
+                          ],
+                          // color: Colors.black26,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                left: 16,
+                                top: 16,
+                                bottom: 16,
+                              ),
+                              child: SizedBox(
                                 height: height * .2,
                                 width: width * .2,
-                                fit: BoxFit
-                                    .contain, // Make sure the image fits within the available space
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: width * .05,
-                          ),
-                          const Expanded(
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                right: 10.0,
-                                top: 10.0,
-                                bottom: 10.0,
-                              ),
-                              child: Text(
-                                'MONTREAL COGNITIVE ASSESSMENT (MoCA)',
-                                style: TextStyle(
-                                  overflow: TextOverflow.visible,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
+                                child: Image.asset(
+                                  'assets/images/bacteria.png',
+                                  height: height * .2,
+                                  width: width * .2,
+                                  fit: BoxFit
+                                      .contain, // Make sure the image fits within the available space
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                            SizedBox(
+                              width: width * .05,
+                            ),
+                            const Expanded(
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                  right: 10.0,
+                                  top: 10.0,
+                                  bottom: 10.0,
+                                ),
+                                child: Text(
+                                  'MONTREAL COGNITIVE ASSESSMENT (MoCA)',
+                                  style: TextStyle(
+                                    overflow: TextOverflow.visible,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),

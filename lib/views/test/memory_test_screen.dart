@@ -166,7 +166,7 @@ class MemoryTestScreenState extends State<MemoryTestScreen> {
                         }
                       }
                       if (_controller.currentTrial.value == 2) {
-                        _controller.saveData(wordList, recognizedWordsList);
+                        // _controller.saveData(wordList, recognizedWordsList);
                         Future.delayed(const Duration(seconds: 3), () {
                           alertdialog();
                         });
