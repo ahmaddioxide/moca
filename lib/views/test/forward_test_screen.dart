@@ -162,14 +162,30 @@ class _ForwardDigitState extends State<ForwardDigitSpan> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(
-            padding: EdgeInsets.only(top: 5.0, left: 16.0),
-            child: Text(
-              'Forward Digit Span',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
+           Padding(
+            padding: EdgeInsets.only(top: 5.0, left: 16.0, right: 16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  'Forward Digit Span',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Obx(
+                      () => Text(
+                    '${_controller.remainingSeconds}',
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.deepPurple,
+                    ),
+                  ),
+                ),
+
+              ],
             ),
           ),
           const Padding(
@@ -193,61 +209,36 @@ class _ForwardDigitState extends State<ForwardDigitSpan> {
           //     ),
           //   ),
           // ),
-          Padding(
-            padding: const EdgeInsets.only(
-                top: 5.0, left: 16.0, bottom: 16.0, right: 12.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'Numbers:',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Obx(
-                  () => Text(
-                    '${_controller.remainingSeconds}',
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.deepPurple,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Center(
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Row(
-                  children: [
-                    for (var number in numbers) ...[
-                      const SizedBox(width: 8),
-                      Chip(
-                        label: Text(
-                          number,
-                          style: const TextStyle(
-                              fontSize: 18, color: Colors.deepPurple),
-                        ),
-                      ),
-                    ],
-                  ],
-                ),
-              ),
-            ),
-          ),
-          SizedBox(height: height * 0.05),
+          // Center(
+          //   child: SingleChildScrollView(
+          //     scrollDirection: Axis.horizontal,
+          //     child: Padding(
+          //       padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          //       child: Row(
+          //         children: [
+          //           for (var number in numbers) ...[
+          //             const SizedBox(width: 8),
+          //             Chip(
+          //               label: Text(
+          //                 number,
+          //                 style: const TextStyle(
+          //                     fontSize: 18, color: Colors.deepPurple),
+          //               ),
+          //             ),
+          //           ],
+          //         ],
+          //       ),
+          //     ),
+          //   ),
+          // ),
+          SizedBox(height: height * 0.02),
           const Divider(
             thickness: 1,
             indent: 16,
             endIndent: 16,
             color: Colors.deepPurple,
           ),
+          SizedBox(height: height * 0.1),
           Padding(
             padding: const EdgeInsets.only(top: 50),
             child: SingleChildScrollView(
