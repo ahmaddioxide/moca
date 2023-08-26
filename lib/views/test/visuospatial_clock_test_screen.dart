@@ -28,7 +28,7 @@ class _ClockTestScreenState extends State<ClockTestScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Select Time'),
+        title: const Text('Please Select Time "10 past 11"'),
       ),
       body: Center(
         child: Column(
