@@ -39,7 +39,7 @@ This Flutter app is designed to conduct cognitive assessments and collect user d
    ```bash
    flutter run
    ```
-5. Configure Firebase Firestore:
+5. Configure Firebase Firestore:itn
 
 - Create a Firebase project at Firebase Console.
 - Enable Firestore as the backend database for your project.

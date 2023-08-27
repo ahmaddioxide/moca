@@ -8,21 +8,20 @@ import 'onboard_content.dart';
 const List<Map<String, String>> onboardData = [
   {
     'text':
-        "Welcome to CineMate! We're excited to help you plan the perfect movie night for you and your friends.",
-    'image': 'assets/illustrations/Signup.png',
+        "Welcome to MOCA.",
+    'image': 'assets/illustrations/onboarding1.jpg',
+    'heading': 'Welcome'
+  },
+  {
+    'text':
+        "Here, you can find out what your cognitive strengths are, track your progress, and get personalised recommendations to improve your faculties, all the while contributing to the latest brain research.",
+    'image': 'assets/illustrations/onboarding2.jpg',
     'heading': 'Introduction'
   },
   {
-    'text':
-        "Can't remember the name of that movie you loved? Or maybe you're looking for something new to watch that fits your mood. With Movie Night Planner, you can easily search for movies by keywords",
+    'text':"Currently, we are researching the impact of Long COVID on memory and cognition. To become a part of this research, and test your cognitive abilities, please sign up.",
     'image': 'assets/illustrations/Signup.png',
-    'heading': 'Search Movies'
-  },
-  {
-    'text':
-        "Can't decide what to watch? Let Movie Night Planner help you discover the best movies of the moment. Whether you're looking for the latest blockbusters, the most critically acclaimed indie films, or the hottest streaming trends, we've got you covered.",
-    'image': 'assets/illustrations/Signup.png',
-    'heading': 'Explore'
+    'heading': 'Jump In'
   },
 ];
 
