@@ -33,11 +33,13 @@ class _HomeScreenState extends State<HomeScreen> {
         fontWeight: FontWeight.bold,
         fontSize: 20,
       ),
-      content: const Text(
-        'Details: \n MOCA is a mobile application that aims to help the medical professionals to collect data from patients in a more efficient way. Information: \n It is a digital version of the paper-based questionnaire that is used to collect data from patients. The app is developed by the students of the Air University as a part of the final year project.',
-        style: TextStyle(
-          color: Colors.black,
-          fontSize: 16,
+      content: const SingleChildScrollView(
+        child: Text(
+          "MOCA is a not-for-profit initiative by the students of Fazaia Medical College dedicated to promoting research, education, and public engagement in neurocognitive science in Pakistan. Our self-assessment tool uses two high-quality, scientifically valid cognitive tests, the Cognitive Failures Questionnaire (DE Broadbent and colleagues) and the Montreal Cognitive Assessment (ZS Nasreddine and colleagues), to provide personalized feedback and recommendations that will help you learn more about your brain, and make lifestyle choices to improve your cognitive health. Your participation, in turn, helps us understand more about the cognitive functions of the brain–mental processes that allow us to receive, store, transform, develop and recover information–and how they change with age, lifestyle and disease.",
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 16,
+          ),
         ),
       ),
       textConfirm: 'OK',
