@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:moca/views/animal_name_screen.dart';
-import 'package:moca/views/test_main_screens.dart';
+import 'package:moca/views/home_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../controllers/cognitive_failure_controller.dart';
 
 class CognitiveFailure extends StatefulWidget {
-  CognitiveFailure({super.key});
+  const CognitiveFailure({super.key});
 
   @override
   State<CognitiveFailure> createState() => _CognitiveFailureState();
@@ -144,16 +143,29 @@ class _CognitiveFailureState extends State<CognitiveFailure> {
                             setState(() {
                               _isloading = true;
                             });
-                            await _cognitiveFailureController
-                                .submitSurvey()
-                                .then((value) {
-                              if (value) {
-                                setState(() {
-                                  _isloading = false;
-                                });
-                                Get.offAll(() => const MainTestScreen());
-                              }
-                            });
+                            try {
+                              await _cognitiveFailureController
+                                  .submitSurvey()
+                                  .then((value) {
+                                if (value) {
+                                  setState(() {
+                                    _isloading = false;
+                                  });
+                                  Get.offAll(() => const HomeScreen());
+                                }
+                              });
+                            } catch (e) {
+                              setState(() {
+                                _isloading = false;
+                              });
+                              Get.snackbar(
+                                'Error',
+                                'Something went wrong',
+                                snackPosition: SnackPosition.BOTTOM,
+                                backgroundColor: Colors.red,
+                                colorText: Colors.white,
+                              );
+                            }
                           },
                           child: _isloading == true
                               ? const Row(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:moca/views/home_screen.dart';
 import 'package:moca/views/signup_screen.dart';
-import 'package:moca/views/sociodemographic_sceen.dart';
 import '../controllers/login_controller.dart';
 
 class LogInScreen extends StatefulWidget {
@@ -153,7 +153,7 @@ class _LogInScreenState extends State<LogInScreen> {
                                       _isloading = false;
                                     });
                                     Get.to(
-                                      () => const SocioDemographicScreen(),
+                                      () => const HomeScreen(),
                                     );
                                   } else {
                                     setState(() {

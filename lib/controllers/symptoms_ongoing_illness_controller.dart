@@ -52,8 +52,15 @@ class SymptomsOnGoingIllnessController extends GetxController {
     lossOfAppetite,
   }) async {
     try {
+      ///storing page info if page has been used of user in firestore
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(currentUser!.uid)
+          .set({
+        'pages': FieldValue.arrayUnion(['symptoms_ongoing_illness']),
+      }, SetOptions(merge: true));
+      ////storing data of user in firestore
       debugPrint('submitForm() called');
-
       await FirebaseFirestore.instance
           .collection('users')
           .doc(currentUser!.uid)

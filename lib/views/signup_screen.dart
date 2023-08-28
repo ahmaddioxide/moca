@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:moca/views/sociodemographic_sceen.dart';
+import 'package:moca/views/home_screen.dart';
 import '../controllers/signup_controller.dart';
 import 'login_screen.dart';
 
@@ -231,7 +231,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     _isloading = false;
                                   });
                                   Get.offAll(
-                                    () => const SocioDemographicScreen(),
+                                    () => const HomeScreen(),
                                   );
                                 }
                               });

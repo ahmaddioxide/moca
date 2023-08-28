@@ -13,6 +13,15 @@ class MedicalHistoryController extends GetxController {
       {diet, physicalActivity, smoke, medicalCondition}) async {
     debugPrint('submitForm() called');
     try {
+      ///storing page info if page has been used of user in firestore
+
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(currentUser!.uid)
+          .set({
+        'pages': FieldValue.arrayUnion(['medical_history']),
+      }, SetOptions(merge: true));
+      ////storing data of user in firestore
       await FirebaseFirestore.instance
           .collection('users')
           .doc(currentUser!.uid)

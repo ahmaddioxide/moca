@@ -1,22 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:moca/controllers/clock_test_controller.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../animal_name_screen.dart';
 
+class ClockTestScreen extends StatefulWidget {
+  const ClockTestScreen({super.key});
+  @override
+  State<ClockTestScreen> createState() => _ClockTestScreenState();
+}
 
-
-class ClockTestScreen extends StatelessWidget {
+class _ClockTestScreenState extends State<ClockTestScreen> {
   final ClockTestController _controller = Get.put(ClockTestController());
+  late SharedPreferences sf;
+  @override
+  initState() {
+    super.initState();
+    initalizeSharedPref();
+  }
 
-   ClockTestScreen({super.key});
+  Future<void> initalizeSharedPref() async {
+    sf = await SharedPreferences.getInstance();
+  }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Select Time'),
+        title: const Text('Please Select Time "10 past 11"'),
       ),
       body: Center(
         child: Column(
@@ -50,42 +62,44 @@ class ClockTestScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             Obx(
-                  () => _controller.isLoading.value
+              () => _controller.isLoading.value
                   ? const CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.deepPurple),
-              )
+                      valueColor:
+                          AlwaysStoppedAnimation<Color>(Colors.deepPurple),
+                    )
                   : DecoratedBox(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: Colors.deepPurple,
-                ),
-                child: SizedBox(
-                  width: 200,
-                  height: 46,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.deepPurple,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        color: Colors.deepPurple,
+                      ),
+                      child: SizedBox(
+                        width: 200,
+                        height: 46,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.deepPurple,
+                          ),
+                          onPressed: () async {
+                            if (_controller.selectedTime != null) {
+                              _controller.increaseScore();
+                              if (_controller.selectedTime!.hour == 11) {
+                                _controller.increaseScore();
+                              }
+                              if (_controller.selectedTime!.minute == 10) {
+                                _controller.increaseScore();
+                              }
+                            }
+                            await sf.setInt('nextGame', 4);
+                            await _controller.saveScoreToFirestore();
+                            Get.offAll(() => const AnimalNameGuessScreen());
+                          },
+                          child: const Text(
+                            'Submit',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
                     ),
-                    onPressed: () async {
-                      if (_controller.selectedTime != null) {
-                        _controller.increaseScore();
-                        if (_controller.selectedTime!.hour == 11) {
-                          _controller.increaseScore();
-                        }
-                        if (_controller.selectedTime!.minute == 10) {
-                          _controller.increaseScore();
-                        }
-                      }
-                      await _controller.saveScoreToFirestore();
-                      Get.offAll(() => const AnimalNameGuessScreen());
-                    },
-                    child: const Text(
-                      'Submit',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                ),
-              ),
             ),
           ],
         ),

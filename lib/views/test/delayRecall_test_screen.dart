@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'package:avatar_glow/avatar_glow.dart';
-
-import 'package:moca/views/test/forward_test_screen.dart';
 import 'package:moca/views/test/orientation_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:speech_to_text/speech_to_text.dart';
@@ -51,7 +48,6 @@ class DelayRecallScreenState extends State<DelayRecallScreen> {
     isTimerStarted = true;
     _controller.timeDuration();
     _countdownTimer();
-
   }
 
   void _countdownTimer() async {
