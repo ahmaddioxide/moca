@@ -31,10 +31,18 @@ class OreientationController extends GetxController {
 
         // final DocumentReference resultDoc = resultsCollection.doc('result'); // Use 'result' as the document name
 
+        int score = 0;
+        if(isDayCorrect.value) {
+          score=4;
+        }
+        if(isPlaceCorrect.value) {
+          score=score++;
+        }
+        if(isCityCorrect.value) {
+          score=score++;
+        }
         await userDoc.update({'date_verification_results':{
-          'isDayCorrect': isDayCorrect.value,
-          'isPlaceCorrect': isPlaceCorrect.value,
-          'isCityCorrect': isCityCorrect.value,
+          'orientation_score':score,
         }});
       } catch (error) {
         // Handle Firestore error
