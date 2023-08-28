@@ -188,7 +188,6 @@ class _ForwardDigitState extends State<ForwardDigitSpan> {
               ],
             ),
           ),
-<
           const Padding(
             padding: EdgeInsets.only(
                 top: 5.0, left: 16.0, bottom: 16.0, right: 12.0),

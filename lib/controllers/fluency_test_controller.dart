@@ -6,7 +6,7 @@ import 'package:moca/controllers/firebase_const.dart';
 
 class FluencyTestController extends GetxController {
   final CollectionReference _scoresCollection =
-  FirebaseFirestore.instance.collection('test');
+  FirebaseFirestore.instance.collection('users');
 
   RxInt score = 0.obs;
   RxBool isListening = false.obs;

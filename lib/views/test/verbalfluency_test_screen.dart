@@ -235,6 +235,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
 
   void _showDialog() {
     showDialog(
+      barrierDismissible: false,
       context: context,
       builder: (context) => AlertDialog(
         title: const Text(
