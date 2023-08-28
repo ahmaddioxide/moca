@@ -16,9 +16,25 @@ class AbstractionController extends GetxController {
       final DocumentReference userDoc = userCollection.doc(currentUser.uid);
       // final CollectionReference resultsCollection =
       // userDoc.collection('abstraction_results');
+ int numberOfTrues = 0;
+ int result = 0;
+       for (int i = 0; i < taskResults.length; i++) {
+          if (taskResults[i] == true) {
+            numberOfTrues++;
+          }
+        }
 
+       if(numberOfTrues>=2) {
+         result = 2;
+       }
+        else if(numberOfTrues==1) {
+          result = 1;
+        }
+        else {
+          result = 0;
+        }
       await userDoc.update({
-        'abstraction_results': {'taskResults': taskResults}
+        'abstraction_results': {'taskResults': result}
       }).then((value) {
         Get.snackbar('Success', "Task results saved successfully.",
             backgroundColor: Colors.green,

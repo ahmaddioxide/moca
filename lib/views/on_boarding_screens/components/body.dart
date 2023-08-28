@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:moca/views/home_screen.dart';
 
+import '../../login_screen.dart';
 import '../../signup_screen.dart';
 import 'onboard_content.dart';
 
@@ -136,7 +137,9 @@ class _BodyState extends State<Body> {
                                   Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => const HomeScreen(),
+                                      builder: (context) => user != null
+                                          ? const HomeScreen()
+                                          : const SignUpScreen(),
                                     ),
                                   );
                                 } else {
