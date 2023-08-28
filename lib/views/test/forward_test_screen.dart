@@ -219,28 +219,28 @@ class _ForwardDigitState extends State<ForwardDigitSpan> {
               ],
             ),
           ),
-          Center(
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Row(
-                  children: [
-                    for (var number in numbers) ...[
-                      const SizedBox(width: 8),
-                      Chip(
-                        label: Text(
-                          number,
-                          style: const TextStyle(
-                              fontSize: 18, color: Colors.deepPurple),
-                        ),
-                      ),
-                    ],
-                  ],
-                ),
-              ),
-            ),
-          ),
+          // Center(
+          //   child: SingleChildScrollView(
+          //     scrollDirection: Axis.horizontal,
+          //     child: Padding(
+          //       padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          //       child: Row(
+          //         children: [
+          //           for (var number in numbers) ...[
+          //             const SizedBox(width: 8),
+          //             Chip(
+          //               label: Text(
+          //                 number,
+          //                 style: const TextStyle(
+          //                     fontSize: 18, color: Colors.deepPurple),
+          //               ),
+          //             ),
+          //           ],
+          //         ],
+          //       ),
+          //     ),
+          //   ),
+          // ),
           SizedBox(height: height * 0.05),
           const Divider(
             thickness: 1,
