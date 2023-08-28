@@ -9,6 +9,7 @@ import 'package:moca/views/symptoms_initial_illness_screen.dart';
 import 'package:moca/views/symptoms_ongoing_illness_screen.dart';
 import 'package:moca/views/test_main_screens.dart';
 
+
 import 'cognitive_failure_screen.dart';
 import 'on_boarding_screens/on_boarding_screen.dart';
 
@@ -330,6 +331,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             builder: (context) => const MainTestScreen(),
                           ),
                         );
+
                       },
                       child: Container(
                         height: height * .25,

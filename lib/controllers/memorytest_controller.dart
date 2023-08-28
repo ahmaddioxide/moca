@@ -41,27 +41,27 @@ class MemoryTestController extends GetxController {
     currentTrial.value++;
   }
 
-  void saveData(wordList, recognizedWordsList) async {
-    try {
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(currentUser!.uid)
-          .update({
-        'memory_test': {
-          'WordList': wordList.toList(),
-          'RecognizedWordList': recognizedWordsList.toList()
-        }
-      });
-      debugPrint('Word list saved successfully');
-    } catch (e) {
-      debugPrint('Error saving word list: $e');
-      Get.snackbar(
-        'Error',
-        'Some Error Occured! ',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
-    }
-  }
+  // void saveData(wordList, recognizedWordsList) async {
+  //   try {
+  //     await FirebaseFirestore.instance
+  //         .collection('users')
+  //         .doc(currentUser!.uid)
+  //         .update({
+  //       'memory_test': {
+  //         'WordList': wordList.toList(),
+  //         'RecognizedWordList': recognizedWordsList.toList()
+  //       }
+  //     });
+  //     debugPrint('Word list saved successfully');
+  //   } catch (e) {
+  //     debugPrint('Error saving word list: $e');
+  //     Get.snackbar(
+  //       'Error',
+  //       'Some Error Occured! ',
+  //       snackPosition: SnackPosition.BOTTOM,
+  //       backgroundColor: Colors.red,
+  //       colorText: Colors.white,
+  //     );
+  //   }
+  // }
 }
