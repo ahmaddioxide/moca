@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:moca/controllers/abstraction_controller.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AbstractionScreen extends StatefulWidget {
   const AbstractionScreen({super.key});
@@ -12,6 +13,16 @@ class AbstractionScreen extends StatefulWidget {
 class _AbstractionScreenState extends State<AbstractionScreen> {
   List<bool> taskResults = List<bool>.filled(3, false);
   final controller = Get.put(AbstractionController());
+  late SharedPreferences sf;
+  @override
+  initState() {
+    super.initState();
+    initalizeSharedPref();
+  }
+
+  Future<void> initalizeSharedPref() async {
+    sf = await SharedPreferences.getInstance();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,6 +96,7 @@ class _AbstractionScreenState extends State<AbstractionScreen> {
                       ),
                       onPressed: () async {
                         controller.submitTaskResults(taskResults);
+                        sf.setInt('nextGame', 13);
                       },
                       child: const Text(
                         'Submit',
