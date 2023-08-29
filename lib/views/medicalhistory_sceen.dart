@@ -14,7 +14,7 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
   bool _isloading = false;
   // Create an instance of the controller
   final MedicalHistoryController _controller =
-  Get.put(MedicalHistoryController());
+      Get.put(MedicalHistoryController());
 
   @override
   Widget build(BuildContext context) {
@@ -22,13 +22,13 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
       appBar: AppBar(
         title: const Center(
             child: Text(
-              'Medical History Data',
-              style: TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-                color: Colors.deepPurple,
-              ),
-            )),
+          'Medical History Data',
+          style: TextStyle(
+            fontSize: 28,
+            fontWeight: FontWeight.bold,
+            color: Colors.deepPurple,
+          ),
+        )),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -138,7 +138,7 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                       children: [
                         Radio(
                           value:
-                          'Protein: red meat, poultry, fish, eggs, beans',
+                              'Protein: red meat, poultry, fish, eggs, beans',
                           groupValue: _controller.diet,
                           onChanged: (value) {
                             setState(() {
@@ -202,7 +202,6 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                       children: [
                         Radio(
                           value: 'Occasional, light to moderate activity',
-
                           groupValue: _controller.physicalActivity,
                           onChanged: (value) {
                             setState(() {
@@ -562,19 +561,19 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                               _controller.medicalCondition != '') {
                             _controller
                                 .submitForm(
-                                diet: _controller.diet,
-                                physicalActivity:
-                                _controller.physicalActivity,
-                                smoke: _controller.smoke,
-                                medicalCondition:
-                                _controller.medicalCondition)
+                                    diet: _controller.diet,
+                                    physicalActivity:
+                                        _controller.physicalActivity,
+                                    smoke: _controller.smoke,
+                                    medicalCondition:
+                                        _controller.medicalCondition)
                                 .then((value) {
                               if (value == true) {
                                 setState(() {
                                   _isloading = false;
                                 });
                                 Get.offAll(
-                                      () => const CovidExperienceScreen(),
+                                  () => const CovidExperienceScreen(),
                                 );
                               }
                             });
@@ -583,49 +582,58 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                               _isloading = false;
                             });
                             Get.snackbar(
-                              'Missing Fields',
-                              'Please answer all the questions',
-                              snackPosition: SnackPosition.BOTTOM,
-                              backgroundColor: Colors.red,
+                              'Missing Fields!',
+                              'Please complete the form!',
+                              titleText: const Text(
+                                'Attention!',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                ),
+                              ),
+                              snackPosition: SnackPosition.TOP,
+                              backgroundColor: Colors.red.shade500,
                               colorText: Colors.white,
+                              snackStyle: SnackStyle.FLOATING,
                             );
                           }
                         },
                         child: _isloading == true
                             ? const Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              "Loading",
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            SizedBox(
-                              height: 20,
-                              width: 20,
-                              child: CircularProgressIndicator(
-                                valueColor:
-                                AlwaysStoppedAnimation(Colors.white),
-                                backgroundColor: Colors.blue,
-                                strokeWidth: 4,
-                              ),
-                            )
-                          ],
-                        )
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    "Loading",
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  SizedBox(
+                                    height: 20,
+                                    width: 20,
+                                    child: CircularProgressIndicator(
+                                      valueColor:
+                                          AlwaysStoppedAnimation(Colors.white),
+                                      backgroundColor: Colors.blue,
+                                      strokeWidth: 4,
+                                    ),
+                                  )
+                                ],
+                              )
                             : const Text(
-                          'Submit',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
+                                'Next ',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
+                              ),
                       ),
                     ),
                   ),
