@@ -59,7 +59,6 @@ class _ForwardDigitState extends State<ForwardDigitSpan> {
     _controller.remainingSeconds;
   }
 
-
   void nextTest() {
     sf.setInt('nextGame', 7);
     innNextScreen = true;
@@ -75,7 +74,6 @@ class _ForwardDigitState extends State<ForwardDigitSpan> {
     }
     _controller.isReading.value = false;
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -101,13 +99,14 @@ class _ForwardDigitState extends State<ForwardDigitSpan> {
                 _controller.isListening.value = true;
                 speechToText.listen(
                   onResult: (result) {
-                      _controller.text.value = result.recognizedWords;
-                      var recognizedWords = _controller.text.replaceAll('', ' ').split(' ');
-                      var numbersJoined = numbers.join('');
-                      if (recognizedWords.join('') == numbersJoined) {
-                        score++;
-                        _controller.incrementScore();
-                      }
+                    _controller.text.value = result.recognizedWords;
+                    var recognizedWords =
+                        _controller.text.replaceAll('', ' ').split(' ');
+                    var numbersJoined = numbers.join('');
+                    if (recognizedWords.join('') == numbersJoined) {
+                      score++;
+                      _controller.incrementScore();
+                    }
                   },
                 );
               }
@@ -132,9 +131,9 @@ class _ForwardDigitState extends State<ForwardDigitSpan> {
             () => CircleAvatar(
               backgroundColor: _controller.starttest.value
                   ? Colors.deepPurple
-                      :_controller.isReading.value
-                          ? Colors.grey
-                          : Colors.deepPurple,
+                  : _controller.isReading.value
+                      ? Colors.grey
+                      : Colors.deepPurple,
               radius: 40,
               child: Obx(
                 () => Icon(
@@ -162,8 +161,8 @@ class _ForwardDigitState extends State<ForwardDigitSpan> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-           Padding(
-            padding: EdgeInsets.only(top: 5.0, left: 16.0, right: 16),
+          Padding(
+            padding: const EdgeInsets.only(top: 5.0, left: 16.0, right: 16),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -175,7 +174,7 @@ class _ForwardDigitState extends State<ForwardDigitSpan> {
                   ),
                 ),
                 Obx(
-                      () => Text(
+                  () => Text(
                     '${_controller.remainingSeconds}',
                     style: const TextStyle(
                       fontSize: 18,
@@ -184,10 +183,13 @@ class _ForwardDigitState extends State<ForwardDigitSpan> {
                     ),
                   ),
                 ),
-
               ],
             ),
           ),
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
           const Padding(
             padding: EdgeInsets.only(
                 top: 5.0, left: 16.0, bottom: 16.0, right: 12.0),
@@ -258,7 +260,9 @@ class _ForwardDigitState extends State<ForwardDigitSpan> {
                         : _controller.text.value,
                     style: TextStyle(
                       fontSize: 20,
-                      color: _controller.isListening.value ? Colors.deepPurple : Colors.black54,
+                      color: _controller.isListening.value
+                          ? Colors.deepPurple
+                          : Colors.black54,
                     ),
                     textAlign: TextAlign.center,
                   ),
