@@ -1,7 +1,4 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:moca/controllers/firebase_const.dart';
 
 class MemoryTestController extends GetxController {
   RxList<String> wordList = <String>[].obs;
