@@ -1617,11 +1617,20 @@ class _SymptomsOnGoingIllnessScreenState
                             });
                             debugPrint('Error: $e');
                             Get.snackbar(
-                              'Error',
-                              'Error: $e',
-                              snackPosition: SnackPosition.BOTTOM,
-                              backgroundColor: Colors.red,
+                              'Attention!',
+                              'Some Error Occured!',
+                              titleText: const Text(
+                                'Attention!',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                ),
+                              ),
+                              snackPosition: SnackPosition.TOP,
+                              backgroundColor: Colors.red.shade500,
                               colorText: Colors.white,
+                              snackStyle: SnackStyle.FLOATING,
                             );
                           }
                         },
@@ -1653,7 +1662,7 @@ class _SymptomsOnGoingIllnessScreenState
                                 ],
                               )
                             : const Text(
-                                'Submit',
+                                'Next',
                                 style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.w500,
