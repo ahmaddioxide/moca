@@ -1,15 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:moca/views/home_screen.dart';
-
-import '../../login_screen.dart';
 import '../../signup_screen.dart';
 import 'onboard_content.dart';
 
 const List<Map<String, String>> onboardData = [
   {
-    'text':
-        "Welcome to MOCA.",
+    'text': "Welcome to MOCA.",
     'image': 'assets/illustrations/onboarding1.jpg',
     'heading': 'Welcome'
   },
@@ -20,7 +17,8 @@ const List<Map<String, String>> onboardData = [
     'heading': 'Introduction'
   },
   {
-    'text':"Currently, we are researching the impact of Long COVID on memory and cognition. To become a part of this research, and test your cognitive abilities, please sign up.",
+    'text':
+        "Currently, we are researching the impact of Long COVID on memory and cognition. To become a part of this research, and test your cognitive abilities, please sign up.",
     'image': 'assets/illustrations/Signup.png',
     'heading': 'Jump In'
   },
