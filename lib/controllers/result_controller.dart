@@ -5,6 +5,7 @@ import 'package:moca/controllers/firebase_const.dart';
 
 //import 'package:moca/controllers/firebase_const.dart';
 int totalScore = 0;
+int cfq = 0;
 
 class ResultController extends GetxController {
   Future<int?> fetchUserAge() async {
@@ -216,6 +217,36 @@ class ResultController extends GetxController {
       }
 
       return totalScore;
+    } catch (e) {
+      Get.snackbar('Error', "Task results could not be saved.",
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+          snackPosition: SnackPosition.BOTTOM);
+      return 0;
+    }
+  }
+
+  Future<int?> fetchUserCfq() async {
+    try {
+      DocumentSnapshot userDoc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(currentUser?.uid)
+          .get();
+
+      if (userDoc.exists) {
+        Map<String, dynamic> userData = userDoc.data() as Map<String, dynamic>;
+        Map<String, dynamic>? surveyresults =
+            userData['survey_results'] as Map<String, dynamic>?;
+
+        for (var e in surveyresults!.entries) {
+          if (e.value != null && e.value.containsKey('rating')) {
+            cfq = (cfq + e.value['rating'] as int?)!;
+          }
+        }
+        return cfq as int?;
+      }
+
+      return 0;
     } catch (e) {
       Get.snackbar('Error', "Task results could not be saved.",
           backgroundColor: Colors.red,
