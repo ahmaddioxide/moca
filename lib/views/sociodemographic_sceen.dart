@@ -401,7 +401,7 @@ class _SocioDemographicScreenState extends State<SocioDemographicScreen> {
                                   Get.snackbar(
                                     'Error',
                                     'Complete the form! ',
-                                    snackPosition: SnackPosition.BOTTOM,
+                                    snackPosition: SnackPosition.TOP,
                                     backgroundColor: Colors.red,
                                     colorText: Colors.white,
                                   );
@@ -424,7 +424,7 @@ class _SocioDemographicScreenState extends State<SocioDemographicScreen> {
                               Get.snackbar(
                                 'Error',
                                 'Some Error Occured! ',
-                                snackPosition: SnackPosition.BOTTOM,
+                                snackPosition: SnackPosition.TOP,
                                 backgroundColor: Colors.red,
                                 colorText: Colors.white,
                               );
@@ -458,7 +458,7 @@ class _SocioDemographicScreenState extends State<SocioDemographicScreen> {
                                   ],
                                 )
                               : const Text(
-                                  'Submit',
+                                  'Next ',
                                   style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
