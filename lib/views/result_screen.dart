@@ -12,6 +12,7 @@ class ResultScreen extends StatefulWidget {
 
 class _ResultScreenState extends State<ResultScreen> {
   int? totalScore = 0;
+  int? totalCfq = 0;
   String? userName;
   String? userEmail;
   String? userGender;
@@ -40,19 +41,18 @@ class _ResultScreenState extends State<ResultScreen> {
         userGender = gender;
       });
     });
-
-    // _controller.userScorePer().then((per) {
-    //   setState(() {
-    //     totalScorePer = per;
-    //   });
-    // });
+    _controller.fetchUserCfq().then((cfq) {
+      setState(() {
+        totalCfq = cfq;
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
-    double percentage = (totalScore! / 30) * 100;
+    // double percentage = (totalScore! / 30) * 100;
     String message;
     String src = 'assets/illustrations/Signup.png';
     if (totalScore! <= 30 && totalScore! >= 26) {
@@ -167,7 +167,7 @@ class _ResultScreenState extends State<ResultScreen> {
                         Row(
                           children: [
                             const Text(
-                              "Your Score : ",
+                              "Games Score is: ",
                               style: TextStyle(
                                 fontSize: 28,
                                 color: Colors.black,
@@ -190,14 +190,14 @@ class _ResultScreenState extends State<ResultScreen> {
                         Row(
                           children: [
                             const Text(
-                              "You have Scored : ",
+                              "CFQ Score is : ",
                               style: TextStyle(
                                 fontSize: 28,
                                 color: Colors.black,
                               ),
                             ),
                             Text(
-                              percentage.toStringAsFixed(2),
+                              totalCfq.toString(),
                               style: const TextStyle(
                                 fontSize: 28,
                                 fontWeight: FontWeight.bold,
