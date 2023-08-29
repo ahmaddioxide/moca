@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../views/result_screen.dart';
+
 class OreientationController extends GetxController {
   final TextEditingController dayController = TextEditingController();
   final TextEditingController placeController = TextEditingController();
@@ -14,9 +16,8 @@ class OreientationController extends GetxController {
   RxBool isPlaceCorrect = false.obs;
   RxBool isCityCorrect = false.obs;
 
-
-  late DateTime selectedDayMonthYear ;
-  DateTime currentDateTime= DateTime.now();
+  late DateTime selectedDayMonthYear;
+  DateTime currentDateTime = DateTime.now();
 
   Future<void> saveResultsToFirestore() async {
     final User? currentUser = FirebaseAuth.instance.currentUser;
@@ -24,7 +25,7 @@ class OreientationController extends GetxController {
       try {
         // Save the results to Firestore
         final CollectionReference userCollection =
-        FirebaseFirestore.instance.collection('users');
+            FirebaseFirestore.instance.collection('users');
         final DocumentReference userDoc = userCollection.doc(currentUser.uid);
         // final CollectionReference resultsCollection =
         // userDoc.collection('date_verification_results');
@@ -32,18 +33,20 @@ class OreientationController extends GetxController {
         // final DocumentReference resultDoc = resultsCollection.doc('result'); // Use 'result' as the document name
 
         int score = 0;
-        if(isDayCorrect.value) {
-          score=4;
+        if (isDayCorrect.value) {
+          score = 4;
         }
-        if(isPlaceCorrect.value) {
-          score=score++;
+        if (isPlaceCorrect.value) {
+          score = score++;
         }
-        if(isCityCorrect.value) {
-          score=score++;
+        if (isCityCorrect.value) {
+          score = score++;
         }
-        await userDoc.update({'date_verification_results':{
-          'orientation_score':score,
-        }});
+        await userDoc.update({
+          'date_verification_results': {
+            'orientation_score': score,
+          }
+        });
       } catch (error) {
         // Handle Firestore error
         debugPrint('Firestore error: $error');
@@ -76,15 +79,29 @@ class OreientationController extends GetxController {
     );
     if (picked != null) {
       selectedDayMonthYear = picked;
-      dayController.text = "${selectedDayMonthYear.day} / ${selectedDayMonthYear.month} /${selectedDayMonthYear.year}";
+      dayController.text =
+          "${selectedDayMonthYear.day} / ${selectedDayMonthYear.month} /${selectedDayMonthYear.year}";
     }
   }
 
   void verifyInputs() {
-    isDayCorrect.value = dayController.text == "${currentDateTime.day} / ${currentDateTime.month} /${currentDateTime.year}";
-    isPlaceCorrect.value = placeController.text.toLowerCase() == 'islamabad'|| placeController.text == 'rawalpindi';
-    isCityCorrect.value = cityController.text.toLowerCase() == 'islamabad'|| cityController.text == 'rawalpindi';
+    try {
+      isDayCorrect.value = dayController.text ==
+          "${currentDateTime.day} / ${currentDateTime.month} /${currentDateTime.year}";
+      isPlaceCorrect.value =
+          placeController.text.toLowerCase() == 'islamabad' ||
+              placeController.text == 'rawalpindi';
+      isCityCorrect.value = cityController.text.toLowerCase() == 'islamabad' ||
+          cityController.text == 'rawalpindi';
 
-    saveResultsToFirestore();
+      saveResultsToFirestore();
+      Get.offAll(() => const ResultScreen());
+    } catch (e) {
+      Get.snackbar(
+        'Error',
+        'Failed to save results. Please try again.',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    }
   }
 }
