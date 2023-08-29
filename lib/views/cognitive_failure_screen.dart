@@ -159,11 +159,20 @@ class _CognitiveFailureState extends State<CognitiveFailure> {
                                 _isloading = false;
                               });
                               Get.snackbar(
-                                'Error',
-                                'Something went wrong',
-                                snackPosition: SnackPosition.BOTTOM,
-                                backgroundColor: Colors.red,
+                                'Attention!',
+                                'Some Error Occured!',
+                                titleText: const Text(
+                                  'Attention!',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                                snackPosition: SnackPosition.TOP,
+                                backgroundColor: Colors.red.shade500,
                                 colorText: Colors.white,
+                                snackStyle: SnackStyle.FLOATING,
                               );
                             }
                           },
