@@ -1,11 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:moca/controllers/orientation_controller.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class OrientationScreen extends StatelessWidget {
+class OrientationScreen extends StatefulWidget {
+  const OrientationScreen({super.key});
+
+  @override
+  State<OrientationScreen> createState() => _OrientationScreenState();
+}
+
+class _OrientationScreenState extends State<OrientationScreen> {
   final OreientationController controller = Get.put(OreientationController());
+  late SharedPreferences sf;
+  @override
+  initState() {
+    super.initState();
+    initalizeSharedPref();
+  }
 
-  OrientationScreen({super.key});
+  Future<void> initalizeSharedPref() async {
+    sf = await SharedPreferences.getInstance();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,8 +96,8 @@ class OrientationScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(12.0),
                       ),
                     ),
-                    onPressed: () {
-
+                    onPressed: () async {
+                      await sf.setInt('nextGame', 1);
                       controller.verifyInputs();
                     },
                     child: const Text(
@@ -95,13 +111,6 @@ class OrientationScreen extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 16.0),
-            const Text('Results:'),
-            Obx(() => Text('Is Day Correct? ${controller.isDayCorrect.value}')),
-            Obx(() =>
-                Text('Is Place Correct? ${controller.isPlaceCorrect.value}')),
-            Obx(() =>
-                Text('Is City Correct? ${controller.isCityCorrect.value}')),
           ],
         ),
       ),
