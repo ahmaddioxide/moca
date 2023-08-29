@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:moca/controllers/firebase_const.dart';
 
@@ -134,14 +135,46 @@ class CognitiveFailureController extends GetxController {
         }
       });
     } catch (e) {
-      Get.snackbar("error", "An error occurred while submitting the survey");
+      Get.snackbar(
+        'Attention!',
+        'An error occurred while submitting the survey',
+        titleText: const Text(
+          'Attention!',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),
+        ),
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.green.shade500,
+        colorText: Colors.white,
+        snackStyle: SnackStyle.FLOATING,
+      );
     }
+
     // Reset the ratings after submission
     ratings.clear();
     ratings.addAll(List<int>.filled(25, 0));
 
     // Show a success message or navigate to the next screen
-    Get.snackbar('Survey Submitted', 'Thank you for completing the survey!');
+
+    Get.snackbar(
+      'Survey Submitted!',
+      'Thank you for completing the survey!',
+      titleText: const Text(
+        'Survey Submitted!',
+        style: TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: 20,
+        ),
+      ),
+      snackPosition: SnackPosition.TOP,
+      backgroundColor: Colors.green.shade500,
+      colorText: Colors.white,
+      snackStyle: SnackStyle.FLOATING,
+    );
     return true;
   }
 
