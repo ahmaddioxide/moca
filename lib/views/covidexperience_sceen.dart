@@ -674,11 +674,20 @@ class _CovidExperienceScreenState extends State<CovidExperienceScreen> {
                                     _isloading = false;
                                   });
                                   Get.snackbar(
-                                    'Missing Fields',
-                                    'Please fill all the fields',
-                                    snackPosition: SnackPosition.BOTTOM,
-                                    backgroundColor: Colors.red,
+                                    'Missing Fields!',
+                                    'Please complete the form!',
+                                    titleText: const Text(
+                                      'Attention!',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                    snackPosition: SnackPosition.TOP,
+                                    backgroundColor: Colors.red.shade500,
                                     colorText: Colors.white,
+                                    snackStyle: SnackStyle.FLOATING,
                                   );
                                 }
                               } catch (e) {
@@ -687,11 +696,20 @@ class _CovidExperienceScreenState extends State<CovidExperienceScreen> {
                                 });
                                 debugPrint('Error: $e');
                                 Get.snackbar(
-                                  'Error',
-                                  'Error: $e',
-                                  snackPosition: SnackPosition.BOTTOM,
-                                  backgroundColor: Colors.red,
+                                  'Attention!',
+                                  'Some Error Occured!',
+                                  titleText: const Text(
+                                    'Attention!',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                  snackPosition: SnackPosition.TOP,
+                                  backgroundColor: Colors.red.shade500,
                                   colorText: Colors.white,
+                                  snackStyle: SnackStyle.FLOATING,
                                 );
                               }
                             },
@@ -723,7 +741,7 @@ class _CovidExperienceScreenState extends State<CovidExperienceScreen> {
                                     ],
                                   )
                                 : const Text(
-                                    'Submit',
+                                    'Next',
                                     style: TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
