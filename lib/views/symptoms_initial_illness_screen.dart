@@ -1004,12 +1004,14 @@ class _SymptomsInitialIllnessScreenState
                 const SizedBox(height: 8),
                 Row(
                   children: [
-                    const Text(
-                      'Depression / Anxiety',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.deepPurple,
+                    const Flexible(
+                      child: Text(
+                        'Depression / Anxiety',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.deepPurple,
+                        ),
                       ),
                     ),
                     const SizedBox(width: 10),

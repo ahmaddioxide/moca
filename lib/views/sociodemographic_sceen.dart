@@ -212,55 +212,67 @@ class _SocioDemographicScreenState extends State<SocioDemographicScreen> {
                 ),
                 Row(
                   children: [
-                    Radio(
-                      value: 'Rural',
-                      groupValue: _controller.residence,
-                      onChanged: (value) {
-                        setState(() {
-                          _controller.residence = value!;
-                        });
-                      },
-                    ),
-                    const Text(
-                      'Rural',
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.deepPurple,
-                        fontWeight: FontWeight.w500,
+                    Flexible(
+                      child: Radio(
+                        value: 'Rural',
+                        groupValue: _controller.residence,
+                        onChanged: (value) {
+                          setState(() {
+                            _controller.residence = value!;
+                          });
+                        },
                       ),
                     ),
-                    Radio(
-                      value: 'Semi-urban',
-                      groupValue: _controller.residence,
-                      onChanged: (value) {
-                        setState(() {
-                          _controller.residence = value!;
-                        });
-                      },
-                    ),
-                    const Text(
-                      'Semi-urban',
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.deepPurple,
-                        fontWeight: FontWeight.w500,
+                    const Flexible(
+                      child: Text(
+                        'Rural',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.deepPurple,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ),
-                    Radio(
-                      value: 'Urban',
-                      groupValue: _controller.residence,
-                      onChanged: (value) {
-                        setState(() {
-                          _controller.residence = value!;
-                        });
-                      },
+                    Flexible(
+                      child: Radio(
+                        value: 'Semi-urban',
+                        groupValue: _controller.residence,
+                        onChanged: (value) {
+                          setState(() {
+                            _controller.residence = value!;
+                          });
+                        },
+                      ),
                     ),
-                    const Text(
-                      'Urban',
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.deepPurple,
-                        fontWeight: FontWeight.w500,
+                    const Flexible(
+                      child: Text(
+                        'Semi-urban',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.deepPurple,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                    Flexible(
+                      child: Radio(
+                        value: 'Urban',
+                        groupValue: _controller.residence,
+                        onChanged: (value) {
+                          setState(() {
+                            _controller.residence = value!;
+                          });
+                        },
+                      ),
+                    ),
+                    const Flexible(
+                      child: Text(
+                        'Urban',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.deepPurple,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ),
                   ],

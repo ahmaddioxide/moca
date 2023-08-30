@@ -324,12 +324,14 @@ class _SymptomsOnGoingIllnessScreenState
                 const SizedBox(height: 8),
                 Row(
                   children: [
-                    const Text(
-                      'Itechy/Red/Dry Eyes',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.deepPurple,
+                    const Flexible(
+                      child: Text(
+                        'Itechy/Red/Dry Eyes',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.deepPurple,
+                        ),
                       ),
                     ),
                     const SizedBox(width: 20),
@@ -460,12 +462,14 @@ class _SymptomsOnGoingIllnessScreenState
                 const SizedBox(height: 8),
                 Row(
                   children: [
-                    const Text(
-                      'Loss Of Smell/Taste',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.deepPurple,
+                    const Flexible(
+                      child: Text(
+                        'Loss Of Smell/Taste',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.deepPurple,
+                        ),
                       ),
                     ),
                     const SizedBox(width: 20),
@@ -868,12 +872,14 @@ class _SymptomsOnGoingIllnessScreenState
                 const SizedBox(height: 8),
                 Row(
                   children: [
-                    const Text(
-                      'Poor Concentration',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.deepPurple,
+                    const Flexible(
+                      child: Text(
+                        'Poor Concentration',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.deepPurple,
+                        ),
                       ),
                     ),
                     const SizedBox(width: 20),
@@ -1072,12 +1078,14 @@ class _SymptomsOnGoingIllnessScreenState
                 const SizedBox(height: 8),
                 Row(
                   children: [
-                    const Text(
-                      'Depression/Anxiety',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.deepPurple,
+                    const Flexible(
+                      child: Text(
+                        'Depression/Anxiety',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.deepPurple,
+                        ),
                       ),
                     ),
                     const SizedBox(width: 20),

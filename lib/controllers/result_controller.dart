@@ -124,7 +124,7 @@ class ResultController extends GetxController {
           .collection('users')
           .doc(currentUser?.uid)
           .get();
-      /////DelayRecall_test_score
+
       if (userDoc.exists) {
         Map<String, dynamic> userData = userDoc.data() as Map<String, dynamic>;
         /////delayedRecalltest
@@ -205,6 +205,29 @@ class ResultController extends GetxController {
             dateverificationresults.containsKey('orientation_score')) {
           totalScore = totalScore +
               (dateverificationresults['orientation_score'] as int);
+        }
+        ////language_test_2
+        Map<String, dynamic>? languagetest1 =
+            userData['language_test_1'] as Map<String, dynamic>?;
+
+        if (languagetest1 != null && languagetest1.containsKey('score')) {
+          totalScore = totalScore + (languagetest1['score'] as int);
+        }
+        ////language_test_2
+        Map<String, dynamic>? languagetest2 =
+            userData['language_test_2'] as Map<String, dynamic>?;
+
+        if (languagetest2 != null &&
+            languagetest2.containsKey('fluency_test_sccore')) {
+          totalScore =
+              totalScore + (languagetest2['fluency_test_sccore'] as int);
+        }
+        ////memorytest
+        Map<String, dynamic>? memorytest =
+            userData['memory_test'] as Map<String, dynamic>?;
+
+        if (memorytest != null && memorytest.containsKey('score')) {
+          totalScore = totalScore + (memorytest['score'] as int);
         }
         ////visuospatial_draw_clock
         Map<String, dynamic>? visuospatialdrawclock =

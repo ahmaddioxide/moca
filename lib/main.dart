@@ -2,7 +2,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:moca/views/on_boarding_screens/on_boarding_screen.dart';
-import 'package:moca/views/result_screen.dart';
 import 'firebase_options.dart';
 
 void main() async {

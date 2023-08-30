@@ -15,15 +15,10 @@ class AnimalNameTestController extends GetxController {
           .update({
         'animal_name_test': {
           'score': score,
-          'id': currentUser!.uid,
+          //'id': currentUser!.uid,
         }
       });
-      //     .collection('animal_name_test')
-      //     .doc('data')
-      //     .set({
-      //   'score': score,
-      //   'id': currentUser!.uid,
-      // });
+
       return true;
     } catch (e) {
       debugPrint('Error: $e');

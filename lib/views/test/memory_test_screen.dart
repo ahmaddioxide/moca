@@ -179,6 +179,7 @@ class MemoryTestScreenState extends State<MemoryTestScreen> {
                           speakWordList();
                         });
                       }
+                      _controller.saveData(wordList, recognizedWordsList);
                     } else {
                       _controller.recognizedText.value = result.recognizedWords;
                     }

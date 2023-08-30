@@ -68,7 +68,7 @@ class SentenceRepetitionScreenState extends State<SentenceRepetitionScreen> {
     isTimerStarted = false;
     if (gotoNextSentence == false) {
       goToNextSentence();
-    }else if(gotoNextSentence == true && gotoNextScreen == false){
+    } else if (gotoNextSentence == true && gotoNextScreen == false) {
       nextTest();
     }
   }
@@ -115,7 +115,6 @@ class SentenceRepetitionScreenState extends State<SentenceRepetitionScreen> {
     spokenSentence.value = 'Hold the button and start speaking';
     currentSentenceIndex++;
 
-
     if (secondSentence.value) {
       _controller.disableMicButton();
       secondSentence.value = false;
@@ -123,7 +122,7 @@ class SentenceRepetitionScreenState extends State<SentenceRepetitionScreen> {
         _speakSentence();
       });
     } else {
-        nextTest();
+      nextTest();
     }
   }
 
@@ -172,6 +171,7 @@ class SentenceRepetitionScreenState extends State<SentenceRepetitionScreen> {
                 debugPrint('Speech recognition is not available');
               }
             }
+            _controller.updateScore(score);
           },
           onTapUp: (details) {
             isListening.value = false;

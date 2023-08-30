@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:moca/controllers/firebase_const.dart';
 
 class MemoryTestController extends GetxController {
   RxList<String> wordList = <String>[].obs;
@@ -38,27 +41,26 @@ class MemoryTestController extends GetxController {
     currentTrial.value++;
   }
 
-  // void saveData(wordList, recognizedWordsList) async {
-  //   try {
-  //     await FirebaseFirestore.instance
-  //         .collection('users')
-  //         .doc(currentUser!.uid)
-  //         .update({
-  //       'memory_test': {
-  //         'WordList': wordList.toList(),
-  //         'RecognizedWordList': recognizedWordsList.toList()
-  //       }
-  //     });
-  //     debugPrint('Word list saved successfully');
-  //   } catch (e) {
-  //     debugPrint('Error saving word list: $e');
-  //     Get.snackbar(
-  //       'Error',
-  //       'Some Error Occured! ',
-  //       snackPosition: SnackPosition.BOTTOM,
-  //       backgroundColor: Colors.red,
-  //       colorText: Colors.white,
-  //     );
-  //   }
-  // }
+  void saveData(wordList, recognizedWordsList) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(currentUser!.uid)
+          .update({
+        'memory_test': {
+          'score': wordCount.value,
+        }
+      });
+      debugPrint('Word list saved successfully');
+    } catch (e) {
+      debugPrint('Error saving word list: $e');
+      Get.snackbar(
+        'Error',
+        'Some Error Occured! ',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
+  }
 }

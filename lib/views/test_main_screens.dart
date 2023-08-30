@@ -137,7 +137,7 @@ class _MainTestScreenState extends State<MainTestScreen> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16.0),
                 ),
-                textStyle: const TextStyle(fontSize: 25.0, color: Colors.white),
+                textStyle: const TextStyle(fontSize: 20, color: Colors.white),
                 backgroundColor: isLocked ? Colors.grey : Colors.deepPurple,
                 minimumSize: const Size(100, 120),
               ),
