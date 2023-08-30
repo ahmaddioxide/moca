@@ -206,7 +206,7 @@ class ResultController extends GetxController {
           totalScore = totalScore +
               (dateverificationresults['orientation_score'] as int);
         }
-        ////language_test_2
+        ////language_test_1
         Map<String, dynamic>? languagetest1 =
             userData['language_test_1'] as Map<String, dynamic>?;
 
@@ -236,6 +236,41 @@ class ResultController extends GetxController {
         if (visuospatialdrawclock != null &&
             visuospatialdrawclock.containsKey('score')) {
           totalScore = totalScore + (visuospatialdrawclock['score'] as int);
+        }
+
+        ////memorytest
+        Map<String, dynamic>? results =
+            userData['results'] as Map<String, dynamic>?;
+
+        if (results != null && results.containsKey('totalscore')) {
+        } else {
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(currentUser!.uid)
+              .update({
+            'results': {
+              'totalscore': totalScore,
+              'delayedRecalltest':
+                  (delayedRecalltest?['DelayRecall_test_score'] as int),
+              'viscospatialtest1':
+                  (viscospatialtest1?['connecting_dot_score'] as int),
+              'viscospatialtest2':
+                  (viscospatialtest2?['cube_drawing_sccore'] as int),
+              'abstractionresults': (abstractionresults?['taskResults'] as int),
+              'animalnametest': (animalnametest?['score'] as int),
+              'attentiontest1': (attentiontest1?['digit_span_score'] as int),
+              'attentiontest2':
+                  (attentiontest2?['vigilance_test_score'] as int),
+              'attentiontest3': (attentiontest3?['serial7_test_score'] as int),
+              'dateverificationresults':
+                  (dateverificationresults?['orientation_score'] as int),
+              'languagetest1': (languagetest1?['score'] as int),
+              'languagetest2': (languagetest2?['fluency_test_sccore'] as int),
+              'memorytest': (memorytest?['score'] as int),
+              'visuospatialdrawclock': (visuospatialdrawclock?['score'] as int),
+              'id': currentUser!.uid,
+            }
+          });
         }
       }
 
