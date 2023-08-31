@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cr_file_saver/file_saver.dart';
 import 'package:csv/csv.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -49,7 +48,7 @@ class AdminController extends GetxController {
   /* User Info Headers */
     "Name" : "user_info.name" ,
     "Email" : "user_info.email",
-    "Total Score" : "user_info.totalScore",
+    "Total Score" : "results.totalScore",
 
   /* Social Demographic Headers */
     "Age" : "socio_demographic.age",
@@ -154,16 +153,19 @@ class AdminController extends GetxController {
 
 
   /* Tests */
-  "Abstraction Score" : "abstraction_results.taskResults",
-  "Alternating Trail Score" : "Viscospatial_test_1.connecting_dot_score",
-  "Animal Naming Score" : "animal_name_test.score",
-  "Attention Digit Span Score" : "attention_test_1.digit_span_score",
-  "Attention Vigilance Score" : "attention_test_2.vigilance_test_score",
-  "Attention Serial7s Score" : "attention_test_3.serial7_test_score",
-  "Orientation Score" : "date_verification_results.orientation_score",
-  "Delayed Recall Score" : "DelayedRecall_test.DelayedRecall_test_score",
-  "Visuoconstructional Skill: Cube Drawing Score" : "Viscospatial_test_2.cube_drawing_sccore",
-  "Visuoconstructional Skill: Clock Drawing Score" : "visuospatial_draw_clock.score",
+  "Abstraction Score" : "results.abstractionresults",
+  "Alternating Trail Score" : "results.viscospatialtest1",
+  "Animal Naming Score" : "results.animalnametest",
+  "Attention Digit Span Score" : "results.attentiontest1",
+  "Attention Vigilance Score" : "results.attentiontest2",
+  "Attention Serial7s Score" : "results.attentiontest3",
+  "Orientation Score" : "results.dateverificationresults",
+  "Delayed Recall Score" : "results.delayedrecalltest",
+  "Language Test 1" : "results.languagetest1",
+  "Language Test 2" : "results.languagetest2",
+  "Memory Test" : "results.memorytest",
+  "Visuoconstructional Skill: Cube Drawing Score" : "results.viscospatialtest2",
+  "Visuoconstructional Skill: Clock Drawing Score" : "results.visuospatialdrawclock",
 
 };
 
@@ -189,127 +191,7 @@ class AdminController extends GetxController {
     List<List<dynamic>> rows = [];
     List<dynamic> row = [];
 
-    /**
-    /* User Info Headers */
-    row.add ("user_info.name");
-    row.add("user_info.email");
-    row.add("user_info.totalScore");
 
-    /* Social Demographic Headers */
-    row.add("socio_demographic.age");
-    row.add("socio_demographic.education");
-    row.add("socio_demographic.gender");
-    row.add("socio_demographic.profession");
-    row.add("socio_demographic.residence");
-
-    /* Medical History Headers */
-    row.add("medical_history.diet");
-    row.add("medical_history.medicalCondition");
-    row.add("medical_history.physicalActivity");
-    row.add("medical_history.smoke");
-
-    /* Covid Experience Headers */
-    row.add("covid_experience.covid");
-    row.add("covid_experience.duration");
-    row.add("covid_experience.first4weeks");
-    row.add("covid_experience.pcrTest");
-    row.add("covid_experience.pcrTestDetails");
-    row.add("covid_experience.results");
-    row.add("covid_experience.week4Experience");
-
-    /* Initial Illness Symptom */
-    row.add("symptoms_initial_illness.abdominalPain");
-    row.add("symptoms_initial_illness.blurredVision");
-    row.add("symptoms_initial_illness.bodyPain");
-    row.add("symptoms_initial_illness.breathingIssues");
-    row.add("symptoms_initial_illness.chestPain");
-    row.add("symptoms_initial_illness.confusion");
-    row.add("symptoms_initial_illness.cough");
-    row.add("symptoms_initial_illness.depressionAnxiety");
-    row.add("symptoms_initial_illness.diarrhea");
-    row.add("symptoms_initial_illness.difficultSleepy");
-    row.add("symptoms_initial_illness.fatigue");
-    row.add("symptoms_initial_illness.fever");
-    row.add("symptoms_initial_illness.hallucinations");
-    row.add("symptoms_initial_illness.headAches");
-    row.add("symptoms_initial_illness.hotFlashes");
-    row.add("symptoms_initial_illness.irregularPulse");
-    row.add("symptoms_initial_illness.itchyRedDryEyes");
-    row.add("symptoms_initial_illness.lossOfAppetite");
-    row.add("symptoms_initial_illness.lossOfSmelltaste");
-    row.add("symptoms_initial_illness.nausea");
-    row.add("symptoms_initial_illness.numbness");
-    row.add("symptoms_initial_illness.rash");
-    row.add("symptoms_initial_illness.soreThroat");
-    row.add("symptoms_initial_illness.stuffyNose");
-    row.add("symptoms_initial_illness.vomiting");
-
-    /* Initial Illness Symptom */
-    row.add("symptoms_ongoing_illness.abdominalPain");
-    row.add("symptoms_ongoing_illness.blurredVision");
-    row.add("symptoms_ongoing_illness.bodyPain");
-    row.add("symptoms_ongoing_illness.breathingIssues");
-    row.add("symptoms_ongoing_illness.chestPain");
-    row.add("symptoms_ongoing_illness.confusion");
-    row.add("symptoms_ongoing_illness.cough");
-    row.add("symptoms_ongoing_illness.delayedThinking");
-    row.add("symptoms_ongoing_illness.depressionAnxiety");
-    row.add("symptoms_ongoing_illness.difficultSleeping");
-    row.add("symptoms_ongoing_illness.difficultSpeaking");
-    row.add("symptoms_ongoing_illness.fatigue");
-    row.add("symptoms_ongoing_illness.forgetfulness");
-    row.add("symptoms_ongoing_illness.hallucinations");
-    row.add("symptoms_ongoing_illness.headAche");
-    row.add("symptoms_ongoing_illness.irregularPulse");
-    row.add("symptoms_ongoing_illness.itchyRedDryEyes");
-    row.add("symptoms_ongoing_illness.lossOfAppetite");
-    row.add("symptoms_ongoing_illness.lossOfSmelltaste");
-    row.add("symptoms_ongoing_illness.nausea");
-    row.add("symptoms_ongoing_illness.numbness");
-    row.add("symptoms_ongoing_illness.poorConcentration");
-
-    /* Survey Results */
-    row.add("survey_results.0.rating");
-    row.add("survey_results.1.rating");
-    row.add("survey_results.2.rating");
-    row.add("survey_results.3.rating");
-    row.add("survey_results.4.rating");
-    row.add("survey_results.5.rating");
-    row.add("survey_results.6.rating");
-    row.add("survey_results.7.rating");
-    row.add("survey_results.8.rating");
-    row.add("survey_results.9.rating");
-    row.add("survey_results.10.rating");
-    row.add("survey_results.11.rating");
-    row.add("survey_results.12.rating");
-    row.add("survey_results.13.rating");
-    row.add("survey_results.14.rating");
-    row.add("survey_results.15.rating");
-    row.add("survey_results.16.rating");
-    row.add("survey_results.17.rating");
-    row.add("survey_results.18.rating");
-    row.add("survey_results.19.rating");
-    row.add("survey_results.20.rating");
-    row.add("survey_results.21.rating");
-    row.add("survey_results.22.rating");
-    row.add("survey_results.23.rating");
-    row.add("survey_results.24.rating");
-
-
-
-    /* Tests */
-    row.add("abstraction_results.taskResults");
-    row.add("animal_name_test.score");
-    row.add("attention_test_1.digit_span_score");
-    row.add("attention_test_2.vigilance_test_score");
-    row.add("attention_test_3.serial7_test_score");
-    row.add("date_verification_results.orientation_score");
-    row.add("DelayedRecall_test.DelayedRecall_test_score");
-    row.add("Viscospatial_test_1.connecting_dot_score");
-    row.add("Viscospatial_test_2.cube_drawing_sccore");
-    row.add("visuospatial_draw_clock.score");
-
-*/
 
     headers.forEach((header, _) {
       row.add(header);
@@ -374,7 +256,6 @@ class AdminController extends GetxController {
     _isTotalSubmissionLoaded = true.obs;
     update();
     debugPrint("${querySnapshot.docs.length}");
-    //debugPrint("${_isTotalSubmissionLoaded}");
   }
 
   Future<void> getUserByEmail() async {
@@ -426,7 +307,6 @@ class AdminController extends GetxController {
         Permission.manageExternalStorage,
       ].request();
 
-      //final permStatus = await Permission.storage.status;
 
       if (status[Permission.manageExternalStorage]!.isDenied) {
         await CRFileSaver.requestWriteExternalStoragePermission();
