@@ -48,7 +48,7 @@ class AdminController extends GetxController {
   /* User Info Headers */
     "Name" : "user_info.name" ,
     "Email" : "user_info.email",
-    "Total Score" : "results.totalScore",
+    "Total Score" : "results.totalscore",
 
   /* Social Demographic Headers */
     "Age" : "socio_demographic.age",
@@ -64,13 +64,13 @@ class AdminController extends GetxController {
     "Does Smoke" : "medical_history.smoke",
 
   /* Covid Experience Headers */
-    "covid_experience.covid" : "Has Had Covid 19",
-    "covid_experience.duration" : "Time Since Diagnosis",
-    "covid_experience.first4weeks" : "Covid Experience in First 4 Weeks",
-    "covid_experience.pcrTest" : "Took PCR Test",
-    "covid_experience.results" : "PCR Test Result",
-    "covid_experience.pcrTestDetails" : "Did Not Take PCR - How Person Knew They Had Covid-19",
-    "covid_experience.week4Experience" : "Covid Experience After First 4 Weeks",
+    "Has Had Covid 19" : "covid_experience.covid",
+    "Time Since Diagnosis" : "covid_experience.duration",
+    "Covid Experience in First 4 Weeks" : "covid_experience.first4weeks",
+    "Took PCR Test" : "covid_experience.pcrTest",
+    "PCR Test Result" : "covid_experience.results",
+    "Did Not Take PCR - How Person Knew They Had Covid-19" : "covid_experience.pcrTestDetails",
+    "Covid Experience After First 4 Weeks" : "covid_experience.week4Experience",
 
   /* Initial Illness Symptom */
    "First 4 Weeks Symptom: Abdominal Pain" : "symptoms_initial_illness.abdominalPain",
@@ -160,7 +160,7 @@ class AdminController extends GetxController {
   "Attention Vigilance Score" : "results.attentiontest2",
   "Attention Serial7s Score" : "results.attentiontest3",
   "Orientation Score" : "results.dateverificationresults",
-  "Delayed Recall Score" : "results.delayedrecalltest",
+  "Delayed Recall Score" : "results.delayedRecalltest",
   "Language Test 1" : "results.languagetest1",
   "Language Test 2" : "results.languagetest2",
   "Memory Test" : "results.memorytest",
@@ -169,20 +169,6 @@ class AdminController extends GetxController {
 
 };
 
-
-
-  Future<String> convertDataToCSV() async {
-
-    final List<List<dynamic>> csvData = [];
-    final List<dynamic> headers = [
-      "Name", "Age", "other Details",
-    ];
-
-    csvData.add(headers);
-
-    const String csvString = "";
-    return csvString;
-  }
 
   Future<void> downloadCSV() async {
     final QuerySnapshot querySnapshot =
@@ -234,7 +220,7 @@ class AdminController extends GetxController {
 
     for(QueryDocumentSnapshot userDoc in querySnapshot.docs) {
       try {
-        sumOfScores += userDoc["user_info.totalScore"];
+        sumOfScores += userDoc["results.totalscore"];
         numOfValidUsers++;
       } catch (e) {
         debugPrint("Invalid User does not have total Score: id = ${userDoc.id}\nError: $e");
@@ -280,7 +266,7 @@ class AdminController extends GetxController {
         _searchedUserEmail.value =
         (querySnapshot.docs.last['user_info']['email'] as String);
         _searchedUserTotalScore.value =
-        (querySnapshot.docs.last['user_info']['totalScore'] as int);
+        (querySnapshot.docs.last['results']['totalscore'] as int);
         _isUserSearchFound.value = true;
         _userDoc = querySnapshot;
       }
@@ -321,25 +307,7 @@ class AdminController extends GetxController {
 
       List<List<dynamic>> rows = [];
       List<dynamic> row = [];
-      /*row.add ("user_info.name");
-      row.add("user_info.email");
-      row.add("user_info.totalScore");
-      row.add("socio_demographic.age");
-      row.add("socio_demographic.education");
-      row.add("socio_demographic.gender");
-      row.add("socio_demographic.profession");
-      row.add("socio_demographic.residence");
-      row.add("medical_history.diet");
-      row.add("medical_history.medicalCondition");
-      row.add("medical_history.physicalActivity");
-      row.add("medical_history.smoke");
-      row.add("covid_experience.covid");
-      row.add("covid_experience.duration");
-      row.add("covid_experience.first4weeks");
-      row.add("covid_experience.pcrTest");
-      row.add("covid_experience.pcrTestDetails");
-      row.add("covid_experience.results");
-      row.add("covid_experience.week4Experience");*/
+
 
       headers.forEach((header, _) {
         row.add(header);
@@ -348,8 +316,13 @@ class AdminController extends GetxController {
 
       List<dynamic> userData = [];
 
+
       for (String key in row) {
-        userData.add(_userDoc?.docs.last[headers[key] ?? ""]);
+        try {
+          userData.add(_userDoc?.docs.last[headers[key] ?? ""]);
+        } catch (e) {
+          userData.add("null");
+        }
       }
 
       rows.add(userData);
@@ -364,6 +337,5 @@ class AdminController extends GetxController {
         debugPrint('dir $dir');
         Fluttertoast.showToast(msg: "file saved at: $dir");
       });
-    //}
   }}
 }
