@@ -74,7 +74,16 @@ class _LogInScreenState extends State<LogInScreen> {
                             return 'Please Enter Valid Email';
                           } else if (value.contains('..')) {
                             return 'Please Enter Valid Email';
+                          } else if (value.contains('examples')) {
+                            return 'Please Enter Valid Email';
+                          } else if (value.contains('example')) {
+                            return 'Please Enter Valid Email';
+                          } else if (value.contains('@test')) {
+                            return 'Please Enter Valid Email';
+                          } else if (value.contains('@testing')) {
+                            return 'Please Enter Valid Email';
                           }
+
                           return null;
                         },
                       ),
