@@ -37,7 +37,7 @@ class _ClockTestScreenState extends State<ClockTestScreen> {
             Text(
               _controller.selectedTime != null
                   ? 'Selected Time: ${_controller.selectedTime!.hour}:${_controller.selectedTime!.minute}'
-                  : 'Select a time',
+                  : 'Please select time 10 past 11',
               style: const TextStyle(fontSize: 20),
             ),
             const SizedBox(height: 20),
