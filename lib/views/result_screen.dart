@@ -144,7 +144,7 @@ class _ResultScreenState extends State<ResultScreen> {
               Center(
                 child: Container(
                   width: width * 0.9,
-                  height: height * 0.6,
+                  height: height * 0.62,
                   decoration: BoxDecoration(
                     color: Colors.deepPurple[50],
                     borderRadius: BorderRadius.circular(20),
@@ -157,104 +157,106 @@ class _ResultScreenState extends State<ResultScreen> {
                       ),
                     ],
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(14, 0, 0, 0),
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: height * 0.02,
-                        ),
-                        Row(
-                          children: [
-                            const Text(
-                              "MOCA Score is: ",
-                              style: TextStyle(
-                                fontSize: 28,
-                                color: Colors.black,
-                              ),
-                            ),
-                            Flexible(
-                              child: Text(
-                                "$totalScore  / 30",
-                                style: const TextStyle(
-                                    fontSize: 28,
-                                    color: Colors.deepPurple,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            )
-                          ],
-                        ),
-                        SizedBox(
-                          height: height * 0.02,
-                        ),
-                        Row(
-                          children: [
-                            const Text(
-                              "CFQ Score is : ",
-                              style: TextStyle(
-                                fontSize: 28,
-                                color: Colors.black,
-                              ),
-                            ),
-                            Text(
-                              totalCfq.toString(),
-                              style: const TextStyle(
-                                fontSize: 28,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.deepPurple,
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: height * 0.02,
-                        ),
-                        Align(
-                          alignment: Alignment.center,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              children: [
-                                Text(
-                                  message,
-                                  style: const TextStyle(
-                                    fontSize: 30,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.deepPurple,
-                                  ),
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(14, 0, 0, 0),
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: height * 0.02,
+                          ),
+                          Row(
+                            children: [
+                              const Text(
+                                "MOCA Score is: ",
+                                style: TextStyle(
+                                  fontSize: 26,
+                                  color: Colors.black,
                                 ),
-                              ],
+                              ),
+                              Flexible(
+                                child: Text(
+                                  "$totalScore  / 30",
+                                  style: const TextStyle(
+                                      fontSize: 26,
+                                      color: Colors.deepPurple,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              )
+                            ],
+                          ),
+                          SizedBox(
+                            height: height * 0.02,
+                          ),
+                          Row(
+                            children: [
+                              const Text(
+                                "CFQ Score is : ",
+                                style: TextStyle(
+                                  fontSize: 26,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              Text(
+                                totalCfq.toString(),
+                                style: const TextStyle(
+                                  fontSize: 26,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.deepPurple,
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: height * 0.02,
+                          ),
+                          Align(
+                            alignment: Alignment.center,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: [
+                                  Text(
+                                    message,
+                                    style: const TextStyle(
+                                      fontSize: 28,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.deepPurple,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                        Image(
-                          image: AssetImage(src),
-                          height: 200,
-                          width: 200,
-                          fit: BoxFit.cover,
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        ElevatedButton(
-                          onPressed: () {
-                            Get.offAll(() => const HomeScreen());
-                          },
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.deepPurple,
-                              padding:
-                                  const EdgeInsets.fromLTRB(50, 10, 50, 10),
-                              textStyle: const TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold)),
-                          child: const Text(
-                            "Homepage",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
+                          Image(
+                            image: AssetImage(src),
+                            height: 200,
+                            width: 200,
+                            fit: BoxFit.cover,
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              Get.offAll(() => const HomeScreen());
+                            },
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.deepPurple,
+                                padding:
+                                    const EdgeInsets.fromLTRB(50, 10, 50, 10),
+                                textStyle: const TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.bold)),
+                            child: const Text(
+                              "Homepage",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 17,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),

@@ -287,8 +287,8 @@ class _Serial7State extends State<Serial7Screen> {
                     const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                 margin: const EdgeInsets.only(bottom: 150),
                 child: Obx(
-                  () => Text(
-                    _controller.text.value,
+                  () => Text( _controller.starttest.value?
+                    _controller.text.value : "Double top the button to start test",
                     style: TextStyle(
                       fontSize: 20,
                       color: _controller.isListening.value

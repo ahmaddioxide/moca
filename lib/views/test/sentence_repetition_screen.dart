@@ -84,8 +84,8 @@ class SentenceRepetitionScreenState extends State<SentenceRepetitionScreen> {
   void nextTest() {
     gotoNextScreen = true;
     sf.setInt('nextGame', 11);
-    _controller.remainingSeconds.value = 2;
     Future.delayed(const Duration(seconds: 3), () {
+      _controller.remainingSeconds.value = 0;
       Get.offAll(() => const VocabularyScreen());
     });
   }
@@ -266,10 +266,10 @@ class SentenceRepetitionScreenState extends State<SentenceRepetitionScreen> {
               padding: const EdgeInsets.all(16.0),
               child: Center(
                 child: Obx(
-                  () => Text(
+                  () => Text(starttest.value?
                     isListening.value
                         ? recognizedText.value
-                        : spokenSentence.value,
+                        : spokenSentence.value : "Double top the button to start test",
                     style: TextStyle(
                       fontSize: 18,
                       color: isListening.value
