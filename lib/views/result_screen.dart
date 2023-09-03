@@ -207,6 +207,7 @@ class _ResultScreenState extends State<ResultScreen> {
                               ),
                             ],
                           ),
+
                           SizedBox(
                             height: height * 0.02,
                           ),
