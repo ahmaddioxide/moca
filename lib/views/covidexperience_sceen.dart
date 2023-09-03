@@ -13,6 +13,7 @@ class CovidExperienceScreen extends StatefulWidget {
 class _CovidExperienceScreenState extends State<CovidExperienceScreen> {
   final _formKey = GlobalKey<FormState>();
   bool isVisible = true;
+  bool isVisible2 = true;
   bool _isloading = false;
 
   // Create an instance of the controller
@@ -374,7 +375,7 @@ class _CovidExperienceScreenState extends State<CovidExperienceScreen> {
                     ),
                     const SizedBox(height: 16),
                     const Text(
-                      'How would you describe your experience with COVID-19 in the first 4 weeks? ',
+                      'How would you describe your experience with COVID-19?',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -387,10 +388,10 @@ class _CovidExperienceScreenState extends State<CovidExperienceScreen> {
                           children: [
                             Radio(
                               value: 'Asymptomatic',
-                              groupValue: _controller.first4weeks,
+                              groupValue: _controller.coivdExp,
                               onChanged: (value) {
                                 setState(() {
-                                  _controller.first4weeks = value!;
+                                  _controller.coivdExp = value!;
                                 });
                               },
                             ),
@@ -408,10 +409,10 @@ class _CovidExperienceScreenState extends State<CovidExperienceScreen> {
                           children: [
                             Radio(
                               value: 'Mild',
-                              groupValue: _controller.first4weeks,
+                              groupValue: _controller.coivdExp,
                               onChanged: (value) {
                                 setState(() {
-                                  _controller.first4weeks = value!;
+                                  _controller.coivdExp = value!;
                                 });
                               },
                             ),
@@ -429,10 +430,10 @@ class _CovidExperienceScreenState extends State<CovidExperienceScreen> {
                           children: [
                             Radio(
                               value: 'Moderate',
-                              groupValue: _controller.first4weeks,
+                              groupValue: _controller.coivdExp,
                               onChanged: (value) {
                                 setState(() {
-                                  _controller.first4weeks = value!;
+                                  _controller.coivdExp = value!;
                                 });
                               },
                             ),
@@ -450,10 +451,10 @@ class _CovidExperienceScreenState extends State<CovidExperienceScreen> {
                           children: [
                             Radio(
                               value: 'Severe (hospitalized/oxygen therapy)',
-                              groupValue: _controller.first4weeks,
+                              groupValue: _controller.coivdExp,
                               onChanged: (value) {
                                 setState(() {
-                                  _controller.first4weeks = value!;
+                                  _controller.coivdExp = value!;
                                 });
                               },
                             ),
@@ -488,10 +489,10 @@ class _CovidExperienceScreenState extends State<CovidExperienceScreen> {
                             Radio(
                               value:
                                   'Critically severe (ICU/mechanical ventilation)',
-                              groupValue: _controller.first4weeks,
+                              groupValue: _controller.coivdExp,
                               onChanged: (value) {
                                 setState(() {
-                                  _controller.first4weeks = value!;
+                                  _controller.coivdExp = value!;
                                 });
                               },
                             ),
@@ -499,7 +500,7 @@ class _CovidExperienceScreenState extends State<CovidExperienceScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Critically severe(ICU/mechanical',
+                                  'Critically severe(ICU/',
                                   style: TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.w400,
@@ -507,7 +508,7 @@ class _CovidExperienceScreenState extends State<CovidExperienceScreen> {
                                   ),
                                 ),
                                 Text(
-                                  'ventilation)',
+                                  'mechanical ventilation)',
                                   style: TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.w400,
@@ -526,92 +527,129 @@ class _CovidExperienceScreenState extends State<CovidExperienceScreen> {
                     ),
                     const SizedBox(height: 16),
                     const Text(
-                      'How would you describe your experience with COVID-19 after the first 4 weeks? ',
+                      'Did you get vaccinated against COVID-19? ',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                         color: Colors.deepPurple,
                       ),
                     ),
-                    Column(
+                    Row(
                       children: [
-                        Row(
-                          children: [
-                            Radio(
-                              value: 'I recovered completely  ',
-                              groupValue: _controller.week4Experience,
-                              onChanged: (value) {
-                                setState(() {
-                                  _controller.week4Experience = value!;
-                                });
-                              },
-                            ),
-                            const Text(
-                              'I recovered completely',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.deepPurple,
-                              ),
-                            ),
-                          ],
+                        Radio(
+                          value: 'Yes',
+                          groupValue: _controller.vaccinated,
+                          onChanged: (value) {
+                            setState(() {
+                              _controller.vaccinated = value!;
+                              isVisible2 = true;
+                            });
+                          },
                         ),
-                        Row(
-                          children: [
-                            Radio(
-                              value: 'I have ongoing, mild/ moderate symptoms',
-                              groupValue: _controller.week4Experience,
-                              onChanged: (value) {
-                                setState(() {
-                                  _controller.week4Experience = value!;
-                                });
-                              },
-                            ),
-                            const Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'I have ongoing, mild',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.deepPurple,
-                                  ),
-                                ),
-                                Text(
-                                  '/ moderate symptoms',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.deepPurple,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
+                        const Text(
+                          'Yes',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.deepPurple,
+                            fontWeight: FontWeight.w400,
+                          ),
                         ),
-                        Row(
-                          children: [
-                            Radio(
-                              value: 'I have ongoing, severe symptoms',
-                              groupValue: _controller.week4Experience,
-                              onChanged: (value) {
-                                setState(() {
-                                  _controller.week4Experience = value!;
-                                });
-                              },
-                            ),
-                            const Text(
-                              'I have ongoing, severe symptoms',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.deepPurple,
-                              ),
-                            ),
-                          ],
+                        Radio(
+                          value: 'No',
+                          groupValue: _controller.vaccinated,
+                          onChanged: (value) {
+                            setState(() {
+                              _controller.vaccinated = value!;
+                              isVisible2 = false;
+                              if (isVisible2 == false) {
+                                _controller.vaccinationPeriod = 'none';
+                              }
+                            });
+                          },
+                        ),
+                        const Text(
+                          'No',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.deepPurple,
+                            fontWeight: FontWeight.w400,
+                          ),
                         ),
                       ],
+                    ),
+                    /////Q2
+                    Visibility(
+                      visible: isVisible2,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 16),
+                          const Divider(
+                            color: Colors.black12,
+                          ),
+                          const SizedBox(height: 16),
+                          const Text(
+                            ' If yes, when did you get vaccinated against COVID-19?',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.deepPurple,
+                            ),
+                          ),
+                          Column(
+                            children: [
+                              Row(
+                                children: [
+                                  Radio(
+                                    value:
+                                        ' Before getting infected with COVID-19 ',
+                                    groupValue: _controller.vaccinationPeriod,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _controller.vaccinationPeriod = value!;
+                                      });
+                                    },
+                                  ),
+                                  const Flexible(
+                                    child: Text(
+                                      ' Before getting infected with COVID-19 ',
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.deepPurple,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Radio(
+                                    value:
+                                        'After getting infected with COVID-19 ',
+                                    groupValue: _controller.vaccinationPeriod,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _controller.vaccinationPeriod = value!;
+                                      });
+                                    },
+                                  ),
+                                  const Flexible(
+                                    child: Text(
+                                      'After getting infected with COVID-19 ',
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.deepPurple,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                     const SizedBox(height: 16),
                     const Divider(
@@ -644,8 +682,9 @@ class _CovidExperienceScreenState extends State<CovidExperienceScreen> {
                                     _controller.pcrTest != '' &&
                                     _controller.result != '' &&
                                     _controller.duration != '' &&
-                                    _controller.first4weeks != '' &&
-                                    _controller.week4Experience != '' &&
+                                    _controller.coivdExp != '' &&
+                                    _controller.vaccinated != '' &&
+                                    _controller.vaccinationPeriod != '' &&
                                     _controller.pcrTestDetails != '') {
                                   _controller
                                       .submitFormMethod(
@@ -653,9 +692,10 @@ class _CovidExperienceScreenState extends State<CovidExperienceScreen> {
                                     covid: _controller.covid,
                                     result: _controller.result,
                                     duration: _controller.duration,
-                                    first4weeks: _controller.first4weeks,
-                                    week4Experience:
-                                        _controller.week4Experience,
+                                    coivdExp: _controller.coivdExp,
+                                    vaccinated: _controller.vaccinated,
+                                    vaccinationPeriod:
+                                        _controller.vaccinationPeriod,
                                     pcrTestDetails: _controller.pcrTestDetails,
                                   )
                                       .then((value) {

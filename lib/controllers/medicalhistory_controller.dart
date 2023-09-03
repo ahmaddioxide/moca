@@ -4,13 +4,43 @@ import 'package:get/get.dart';
 import 'package:moca/controllers/firebase_const.dart';
 
 class MedicalHistoryController extends GetxController {
-  String diet = '';
+  String diet1 = '';
+  String diet2 = '';
+  String diet3 = '';
+  String diet4 = '';
+  String diet5 = '';
   String physicalActivity = '';
   String smoke = '';
-  String medicalCondition = '';
+  String medicalCondition1 = '';
+  String medicalCondition2 = '';
+  String medicalCondition3 = '';
+  String medicalCondition4 = '';
+  String medicalCondition5 = '';
+  String medicalCondition6 = '';
+  String medicalCondition7 = '';
+  String medicalCondition8 = '';
+  String medicalCondition9 = '';
+  String alcohol = '';
 
-  Future<bool> submitForm(
-      {diet, physicalActivity, smoke, medicalCondition}) async {
+  Future<bool> submitForm({
+    diet1,
+    diet2,
+    diet3,
+    diet4,
+    diet5,
+    physicalActivity,
+    smoke,
+    alcohol,
+    medicalCondition1,
+    medicalCondition2,
+    medicalCondition3,
+    medicalCondition4,
+    medicalCondition5,
+    medicalCondition6,
+    medicalCondition7,
+    medicalCondition8,
+    medicalCondition9,
+  }) async {
     debugPrint('submitForm() called');
     try {
       ///storing page info if page has been used of user in firestore
@@ -27,10 +57,21 @@ class MedicalHistoryController extends GetxController {
           .doc(currentUser!.uid)
           .update({
         'medical_history': {
-          'diet': diet,
+          'diet': [diet1, diet2, diet3, diet4, diet5],
           'physicalActivity': physicalActivity,
           'smoke': smoke,
-          'medicalCondition': medicalCondition,
+          'alcohol': alcohol,
+          'medicalCondition': [
+            medicalCondition1,
+            medicalCondition2,
+            medicalCondition3,
+            medicalCondition4,
+            medicalCondition5,
+            medicalCondition6,
+            medicalCondition7,
+            medicalCondition8,
+            medicalCondition9
+          ],
           'id': currentUser!.uid,
         }
       });
@@ -57,29 +98,29 @@ class MedicalHistoryController extends GetxController {
     }
   }
 
-  Future<bool> signup({diet, physicalActivity, smoke, medicalCondition}) async {
-    try {
-      debugPrint('submitForm() called');
-      bool? check = await submitForm(
-          diet: diet,
-          physicalActivity: physicalActivity,
-          smoke: smoke,
-          medicalCondition: medicalCondition);
-      if (check == false) {
-        debugPrint('ERROR is storing data!');
-        return false;
-      }
-    } catch (e) {
-      debugPrint('Error: $e');
-      Get.snackbar(
-        'Error',
-        'Error: $e',
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-      );
-      return false;
-    }
-    return true;
-  }
+  // Future<bool> signup({diet, physicalActivity, smoke, medicalCondition}) async {
+  //   try {
+  //     debugPrint('submitForm() called');
+  //     bool? check = await submitForm(
+  //         diet1: diet,
+  //         physicalActivity: physicalActivity,
+  //         smoke: smoke,
+  //         medicalCondition: medicalCondition);
+  //     if (check == false) {
+  //       debugPrint('ERROR is storing data!');
+  //       return false;
+  //     }
+  //   } catch (e) {
+  //     debugPrint('Error: $e');
+  //     Get.snackbar(
+  //       'Error',
+  //       'Error: $e',
+  //       snackPosition: SnackPosition.BOTTOM,
+  //       backgroundColor: Colors.red,
+  //       colorText: Colors.white,
+  //     );
+  //     return false;
+  //   }
+  //   return true;
+  // }
 }

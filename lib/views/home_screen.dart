@@ -27,18 +27,20 @@ class _HomeScreenState extends State<HomeScreen> {
   //alert dialog which shows the information about the app
   void _showAlert() {
     Get.defaultDialog(
-      title: 'About MOCA',
+      title: 'About CogWheel',
       titleStyle: const TextStyle(
         color: Colors.deepPurple,
         fontWeight: FontWeight.bold,
         fontSize: 18,
       ),
       content: const SingleChildScrollView(
-        child: Text(
-          "MOCA is a not-for-profit initiative by the students of Fazaia Medical College dedicated to promoting research, education, and public engagement in neurocognitive science in Pakistan. Our self-assessment tool uses two high-quality, scientifically valid cognitive tests, the Cognitive Failures Questionnaire (DE Broadbent and colleagues) and the Montreal Cognitive Assessment (ZS Nasreddine and colleagues), to provide personalized feedback and recommendations that will help you learn more about your brain, and make lifestyle choices to improve your cognitive health. Your participation, in turn, helps us understand more about the cognitive functions of the brain–mental processes that allow us to receive, store, transform, develop and recover information–and how they change with age, lifestyle and disease.",
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 14,
+        child: Center(
+          child: Text(
+            "CogWheel is a not-for-profit initiative by the students of Fazaia Medical College dedicated to promoting research, education, and public engagement in neurocognitive science in Pakistan. Our self-assessment tool uses two high-quality, scientifically valid cognitive tests, the Cognitive Failures Questionnaire (DE Broadbent and colleagues) and the Montreal Cognitive Assessment (ZS Nasreddine and colleagues), to provide personalized feedback and recommendations that will help you learn more about your brain, and make lifestyle choices to improve your cognitive health. Your participation, in turn, helps us understand more about the cognitive functions of the brain–mental processes that allow us to receive, store, transform, develop and recover information–and how they change with age, lifestyle and disease. is free and accessible to individuals, researchers, educators, and health care professionals. Equipped with a user-friendly interface and features like on-screen instructions, time tracking, automatic scoring, easy result storage and sharing, CogWheel can be used to assess attention, memory, language, problem solving, and reasoning without the need of a trained administrator. All you need is a quiet space, some undistracted time, and a computer, tablet or smartphone. Contact usIf you have any queries, concerns, or feedback, drop the research group leader a line at noorulainansar9@gmail.com ",
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 14,
+            ),
           ),
         ),
       ),
@@ -56,9 +58,12 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
         appBar: AppBar(
           title: const Text(
-            'MOCA',
+            'CogWheel',
             style: TextStyle(
-                color: Colors.deepPurple, fontWeight: FontWeight.bold),
+              color: Colors.deepPurple,
+              fontWeight: FontWeight.bold,
+              fontSize: 28,
+            ),
           ),
           centerTitle: true,
           actions: [
@@ -223,7 +228,18 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       onPressed: () async {
                         try {
-                          if (await _controller.checkIfMedicalHistoryExists() !=
+                          if (await _controller.checkIfSocioDemoGraphExists() !=
+                              true) {
+                            Get.snackbar(
+                              "Attention",
+                              "Fill Socio DemoGraphic Data First!",
+                              snackPosition: SnackPosition.TOP,
+                              backgroundColor: Colors.red.shade500,
+                              colorText: Colors.white,
+                              snackStyle: SnackStyle.FLOATING,
+                            );
+                          } else if (await _controller
+                                  .checkIfMedicalHistoryExists() !=
                               true) {
                             Get.offAll(() => const MedicalHistoryScreen());
                           } else if (await _controller
@@ -235,11 +251,133 @@ class _HomeScreenState extends State<HomeScreen> {
                               true) {
                             Get.offAll(
                                 () => const SymptomsInitialIllnessScreen());
-                          } else if (await _controller
-                                  .checkIfOngoingIllnessExists() !=
+                          } else {
+                            Get.snackbar(
+                              'Attention!',
+                              'The Form is already Filled!',
+                              titleText: const Text(
+                                'Attention!',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                ),
+                              ),
+                              snackPosition: SnackPosition.TOP,
+                              backgroundColor: Colors.green.shade500,
+                              colorText: Colors.white,
+                              snackStyle: SnackStyle.FLOATING,
+                            );
+                          }
+                        } catch (e) {
+                          Get.snackbar(
+                            'Attention!',
+                            'Some Error Occured!',
+                            titleText: const Text(
+                              'Attention!',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                              ),
+                            ),
+                            snackPosition: SnackPosition.TOP,
+                            backgroundColor: Colors.red.shade500,
+                            colorText: Colors.white,
+                            snackStyle: SnackStyle.FLOATING,
+                          );
+                        }
+                      },
+                      child: Container(
+                        height: height * .25,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.white,
+                            width: 2,
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.orangeAccent.withOpacity(0.4),
+                              spreadRadius: 2,
+                              blurRadius: 2,
+                              offset: const Offset(
+                                  0, 3), // changes position of shadow
+                            ),
+                          ],
+                          // color: Colors.black26,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                left: 16,
+                                top: 16,
+                                bottom: 16,
+                              ),
+                              child: SizedBox(
+                                height: height * .2,
+                                width: width * .2,
+                                child: Image.asset(
+                                  'assets/images/health.png',
+                                  height: height * .2,
+                                  width: width * .2,
+                                  fit: BoxFit
+                                      .contain, // Make sure the image fits within the available space
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: width * .05,
+                            ),
+                            const Expanded(
+                              // Use Expanded widget here to fill the remaining width
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                  right: 10.0,
+                                  top: 10.0,
+                                  bottom: 10.0,
+                                ),
+                                child: Text(
+                                  'MEDICAL HISTORY AND HEALTH-RELATED BEHAVIOURS ',
+                                  style: TextStyle(
+                                    overflow: TextOverflow.visible,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      top: 16.0,
+                      left: 16.0,
+                      right: 16.0,
+                    ),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                      ),
+                      onPressed: () async {
+                        try {
+                          if (await _controller.checkIfInitialIllnessExists() !=
                               true) {
-                            Get.offAll(
-                                () => const SymptomsOnGoingIllnessScreen());
+                            Get.snackbar(
+                              "Attention",
+                              "Fill Medical History Data First!",
+                              snackPosition: SnackPosition.TOP,
+                              backgroundColor: Colors.red.shade500,
+                              colorText: Colors.white,
+                              snackStyle: SnackStyle.FLOATING,
+                            );
                           } else if (await _controller
                                   .checkIfCognitiveExists() !=
                               true) {
@@ -312,7 +450,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 height: height * .2,
                                 width: width * .2,
                                 child: Image.asset(
-                                  'assets/images/health.png',
+                                  'assets/images/qicon.png',
                                   height: height * .2,
                                   width: width * .2,
                                   fit: BoxFit
@@ -332,7 +470,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   bottom: 10.0,
                                 ),
                                 child: Text(
-                                  'MEDICAL HISTORY AND HEALTH-RELATED BEHAVIOURS ',
+                                  'COGNITIVE FAILURES QUESTIONNAIRE',
                                   style: TextStyle(
                                     overflow: TextOverflow.visible,
                                     fontSize: 18,
@@ -359,13 +497,39 @@ class _HomeScreenState extends State<HomeScreen> {
                           borderRadius: BorderRadius.circular(20),
                         ),
                       ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const MainTestScreen(),
-                          ),
-                        );
+                      onPressed: () async {
+                        try {
+                          if (await _controller.checkIfCognitiveExists() !=
+                              true) {
+                            Get.snackbar(
+                              "Attention",
+                              "Fill The Forms First!",
+                              snackPosition: SnackPosition.TOP,
+                              backgroundColor: Colors.red.shade500,
+                              colorText: Colors.white,
+                              snackStyle: SnackStyle.FLOATING,
+                            );
+                          } else {
+                            Get.to(() => const MainTestScreen());
+                          }
+                        } catch (e) {
+                          Get.snackbar(
+                            'Attention!',
+                            'Some Error Occured!',
+                            titleText: const Text(
+                              'Attention!',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                              ),
+                            ),
+                            snackPosition: SnackPosition.TOP,
+                            backgroundColor: Colors.red.shade500,
+                            colorText: Colors.white,
+                            snackStyle: SnackStyle.FLOATING,
+                          );
+                        }
                       },
                       child: Container(
                         height: height * .25,

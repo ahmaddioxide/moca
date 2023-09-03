@@ -13,7 +13,6 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      //body: user != null ? const Body() : const SignUpScreen(),
       body: Body(),
     );
   }

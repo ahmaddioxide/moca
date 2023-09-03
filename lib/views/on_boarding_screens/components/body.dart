@@ -6,8 +6,8 @@ import 'onboard_content.dart';
 
 const List<Map<String, String>> onboardData = [
   {
-    'text': "Welcome to MOCA.",
-    'image': 'assets/illustrations/onboarding1.jpg',
+    'text': "Welcome to CogWheel.",
+    'image': 'assets/illustrations/onboarding1.png',
     'heading': 'Welcome'
   },
   {
@@ -19,7 +19,7 @@ const List<Map<String, String>> onboardData = [
   {
     'text':
         "Currently, we are researching the impact of Long COVID on memory and cognition. To become a part of this research, and test your cognitive abilities, please sign up.",
-    'image': 'assets/illustrations/Signup.png',
+    'image': 'assets/illustrations/onboarding3.jpg',
     'heading': 'Jump In'
   },
 ];

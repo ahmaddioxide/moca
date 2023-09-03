@@ -43,8 +43,7 @@ class LogInController extends GetxController {
           backgroundColor: Colors.red,
           colorText: Colors.white,
         );
-      }
-      else if (e.code == 'user-disabled') {
+      } else if (e.code == 'user-disabled') {
         debugPrint('User disabled.');
         Get.snackbar(
           'Error',
@@ -53,8 +52,7 @@ class LogInController extends GetxController {
           backgroundColor: Colors.red,
           colorText: Colors.white,
         );
-      }
-      else if(e.code == 'too-many-requests'){
+      } else if (e.code == 'too-many-requests') {
         debugPrint('Too many requests.');
         Get.snackbar(
           'Error',
@@ -63,8 +61,7 @@ class LogInController extends GetxController {
           backgroundColor: Colors.red,
           colorText: Colors.white,
         );
-      }
-      else {
+      } else {
         debugPrint('Error: $e');
         Get.snackbar(
           'Error',
@@ -74,7 +71,6 @@ class LogInController extends GetxController {
           colorText: Colors.white,
         );
       }
-
     }
     return userCredential;
   }

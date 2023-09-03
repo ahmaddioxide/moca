@@ -124,10 +124,19 @@ class _LogInScreenState extends State<LogInScreen> {
                         },
                         validator: (value) {
                           if (value == null || value.isEmpty) {
+                            setState(() {
+                              _isloading = false;
+                            });
                             return 'Please enter password';
                           } else if (value.length < 6) {
+                            setState(() {
+                              _isloading = false;
+                            });
                             return 'Password must be at least 6 characters!';
                           } else if (value.contains(' ')) {
+                            setState(() {
+                              _isloading = false;
+                            });
                             return 'Password must not contain space!';
                           }
                           return null;
@@ -161,7 +170,7 @@ class _LogInScreenState extends State<LogInScreen> {
                                     setState(() {
                                       _isloading = false;
                                     });
-                                    Get.to(
+                                    Get.offAll(
                                       () => const HomeScreen(),
                                     );
                                   } else {

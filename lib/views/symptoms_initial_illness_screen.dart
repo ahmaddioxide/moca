@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:moca/views/cognitive_failure_screen.dart';
 import 'package:moca/views/symptoms_ongoing_illness_screen.dart';
 import '../controllers/symptoms_initial_illness_controller.dart';
 
@@ -42,7 +43,7 @@ class _SymptomsInitialIllnessScreenState
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text(
-                  'Symptoms during the initial illness (first 4 weeks) ',
+                  'Report the severity of the following symptoms on the given scale by checking the relevant boxes.',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -50,6 +51,7 @@ class _SymptomsInitialIllnessScreenState
                   ),
                 ),
                 const SizedBox(height: 28),
+                //fever
                 Row(
                   children: [
                     const Text(
@@ -115,6 +117,7 @@ class _SymptomsInitialIllnessScreenState
                     ),
                   ],
                 ),
+                ////coungh
                 const SizedBox(height: 8),
                 const Divider(color: Colors.black12),
                 const SizedBox(height: 8),
@@ -186,10 +189,11 @@ class _SymptomsInitialIllnessScreenState
                 const SizedBox(height: 8),
                 const Divider(color: Colors.black12),
                 const SizedBox(height: 8),
+                ////Runny/Stuffy Nose
                 Row(
                   children: [
                     const Text(
-                      'Stuffy Nose',
+                      'Runny/Stuffy Nose',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
@@ -216,11 +220,11 @@ class _SymptomsInitialIllnessScreenState
                             color: Colors.deepPurple,
                             fontWeight: FontWeight.w500,
                           ),
-                          value: _controller.stuffyNose,
+                          value: _controller.runnyStuffyNose,
                           onChanged: (value) {
                             setState(
                               () {
-                                _controller.stuffyNose = value!;
+                                _controller.runnyStuffyNose = value!;
                               },
                             );
                           },
@@ -251,6 +255,7 @@ class _SymptomsInitialIllnessScreenState
                     ),
                   ],
                 ),
+                /////Sore Throat
                 const SizedBox(height: 8),
                 const Divider(color: Colors.black12),
                 const SizedBox(height: 8),
@@ -322,6 +327,7 @@ class _SymptomsInitialIllnessScreenState
                 const SizedBox(height: 8),
                 const Divider(color: Colors.black12),
                 const SizedBox(height: 8),
+                ////Breathing Issues
                 Row(
                   children: [
                     const Text(
@@ -387,13 +393,14 @@ class _SymptomsInitialIllnessScreenState
                     ),
                   ],
                 ),
+                ////Chest Pain/Tightness
                 const SizedBox(height: 8),
                 const Divider(color: Colors.black12),
                 const SizedBox(height: 8),
                 Row(
                   children: [
                     const Text(
-                      'Chest Pain',
+                      'Chest Pain/Tightness',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
@@ -420,11 +427,11 @@ class _SymptomsInitialIllnessScreenState
                             color: Colors.deepPurple,
                             fontWeight: FontWeight.w500,
                           ),
-                          value: _controller.chestPain,
+                          value: _controller.chestPainTightness,
                           onChanged: (value) {
                             setState(
                               () {
-                                _controller.chestPain = value!;
+                                _controller.chestPainTightness = value!;
                               },
                             );
                           },
@@ -458,10 +465,11 @@ class _SymptomsInitialIllnessScreenState
                 const SizedBox(height: 8),
                 const Divider(color: Colors.black12),
                 const SizedBox(height: 8),
+                ////Palpitations
                 Row(
                   children: [
                     const Text(
-                      'Irregular Pulse',
+                      'Palpitations',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
@@ -488,11 +496,11 @@ class _SymptomsInitialIllnessScreenState
                             color: Colors.deepPurple,
                             fontWeight: FontWeight.w500,
                           ),
-                          value: _controller.irregularPulse,
+                          value: _controller.palpitations,
                           onChanged: (value) {
                             setState(
                               () {
-                                _controller.irregularPulse = value!;
+                                _controller.palpitations = value!;
                               },
                             );
                           },
@@ -526,6 +534,7 @@ class _SymptomsInitialIllnessScreenState
                 const SizedBox(height: 8),
                 const Divider(color: Colors.black12),
                 const SizedBox(height: 8),
+                //////Itchy/Red/Dry Eyes
                 Row(
                   children: [
                     const Text(
@@ -594,6 +603,8 @@ class _SymptomsInitialIllnessScreenState
                 const SizedBox(height: 8),
                 const Divider(color: Colors.black12),
                 const SizedBox(height: 8),
+
+                ///Headaches
                 Row(
                   children: [
                     const Text(
@@ -662,6 +673,7 @@ class _SymptomsInitialIllnessScreenState
                 const SizedBox(height: 8),
                 const Divider(color: Colors.black12),
                 const SizedBox(height: 8),
+                ////Loss of Smell/taste
                 Row(
                   children: [
                     const Text(
@@ -730,10 +742,11 @@ class _SymptomsInitialIllnessScreenState
                 const SizedBox(height: 8),
                 const Divider(color: Colors.black12),
                 const SizedBox(height: 8),
+                ////forgetfulness
                 Row(
                   children: [
                     const Text(
-                      'Blurred Vision',
+                      'Forgetfulness',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
@@ -760,11 +773,11 @@ class _SymptomsInitialIllnessScreenState
                             color: Colors.deepPurple,
                             fontWeight: FontWeight.w500,
                           ),
-                          value: _controller.blurredVision,
+                          value: _controller.forgetfulness,
                           onChanged: (value) {
                             setState(
                               () {
-                                _controller.blurredVision = value!;
+                                _controller.forgetfulness = value!;
                               },
                             );
                           },
@@ -798,10 +811,11 @@ class _SymptomsInitialIllnessScreenState
                 const SizedBox(height: 8),
                 const Divider(color: Colors.black12),
                 const SizedBox(height: 8),
+                /////Delayed Thinking
                 Row(
                   children: [
                     const Text(
-                      'Hallucinations',
+                      'Delayed Thinking',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
@@ -828,11 +842,11 @@ class _SymptomsInitialIllnessScreenState
                             color: Colors.deepPurple,
                             fontWeight: FontWeight.w500,
                           ),
-                          value: _controller.hallucinations,
+                          value: _controller.delayedthinking,
                           onChanged: (value) {
                             setState(
                               () {
-                                _controller.hallucinations = value!;
+                                _controller.delayedthinking = value!;
                               },
                             );
                           },
@@ -1075,7 +1089,7 @@ class _SymptomsInitialIllnessScreenState
                 Row(
                   children: [
                     const Text(
-                      'Numbness',
+                      'Difficulty speaking ',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
@@ -1102,11 +1116,11 @@ class _SymptomsInitialIllnessScreenState
                             color: Colors.deepPurple,
                             fontWeight: FontWeight.w500,
                           ),
-                          value: _controller.numbness,
+                          value: _controller.difficultySpeaking,
                           onChanged: (value) {
                             setState(
                               () {
-                                _controller.numbness = value!;
+                                _controller.difficultySpeaking = value!;
                               },
                             );
                           },
@@ -1211,7 +1225,7 @@ class _SymptomsInitialIllnessScreenState
                 Row(
                   children: [
                     const Text(
-                      'Body Pain',
+                      'Muscle/Body Pain',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
@@ -1238,11 +1252,11 @@ class _SymptomsInitialIllnessScreenState
                             color: Colors.deepPurple,
                             fontWeight: FontWeight.w500,
                           ),
-                          value: _controller.bodyPain,
+                          value: _controller.muscleBodyPain,
                           onChanged: (value) {
                             setState(
                               () {
-                                _controller.bodyPain = value!;
+                                _controller.muscleBodyPain = value!;
                               },
                             );
                           },
@@ -1279,7 +1293,7 @@ class _SymptomsInitialIllnessScreenState
                 Row(
                   children: [
                     const Text(
-                      'Nausea',
+                      'Nausea/vomiting',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
@@ -1306,11 +1320,11 @@ class _SymptomsInitialIllnessScreenState
                             color: Colors.deepPurple,
                             fontWeight: FontWeight.w500,
                           ),
-                          value: _controller.nausea,
+                          value: _controller.nauseaVomiting,
                           onChanged: (value) {
                             setState(
                               () {
-                                _controller.nausea = value!;
+                                _controller.nauseaVomiting = value!;
                               },
                             );
                           },
@@ -1347,7 +1361,7 @@ class _SymptomsInitialIllnessScreenState
                 Row(
                   children: [
                     const Text(
-                      'Vomiting',
+                      'Poor concentration',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
@@ -1374,11 +1388,11 @@ class _SymptomsInitialIllnessScreenState
                             color: Colors.deepPurple,
                             fontWeight: FontWeight.w500,
                           ),
-                          value: _controller.vomiting,
+                          value: _controller.poorconcentration,
                           onChanged: (value) {
                             setState(
                               () {
-                                _controller.vomiting = value!;
+                                _controller.poorconcentration = value!;
                               },
                             );
                           },
@@ -1483,7 +1497,7 @@ class _SymptomsInitialIllnessScreenState
                 Row(
                   children: [
                     const Text(
-                      'Abdominal Pain',
+                      'Blisters',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
@@ -1510,11 +1524,11 @@ class _SymptomsInitialIllnessScreenState
                             color: Colors.deepPurple,
                             fontWeight: FontWeight.w500,
                           ),
-                          value: _controller.abdominalPain,
+                          value: _controller.blisters,
                           onChanged: (value) {
                             setState(
                               () {
-                                _controller.abdominalPain = value!;
+                                _controller.blisters = value!;
                               },
                             );
                           },
@@ -1619,7 +1633,7 @@ class _SymptomsInitialIllnessScreenState
                 Row(
                   children: [
                     const Text(
-                      'Hot Flashes',
+                      'Ulcers/Sores ',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w500,
@@ -1646,11 +1660,11 @@ class _SymptomsInitialIllnessScreenState
                             color: Colors.deepPurple,
                             fontWeight: FontWeight.w500,
                           ),
-                          value: _controller.hotFlashes,
+                          value: _controller.ucersSores,
                           onChanged: (value) {
                             setState(
                               () {
-                                _controller.hotFlashes = value!;
+                                _controller.ucersSores = value!;
                               },
                             );
                           },
@@ -1749,6 +1763,142 @@ class _SymptomsInitialIllnessScreenState
                     ),
                   ],
                 ),
+                const SizedBox(height: 8),
+                const Divider(color: Colors.black12),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    const Text(
+                      'Stomach ache',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.deepPurple,
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    DecoratedBox(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: Colors.deepPurple,
+                          width: 1.5,
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: DropdownButton(
+                          //isExpanded: true,
+                          underline: const SizedBox(),
+                          borderRadius: BorderRadius.circular(12),
+                          style: const TextStyle(
+                            fontSize: 18,
+                            color: Colors.deepPurple,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          value: _controller.stomachAche,
+                          onChanged: (value) {
+                            setState(
+                              () {
+                                _controller.stomachAche = value!;
+                              },
+                            );
+                          },
+                          items: const [
+                            DropdownMenuItem(
+                              value: 'None',
+                              child: Text('None'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Mild',
+                              child: Text('Mild'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Moderate',
+                              child: Text('Moderate'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Severe',
+                              child: Text('Severe'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Very Severe',
+                              child: Text('Very Severe'),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                const Divider(color: Colors.black12),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    const Text(
+                      'Itchy/swollen skin',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.deepPurple,
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    DecoratedBox(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: Colors.deepPurple,
+                          width: 1.5,
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: DropdownButton(
+                          //isExpanded: true,
+                          underline: const SizedBox(),
+                          borderRadius: BorderRadius.circular(12),
+                          style: const TextStyle(
+                            fontSize: 18,
+                            color: Colors.deepPurple,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          value: _controller.itchySwollenSkin,
+                          onChanged: (value) {
+                            setState(
+                              () {
+                                _controller.itchySwollenSkin = value!;
+                              },
+                            );
+                          },
+                          items: const [
+                            DropdownMenuItem(
+                              value: 'None',
+                              child: Text('None'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Mild',
+                              child: Text('Mild'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Moderate',
+                              child: Text('Moderate'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Severe',
+                              child: Text('Severe'),
+                            ),
+                            DropdownMenuItem(
+                              value: 'Very Severe',
+                              child: Text('Very Severe'),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
                 const SizedBox(height: 16),
                 const Divider(color: Colors.black12),
                 const SizedBox(height: 8),
@@ -1777,30 +1927,35 @@ class _SymptomsInitialIllnessScreenState
                                   .signUpMethod(
                                 fever: _controller.fever,
                                 cough: _controller.cough,
-                                stuffyNose: _controller.stuffyNose,
+                                runnyStuffyNose: _controller.runnyStuffyNose,
                                 soreThroat: _controller.soreThroat,
                                 breathingIssues: _controller.breathingIssues,
-                                chestPain: _controller.chestPain,
-                                irregularPulse: _controller.irregularPulse,
+                                chestPainTightness:
+                                    _controller.chestPainTightness,
+                                palpitations: _controller.palpitations,
                                 itchyRedDryEyes: _controller.itchyRedDryEyes,
                                 headAches: _controller.headAches,
                                 lossOfSmelltaste: _controller.lossOfSmelltaste,
-                                blurredVision: _controller.blurredVision,
-                                hallucinations: _controller.hallucinations,
+                                forgetfulness: _controller.forgetfulness,
+                                delayedthinking: _controller.delayedthinking,
                                 confusion: _controller.confusion,
                                 difficultSleepy: _controller.difficultSleepy,
                                 depressionAnxiety:
                                     _controller.depressionAnxiety,
-                                numbness: _controller.numbness,
+                                difficultySpeaking:
+                                    _controller.difficultySpeaking,
                                 fatigue: _controller.fatigue,
-                                bodyPain: _controller.bodyPain,
-                                nausea: _controller.nausea,
-                                vomiting: _controller.vomiting,
+                                muscleBodyPain: _controller.muscleBodyPain,
+                                nauseaVomiting: _controller.nauseaVomiting,
+                                poorconcentration:
+                                    _controller.poorconcentration,
                                 diarrhea: _controller.diarrhea,
-                                abdominalPain: _controller.abdominalPain,
+                                blisters: _controller.blisters,
                                 lossOfAppetite: _controller.lossOfAppetite,
-                                hotFlashes: _controller.hotFlashes,
+                                ucersSores: _controller.ucersSores,
                                 rash: _controller.rash,
+                                stomachAche: _controller.stomachAche,
+                                itchySwollenSkin: _controller.itchySwollenSkin,
                               )
                                   .then((value) {
                                 if (value == true) {
@@ -1808,7 +1963,7 @@ class _SymptomsInitialIllnessScreenState
                                     _isloading = false;
                                   });
                                   Get.offAll(
-                                    () => const SymptomsOnGoingIllnessScreen(),
+                                    () => const CognitiveFailure(),
                                   );
                                 }
                               });

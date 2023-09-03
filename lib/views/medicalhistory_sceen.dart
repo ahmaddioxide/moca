@@ -41,7 +41,7 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
               children: [
                 const SizedBox(height: 16),
                 const Text(
-                  'What does your diet typically consist of? ',
+                  'What does your diet typically consist of? (you may choose multiple options)',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -54,10 +54,10 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                       children: [
                         Radio(
                           value: 'Grains: bread, cereal, rice, pasta',
-                          groupValue: _controller.diet,
+                          groupValue: _controller.diet1,
                           onChanged: (value) {
                             setState(() {
-                              _controller.diet = value!;
+                              _controller.diet1 = value!;
                             });
                           },
                         ),
@@ -75,10 +75,10 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                       children: [
                         Radio(
                           value: 'Dairy: milk, yoghurt, cheese',
-                          groupValue: _controller.diet,
+                          groupValue: _controller.diet2,
                           onChanged: (value) {
                             setState(() {
-                              _controller.diet = value!;
+                              _controller.diet2 = value!;
                             });
                           },
                         ),
@@ -96,10 +96,10 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                       children: [
                         Radio(
                           value: 'Vegetables and fruits',
-                          groupValue: _controller.diet,
+                          groupValue: _controller.diet3,
                           onChanged: (value) {
                             setState(() {
-                              _controller.diet = value!;
+                              _controller.diet3 = value!;
                             });
                           },
                         ),
@@ -117,10 +117,10 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                       children: [
                         Radio(
                           value: 'Fats, oils and sugars',
-                          groupValue: _controller.diet,
+                          groupValue: _controller.diet4,
                           onChanged: (value) {
                             setState(() {
-                              _controller.diet = value!;
+                              _controller.diet4 = value!;
                             });
                           },
                         ),
@@ -139,10 +139,10 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                         Radio(
                           value:
                               'Protein: red meat, poultry, fish, eggs, beans',
-                          groupValue: _controller.diet,
+                          groupValue: _controller.diet5,
                           onChanged: (value) {
                             setState(() {
-                              _controller.diet = value!;
+                              _controller.diet5 = value!;
                             });
                           },
                         ),
@@ -323,6 +323,66 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                     ),
                   ],
                 ),
+                /////////////Alcohol
+                const SizedBox(height: 16),
+                const Divider(
+                  color: Colors.black12,
+                ),
+                const SizedBox(height: 16),
+                const Text(
+                  'Do you consume alcohol?',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.deepPurple,
+                  ),
+                ),
+                Row(
+                  children: [
+                    Row(
+                      children: [
+                        Radio(
+                          value: 'Yes',
+                          groupValue: _controller.alcohol,
+                          onChanged: (value) {
+                            setState(() {
+                              _controller.alcohol = value!;
+                            });
+                          },
+                        ),
+                        const Text(
+                          'Yes',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.deepPurple,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Radio(
+                          value: 'No',
+                          groupValue: _controller.alcohol,
+                          onChanged: (value) {
+                            setState(() {
+                              _controller.alcohol = value!;
+                            });
+                          },
+                        ),
+                        const Text(
+                          'No',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.deepPurple,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
                 /////////////Q4
                 const SizedBox(height: 16),
                 const Divider(
@@ -330,7 +390,7 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                 ),
                 const SizedBox(height: 16),
                 const Text(
-                  'Do you have any medical condition/ chronic illness?',
+                  '.Do you have any medical condition/ chronic illness? (you may choose multiple options)',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -343,10 +403,10 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                       children: [
                         Radio(
                           value: 'High blood pressure',
-                          groupValue: _controller.medicalCondition,
+                          groupValue: _controller.medicalCondition1,
                           onChanged: (value) {
                             setState(() {
-                              _controller.medicalCondition = value!;
+                              _controller.medicalCondition1 = value!;
                             });
                           },
                         ),
@@ -364,10 +424,10 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                       children: [
                         Radio(
                           value: 'Asthma',
-                          groupValue: _controller.medicalCondition,
+                          groupValue: _controller.medicalCondition2,
                           onChanged: (value) {
                             setState(() {
-                              _controller.medicalCondition = value!;
+                              _controller.medicalCondition2 = value!;
                             });
                           },
                         ),
@@ -385,10 +445,10 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                       children: [
                         Radio(
                           value: 'Heart disease',
-                          groupValue: _controller.medicalCondition,
+                          groupValue: _controller.medicalCondition3,
                           onChanged: (value) {
                             setState(() {
-                              _controller.medicalCondition = value!;
+                              _controller.medicalCondition3 = value!;
                             });
                           },
                         ),
@@ -406,10 +466,10 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                       children: [
                         Radio(
                           value: 'Mental health disorder',
-                          groupValue: _controller.medicalCondition,
+                          groupValue: _controller.medicalCondition4,
                           onChanged: (value) {
                             setState(() {
-                              _controller.medicalCondition = value!;
+                              _controller.medicalCondition4 = value!;
                             });
                           },
                         ),
@@ -427,10 +487,10 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                       children: [
                         Radio(
                           value: 'Diabetes',
-                          groupValue: _controller.medicalCondition,
+                          groupValue: _controller.medicalCondition5,
                           onChanged: (value) {
                             setState(() {
-                              _controller.medicalCondition = value!;
+                              _controller.medicalCondition5 = value!;
                             });
                           },
                         ),
@@ -448,10 +508,10 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                       children: [
                         Radio(
                           value: 'Obesity',
-                          groupValue: _controller.medicalCondition,
+                          groupValue: _controller.medicalCondition6,
                           onChanged: (value) {
                             setState(() {
-                              _controller.medicalCondition = value!;
+                              _controller.medicalCondition6 = value!;
                             });
                           },
                         ),
@@ -469,10 +529,10 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                       children: [
                         Radio(
                           value: 'Kidney disease',
-                          groupValue: _controller.medicalCondition,
+                          groupValue: _controller.medicalCondition7,
                           onChanged: (value) {
                             setState(() {
-                              _controller.medicalCondition = value!;
+                              _controller.medicalCondition7 = value!;
                             });
                           },
                         ),
@@ -490,10 +550,10 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                       children: [
                         Radio(
                           value: 'None',
-                          groupValue: _controller.medicalCondition,
+                          groupValue: _controller.medicalCondition8,
                           onChanged: (value) {
                             setState(() {
-                              _controller.medicalCondition = value!;
+                              _controller.medicalCondition8 = value!;
                             });
                           },
                         ),
@@ -511,10 +571,10 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                       children: [
                         Radio(
                           value: 'Other',
-                          groupValue: _controller.medicalCondition,
+                          groupValue: _controller.medicalCondition9,
                           onChanged: (value) {
                             setState(() {
-                              _controller.medicalCondition = value!;
+                              _controller.medicalCondition9 = value!;
                             });
                           },
                         ),
@@ -555,18 +615,43 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                           setState(() {
                             _isloading = true;
                           });
-                          if (_controller.diet != '' &&
+                          if ((_controller.diet5 != '' ||
+                                  _controller.diet4 != '' ||
+                                  _controller.diet3 != '' ||
+                                  _controller.diet1 != '' ||
+                                  _controller.diet2 != '') &&
                               _controller.physicalActivity != '' &&
                               _controller.smoke != '' &&
-                              _controller.medicalCondition != '') {
+                              _controller.alcohol != '' &&
+                              (_controller.medicalCondition1 != '' ||
+                                  _controller.medicalCondition2 != '' ||
+                                  _controller.medicalCondition3 != '' ||
+                                  _controller.medicalCondition4 != '' ||
+                                  _controller.medicalCondition5 != '' ||
+                                  _controller.medicalCondition6 != '' ||
+                                  _controller.medicalCondition7 != '' ||
+                                  _controller.medicalCondition8 != '' ||
+                                  _controller.medicalCondition9 != '')) {
                             _controller
                                 .submitForm(
-                                    diet: _controller.diet,
-                                    physicalActivity:
-                                        _controller.physicalActivity,
-                                    smoke: _controller.smoke,
-                                    medicalCondition:
-                                        _controller.medicalCondition)
+                              diet1: _controller.diet1,
+                              diet2: _controller.diet2,
+                              diet3: _controller.diet3,
+                              diet4: _controller.diet4,
+                              diet5: _controller.diet5,
+                              physicalActivity: _controller.physicalActivity,
+                              smoke: _controller.smoke,
+                              alcohol: _controller.alcohol,
+                              medicalCondition1: _controller.medicalCondition1,
+                              medicalCondition2: _controller.medicalCondition2,
+                              medicalCondition3: _controller.medicalCondition3,
+                              medicalCondition4: _controller.medicalCondition4,
+                              medicalCondition5: _controller.medicalCondition5,
+                              medicalCondition6: _controller.medicalCondition6,
+                              medicalCondition7: _controller.medicalCondition7,
+                              medicalCondition8: _controller.medicalCondition8,
+                              medicalCondition9: _controller.medicalCondition9,
+                            )
                                 .then((value) {
                               if (value == true) {
                                 setState(() {

@@ -9,17 +9,19 @@ class CovidExperienceController extends GetxController {
   String covid = '';
   String result = '';
   String duration = '';
-  String first4weeks = '';
-  String week4Experience = '';
+  String coivdExp = '';
+  String vaccinated = '';
+  String vaccinationPeriod = '';
 
   Future<bool> submitForm({
     pcrTest,
+    pcrTestDetails,
     covid,
     result,
     duration,
-    first4weeks,
-    week4Experience,
-    pcrTestDetails,
+    coivdExp,
+    vaccinated,
+    vaccinationPeriod,
   }) async {
     debugPrint('submitForm() called');
     try {
@@ -40,24 +42,13 @@ class CovidExperienceController extends GetxController {
           'covid': covid,
           'results': result,
           'duration': duration,
-          'first4weeks': first4weeks,
-          'week4Experience': week4Experience,
           'pcrTestDetails': pcrTestDetails,
+          'coivdExp': coivdExp,
+          'vaccinated': vaccinated,
+          'vaccinationPeriod': vaccinationPeriod,
           'id': currentUser!.uid,
         }
       });
-      //     .collection('covid_experience')
-      //     .doc('data')
-      //     .set({
-      //   'pcrTest': pcrTest,
-      //   'covid': covid,
-      //   'results': result,
-      //   'duration': duration,
-      //   'first4weeks': first4weeks,
-      //   'week4Experience': week4Experience,
-      //   'pcrTestDetails': pcrTestDetails,
-      //   'id': currentUser!.uid,
-      // });
       return true;
     } catch (e) {
       debugPrint('Error: $e');
@@ -74,12 +65,13 @@ class CovidExperienceController extends GetxController {
 
   Future<bool> submitFormMethod({
     pcrTest,
+    pcrTestDetails,
     covid,
     result,
     duration,
-    first4weeks,
-    week4Experience,
-    pcrTestDetails,
+    coivdExp,
+    vaccinated,
+    vaccinationPeriod,
   }) async {
     try {
       debugPrint('submitForm() called');
@@ -88,9 +80,10 @@ class CovidExperienceController extends GetxController {
         covid: covid,
         result: result,
         duration: duration,
-        first4weeks: first4weeks,
-        week4Experience: week4Experience,
         pcrTestDetails: pcrTestDetails,
+        coivdExp: coivdExp,
+        vaccinated: vaccinated,
+        vaccinationPeriod: vaccinationPeriod,
       );
       if (check == false) {
         debugPrint('ERROR is storing data!');
