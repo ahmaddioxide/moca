@@ -167,7 +167,7 @@ class _ResultScreenState extends State<ResultScreen> {
                         Row(
                           children: [
                             const Text(
-                              "Games Score is: ",
+                              "MOCA Score is: ",
                               style: TextStyle(
                                 fontSize: 28,
                                 color: Colors.black,
