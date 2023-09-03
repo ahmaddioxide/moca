@@ -38,7 +38,9 @@ class _AbstractionScreenState extends State<AbstractionScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text(
-                  'Please perform the following abstraction tasks:',
+                  '“What do each of the following pair of words have in common?'
+                      ' For example, what do “banana” and “orange” have in common?'
+                      ' They are both fruits.',
                   style: TextStyle(
                     fontSize: 18.0,
                     color: Colors.deepPurple,
@@ -71,8 +73,8 @@ class _AbstractionScreenState extends State<AbstractionScreen> {
                       ),
                       TaskItem(
                         statement: 'Watch-Ruler',
-                        options: const ['Fruit', 'Color', 'Tool', 'Animal'],
-                        result: 'Tool',
+                        options: const ['Fruit', 'Color', 'Measuring Tool', 'Animal'],
+                        result: 'Measuring Tool',
                         onChanged: (result) {
                           setState(() {
                             taskResults[2] = result;

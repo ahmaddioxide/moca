@@ -20,7 +20,7 @@ class _ForwardDigitState extends State<ForwardDigitSpan> {
   FlutterTts flutterTts = FlutterTts();
   final DigitSpanController _controller = Get.put(DigitSpanController());
   int score = 0;
-  var numbers = ['2', '4', '5', '7', '9'];
+  var numbers = ['2', '1', '8', '5', '4'];
   bool isTimerStarted = false;
   bool innNextScreen = false;
 

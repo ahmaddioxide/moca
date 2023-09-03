@@ -64,6 +64,7 @@ class _OrientationScreenState extends State<OrientationScreen> {
               controller: controller.placeController,
               decoration: const InputDecoration(
                 labelText: 'Place',
+                hintText: "Rawalpindi/Islamabad",
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(12.0)),
                 ),
@@ -74,6 +75,7 @@ class _OrientationScreenState extends State<OrientationScreen> {
               controller: controller.cityController,
               decoration: const InputDecoration(
                 labelText: 'City',
+                hintText: "Rawalpindi/Islamabad",
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(12.0)),
                 ),
