@@ -55,9 +55,16 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                         Radio(
                           value: 'Grains: bread, cereal, rice, pasta',
                           groupValue: _controller.diet1,
+                          toggleable: true,
                           onChanged: (value) {
                             setState(() {
-                              _controller.diet1 = value!;
+                              if (_controller.diet1 != value) {
+                                _controller.diet1 =
+                                    value; // Deselect if already selected
+                              } else {
+                                _controller.diet1 =
+                                    null; // Select if not selected
+                              }
                             });
                           },
                         ),
@@ -76,9 +83,16 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                         Radio(
                           value: 'Dairy: milk, yoghurt, cheese',
                           groupValue: _controller.diet2,
+                          toggleable: true,
                           onChanged: (value) {
                             setState(() {
-                              _controller.diet2 = value!;
+                              if (_controller.diet2 != value) {
+                                _controller.diet2 =
+                                    value; // Deselect if already selected
+                              } else {
+                                _controller.diet2 =
+                                    null; // Select if not selected
+                              }
                             });
                           },
                         ),
@@ -97,9 +111,16 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                         Radio(
                           value: 'Vegetables and fruits',
                           groupValue: _controller.diet3,
+                          toggleable: true,
                           onChanged: (value) {
                             setState(() {
-                              _controller.diet3 = value!;
+                              if (_controller.diet3 != value) {
+                                _controller.diet3 =
+                                    value; // Deselect if already selected
+                              } else {
+                                _controller.diet3 =
+                                    null; // Select if not selected
+                              }
                             });
                           },
                         ),
@@ -118,9 +139,16 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                         Radio(
                           value: 'Fats, oils and sugars',
                           groupValue: _controller.diet4,
+                          toggleable: true,
                           onChanged: (value) {
                             setState(() {
-                              _controller.diet4 = value!;
+                              if (_controller.diet4 != value) {
+                                _controller.diet4 =
+                                    value; // Deselect if already selected
+                              } else {
+                                _controller.diet4 =
+                                    null; // Select if not selected
+                              }
                             });
                           },
                         ),
@@ -140,9 +168,16 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                           value:
                               'Protein: red meat, poultry, fish, eggs, beans',
                           groupValue: _controller.diet5,
+                          toggleable: true,
                           onChanged: (value) {
                             setState(() {
-                              _controller.diet5 = value!;
+                              if (_controller.diet5 != value) {
+                                _controller.diet5 =
+                                    value; // Deselect if already selected
+                              } else {
+                                _controller.diet5 =
+                                    null; // Select if not selected
+                              }
                             });
                           },
                         ),
@@ -404,9 +439,16 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                         Radio(
                           value: 'High blood pressure',
                           groupValue: _controller.medicalCondition1,
+                          toggleable: true,
                           onChanged: (value) {
                             setState(() {
-                              _controller.medicalCondition1 = value!;
+                              if (_controller.medicalCondition1 != value) {
+                                _controller.medicalCondition1 =
+                                    value; // Deselect if already selected
+                              } else {
+                                _controller.medicalCondition1 =
+                                    null; // Select if not selected
+                              }
                             });
                           },
                         ),
@@ -425,9 +467,16 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                         Radio(
                           value: 'Asthma',
                           groupValue: _controller.medicalCondition2,
+                          toggleable: true,
                           onChanged: (value) {
                             setState(() {
-                              _controller.medicalCondition2 = value!;
+                              if (_controller.medicalCondition2 != value) {
+                                _controller.medicalCondition2 =
+                                    value; // Deselect if already selected
+                              } else {
+                                _controller.medicalCondition2 =
+                                    null; // Select if not selected
+                              }
                             });
                           },
                         ),
@@ -446,9 +495,16 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                         Radio(
                           value: 'Heart disease',
                           groupValue: _controller.medicalCondition3,
+                          toggleable: true,
                           onChanged: (value) {
                             setState(() {
-                              _controller.medicalCondition3 = value!;
+                              if (_controller.medicalCondition3 != value) {
+                                _controller.medicalCondition3 =
+                                    value; // Deselect if already selected
+                              } else {
+                                _controller.medicalCondition3 =
+                                    null; // Select if not selected
+                              }
                             });
                           },
                         ),
@@ -467,9 +523,16 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                         Radio(
                           value: 'Mental health disorder',
                           groupValue: _controller.medicalCondition4,
+                          toggleable: true,
                           onChanged: (value) {
                             setState(() {
-                              _controller.medicalCondition4 = value!;
+                              if (_controller.medicalCondition4 != value) {
+                                _controller.medicalCondition4 =
+                                    value; // Deselect if already selected
+                              } else {
+                                _controller.medicalCondition4 =
+                                    null; // Select if not selected
+                              }
                             });
                           },
                         ),
@@ -488,9 +551,16 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                         Radio(
                           value: 'Diabetes',
                           groupValue: _controller.medicalCondition5,
+                          toggleable: true,
                           onChanged: (value) {
                             setState(() {
-                              _controller.medicalCondition5 = value!;
+                              if (_controller.medicalCondition5 != value) {
+                                _controller.medicalCondition5 =
+                                    value; // Deselect if already selected
+                              } else {
+                                _controller.medicalCondition5 =
+                                    null; // Select if not selected
+                              }
                             });
                           },
                         ),
@@ -509,9 +579,16 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                         Radio(
                           value: 'Obesity',
                           groupValue: _controller.medicalCondition6,
+                          toggleable: true,
                           onChanged: (value) {
                             setState(() {
-                              _controller.medicalCondition6 = value!;
+                              if (_controller.medicalCondition6 != value) {
+                                _controller.medicalCondition6 =
+                                    value; // Deselect if already selected
+                              } else {
+                                _controller.medicalCondition6 =
+                                    null; // Select if not selected
+                              }
                             });
                           },
                         ),
@@ -530,9 +607,16 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                         Radio(
                           value: 'Kidney disease',
                           groupValue: _controller.medicalCondition7,
+                          toggleable: true,
                           onChanged: (value) {
                             setState(() {
-                              _controller.medicalCondition7 = value!;
+                              if (_controller.medicalCondition7 != value) {
+                                _controller.medicalCondition7 =
+                                    value; // Deselect if already selected
+                              } else {
+                                _controller.medicalCondition7 =
+                                    null; // Select if not selected
+                              }
                             });
                           },
                         ),
@@ -551,9 +635,16 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                         Radio(
                           value: 'None',
                           groupValue: _controller.medicalCondition8,
+                          toggleable: true,
                           onChanged: (value) {
                             setState(() {
-                              _controller.medicalCondition8 = value!;
+                              if (_controller.medicalCondition8 != value) {
+                                _controller.medicalCondition8 =
+                                    value; // Deselect if already selected
+                              } else {
+                                _controller.medicalCondition8 =
+                                    null; // Select if not selected
+                              }
                             });
                           },
                         ),
@@ -572,9 +663,16 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                         Radio(
                           value: 'Other',
                           groupValue: _controller.medicalCondition9,
+                          toggleable: true,
                           onChanged: (value) {
                             setState(() {
-                              _controller.medicalCondition9 = value!;
+                              if (_controller.medicalCondition9 != value) {
+                                _controller.medicalCondition9 =
+                                    value; // Deselect if already selected
+                              } else {
+                                _controller.medicalCondition9 =
+                                    null; // Select if not selected
+                              }
                             });
                           },
                         ),

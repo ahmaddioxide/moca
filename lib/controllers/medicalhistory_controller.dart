@@ -4,22 +4,22 @@ import 'package:get/get.dart';
 import 'package:moca/controllers/firebase_const.dart';
 
 class MedicalHistoryController extends GetxController {
-  String diet1 = '';
-  String diet2 = '';
-  String diet3 = '';
-  String diet4 = '';
-  String diet5 = '';
+  String? diet1 = '';
+  String? diet2 = '';
+  String? diet3 = '';
+  String? diet4 = '';
+  String? diet5 = '';
   String physicalActivity = '';
   String smoke = '';
-  String medicalCondition1 = '';
-  String medicalCondition2 = '';
-  String medicalCondition3 = '';
-  String medicalCondition4 = '';
-  String medicalCondition5 = '';
-  String medicalCondition6 = '';
-  String medicalCondition7 = '';
-  String medicalCondition8 = '';
-  String medicalCondition9 = '';
+  String? medicalCondition1 = '';
+  String? medicalCondition2 = '';
+  String? medicalCondition3 = '';
+  String? medicalCondition4 = '';
+  String? medicalCondition5 = '';
+  String? medicalCondition6 = '';
+  String? medicalCondition7 = '';
+  String? medicalCondition8 = '';
+  String? medicalCondition9 = '';
   String alcohol = '';
 
   Future<bool> submitForm({
