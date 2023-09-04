@@ -27,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
   //alert dialog which shows the information about the app
   void _showAlert() {
     Get.defaultDialog(
-      title: 'About CogWheel',
+      title: 'About CogQuest',
       titleStyle: const TextStyle(
         color: Colors.deepPurple,
         fontWeight: FontWeight.bold,
@@ -36,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
       content: const SingleChildScrollView(
         child: Center(
           child: Text(
-            "CogWheel is a not-for-profit initiative by the students of Fazaia Medical College dedicated to promoting research, education, and public engagement in neurocognitive science in Pakistan. Our self-assessment tool uses two high-quality, scientifically valid cognitive tests, the Cognitive Failures Questionnaire (DE Broadbent and colleagues) and the Montreal Cognitive Assessment (ZS Nasreddine and colleagues), to provide personalized feedback and recommendations that will help you learn more about your brain, and make lifestyle choices to improve your cognitive health. Your participation, in turn, helps us understand more about the cognitive functions of the brain–mental processes that allow us to receive, store, transform, develop and recover information–and how they change with age, lifestyle and disease. is free and accessible to individuals, researchers, educators, and health care professionals. Equipped with a user-friendly interface and features like on-screen instructions, time tracking, automatic scoring, easy result storage and sharing, CogWheel can be used to assess attention, memory, language, problem solving, and reasoning without the need of a trained administrator. All you need is a quiet space, some undistracted time, and a computer, tablet or smartphone. Contact usIf you have any queries, concerns, or feedback, drop the research group leader a line at noorulainansar9@gmail.com ",
+            "CogQuest is a not-for-profit initiative by the students of Fazaia Medical College dedicated to promoting research, education, and public engagement in neurocognitive science in Pakistan. Our self-assessment tool uses two high-quality, scientifically valid cognitive tests, the Cognitive Failures Questionnaire (DE Broadbent and colleagues) and the Montreal Cognitive Assessment (ZS Nasreddine and colleagues), to provide personalized feedback and recommendations that will help you learn more about your brain, and make lifestyle choices to improve your cognitive health. Your participation, in turn, helps us understand more about the cognitive functions of the brain–mental processes that allow us to receive, store, transform, develop and recover information–and how they change with age, lifestyle and disease. is free and accessible to individuals, researchers, educators, and health care professionals. Equipped with a user-friendly interface and features like on-screen instructions, time tracking, automatic scoring, easy result storage and sharing, CogQuest can be used to assess attention, memory, language, problem solving, and reasoning without the need of a trained administrator. All you need is a quiet space, some undistracted time, and a computer, tablet or smartphone. Contact usIf you have any queries, concerns, or feedback, drop the research group leader a line at noorulainansar9@gmail.com ",
             style: TextStyle(
               color: Colors.black,
               fontSize: 14,
@@ -58,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
         appBar: AppBar(
           title: const Text(
-            'CogWheel',
+            'CogQuest',
             style: TextStyle(
               color: Colors.deepPurple,
               fontWeight: FontWeight.bold,

@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const ResultScreen(),
+      home: const OnBoardingPage(),
       //home: const SignUpScreen(),
     );
   }

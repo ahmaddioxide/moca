@@ -48,6 +48,18 @@ class _ResultScreenState extends State<ResultScreen> {
     });
   }
 
+  String getRecommendations(int totalScore) {
+    if (totalScore >= 26) {
+      return "- Do regular exercise\n- Engage in brain stimulating activities\n- Stick to a healthy sleep schedule\n- Eat a Mediterranean style diet";
+    } else if (totalScore >= 18) {
+      return "- Consult a doctor\n- Do regular exercise\n- Engage in brain stimulating activities\n- Stick to a healthy sleep schedule\n- Eat a Mediterranean style diet";
+    } else if (totalScore >= 10) {
+      return "- Consult a doctor as soon as possible\n- Do regular exercise\n- Engage in brain stimulating activities\n- Stick to a healthy sleep schedule\n- Eat a Mediterranean style diet";
+    } else {
+      return "- Consult a doctor at your earliest";
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
@@ -69,6 +81,21 @@ class _ResultScreenState extends State<ResultScreen> {
       src = "assets/illustrations/severesick.png";
     }
     return Scaffold(
+      floatingActionButton: FloatingActionButton.extended(
+        tooltip: "Homepage",
+        backgroundColor: Colors.deepPurple,
+        foregroundColor: Colors.white,
+        elevation: 5,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(18),
+        ),
+        onPressed: () {
+          Get.offAll(() => const HomeScreen());
+        },
+        icon: const Icon(Icons.home, color: Colors.white),
+        label: const Text("Home"),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       appBar: AppBar(
         title: const Center(
           child: Text(
@@ -139,12 +166,12 @@ class _ResultScreenState extends State<ResultScreen> {
                 ),
               ),
               SizedBox(
-                height: height * 0.05,
+                height: height * 0.03,
               ),
               Center(
                 child: Container(
                   width: width * 0.9,
-                  height: height * 0.62,
+                  height: height * 0.6,
                   decoration: BoxDecoration(
                     color: Colors.deepPurple[50],
                     borderRadius: BorderRadius.circular(20),
@@ -170,15 +197,16 @@ class _ResultScreenState extends State<ResultScreen> {
                               const Text(
                                 "MOCA Score is: ",
                                 style: TextStyle(
-                                  fontSize: 26,
+                                  fontSize: 22,
                                   color: Colors.black,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
                               Flexible(
                                 child: Text(
                                   "$totalScore  / 30",
                                   style: const TextStyle(
-                                      fontSize: 26,
+                                      fontSize: 22,
                                       color: Colors.deepPurple,
                                       fontWeight: FontWeight.bold),
                                 ),
@@ -186,21 +214,22 @@ class _ResultScreenState extends State<ResultScreen> {
                             ],
                           ),
                           SizedBox(
-                            height: height * 0.02,
+                            height: height * 0.01,
                           ),
                           Row(
                             children: [
                               const Text(
                                 "CFQ Score is : ",
                                 style: TextStyle(
-                                  fontSize: 26,
+                                  fontSize: 22,
                                   color: Colors.black,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
                               Text(
                                 totalCfq.toString(),
                                 style: const TextStyle(
-                                  fontSize: 26,
+                                  fontSize: 22,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.deepPurple,
                                 ),
@@ -215,47 +244,83 @@ class _ResultScreenState extends State<ResultScreen> {
                             alignment: Alignment.center,
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Column(
+                              child: Row(
                                 children: [
-                                  Text(
-                                    message,
-                                    style: const TextStyle(
-                                      fontSize: 28,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.deepPurple,
+                                  SizedBox(
+                                    width: width * 0.5,
+                                    child: Text(
+                                      message,
+                                      style: const TextStyle(
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.deepPurple,
+                                        overflow: TextOverflow.visible,
+                                      ),
                                     ),
+                                  ),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Image(
+                                    image: AssetImage(src),
+                                    height: 100,
+                                    width: 100,
+                                    fit: BoxFit.cover,
                                   ),
                                 ],
                               ),
                             ),
                           ),
-                          Image(
-                            image: AssetImage(src),
-                            height: 200,
-                            width: 200,
-                            fit: BoxFit.cover,
+
+
+                          SizedBox(
+                            height: height * 0.02,
                           ),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          ElevatedButton(
-                            onPressed: () {
-                              Get.offAll(() => const HomeScreen());
-                            },
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.deepPurple,
-                                padding:
-                                    const EdgeInsets.fromLTRB(50, 10, 50, 10),
-                                textStyle: const TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.bold)),
-                            child: const Text(
-                              "Homepage",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 17,
-                              ),
+                          const Text(
+                            "Recommendations:",
+                            style: TextStyle(
+                              fontSize: 22,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
+                          SizedBox(
+                            height: height * 0.005,
+                          ),
+                          SizedBox(
+                            width: width * 0.8,
+                            child: Text(
+                              getRecommendations(totalScore ?? 0),
+                              style: const TextStyle(
+                                fontSize: 18,
+                                color: Colors.deepPurple,
+                                fontWeight: FontWeight.bold,
+                                overflow: TextOverflow.visible,
+                              ),
+                              textAlign: TextAlign.start,
+                            ),
+                          ),
+                          SizedBox(
+                            height: height * 0.02,
+                          ),
+                          // ElevatedButton(
+                          //   onPressed: () {
+                          //     Get.offAll(() => const HomeScreen());
+                          //   },
+                          //   style: ElevatedButton.styleFrom(
+                          //       backgroundColor: Colors.deepPurple,
+                          //       padding:
+                          //           const EdgeInsets.fromLTRB(50, 10, 50, 10),
+                          //       textStyle: const TextStyle(
+                          //           fontSize: 20, fontWeight: FontWeight.bold)),
+                          //   child: const Text(
+                          //     "Homepage",
+                          //     style: TextStyle(
+                          //       color: Colors.white,
+                          //       fontSize: 17,
+                          //     ),
+                          //   ),
+                          // ),
                         ],
                       ),
                     ),

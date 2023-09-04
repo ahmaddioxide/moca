@@ -142,7 +142,7 @@ class VigilanceScreenState extends State<VigilanceScreen> {
           const Padding(
             padding: EdgeInsets.only(top: 5.0, left: 16.0),
             child: Text(
-              'Forward Digit Span',
+              'Vigilance Test',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,

@@ -423,7 +423,7 @@ class _SymptomsInitialIllnessScreenState
                           underline: const SizedBox(),
                           borderRadius: BorderRadius.circular(12),
                           style: const TextStyle(
-                            fontSize: 18,
+                            fontSize: 16,
                             color: Colors.deepPurple,
                             fontWeight: FontWeight.w500,
                           ),
