@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:moca/views/symptoms_initial_illness_screen.dart';
+
 import '../controllers/covidexperience_controller.dart';
 
 class CovidExperienceScreen extends StatefulWidget {
@@ -217,36 +218,41 @@ class _CovidExperienceScreenState extends State<CovidExperienceScreen> {
                       color: Colors.black12,
                     ),
                     const SizedBox(height: 16),
-                    const Text(
-                      'If you did not get your PCR test done, how do you know you have had COVID-19?',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.deepPurple,
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    TextFormField(
-                      decoration: const InputDecoration(
-                        hintText: 'Please share your Experience',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(12),
-                          ),
-                        ),
-                      ),
-                      onChanged: (value) {
-                        setState(() {
-                          _controller.pcrTestDetails = value;
-                        });
-                      },
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please share your Experience';
-                        }
-                        return null;
-                      },
-                    ),
+                    Visibility(
+                        visible: isVisible,
+                        child: Column(
+                          children: [
+                            const Text(
+                              'If you did not get your PCR test done, how do you know you have had COVID-19?',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.deepPurple,
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            TextFormField(
+                              decoration: const InputDecoration(
+                                hintText: 'Please share your Experience',
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(12),
+                                  ),
+                                ),
+                              ),
+                              onChanged: (value) {
+                                setState(() {
+                                  _controller.pcrTestDetails = value;
+                                });
+                              },
+                              validator: (value) {
+
+                                return null;
+                              },
+                            ),
+                          ],
+                        )),
+
                     const SizedBox(height: 16),
                     const Divider(
                       color: Colors.black12,
@@ -367,6 +373,30 @@ class _CovidExperienceScreenState extends State<CovidExperienceScreen> {
                             ),
                           ],
                         ),
+                        Visibility(
+                          visible: !isVisible,
+                          child: Row(
+                            children: [
+                              Radio(
+                                value: 'N/A',
+                                groupValue: _controller.duration,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _controller.duration = value!;
+                                  });
+                                },
+                              ),
+                              const Text(
+                                'N/A',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.deepPurple,
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
                       ],
                     ),
                     const SizedBox(height: 16),
@@ -519,6 +549,30 @@ class _CovidExperienceScreenState extends State<CovidExperienceScreen> {
                             ),
                           ],
                         ),
+                        Visibility(
+                          visible: !isVisible,
+                          child: Row(
+                            children: [
+                              Radio(
+                                value: 'N/A',
+                                groupValue: _controller.coivdExp,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _controller.coivdExp = value!;
+                                  });
+                                },
+                              ),
+                              const Text(
+                                'N/A',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.deepPurple,
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
                       ],
                     ),
                     const SizedBox(height: 16),
@@ -677,15 +731,17 @@ class _CovidExperienceScreenState extends State<CovidExperienceScreen> {
                                 setState(() {
                                   _isloading = true;
                                 });
-                                if (_formKey.currentState!.validate() &&
+                                if (
                                     _controller.covid != '' &&
-                                    _controller.pcrTest != '' &&
-                                    _controller.result != '' &&
+                                    // _controller.pcrTest != '' &&
+                                    // _controller.result != '' &&
                                     _controller.duration != '' &&
-                                    _controller.coivdExp != '' &&
-                                    _controller.vaccinated != '' &&
-                                    _controller.vaccinationPeriod != '' &&
-                                    _controller.pcrTestDetails != '') {
+                                    // _controller.coivdExp != '' &&
+                                    _controller.vaccinated != ''&&
+                                    _controller.vaccinationPeriod != ''
+                                    // _controller.pcrTestDetails != ''
+
+                                ) {
                                   _controller
                                       .submitFormMethod(
                                     pcrTest: _controller.pcrTest,
