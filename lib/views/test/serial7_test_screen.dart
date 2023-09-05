@@ -228,7 +228,7 @@ class _Serial7State extends State<Serial7Screen> {
           const Padding(
             padding: EdgeInsets.only(top: 5, left: 16, right: 16),
             child: Text(
-              'Count backwards from 100 by subtracting 7. Do a total of 5 subtractions.',
+              'Count backwards from 100 by subtracting 7. Do a total of 5 subtractions. Speak the number after each subtraction.',
               style: TextStyle(
                 fontSize: 16,
                 color: Colors.deepPurple,

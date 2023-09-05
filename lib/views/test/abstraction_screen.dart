@@ -38,7 +38,7 @@ class _AbstractionScreenState extends State<AbstractionScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text(
-                  '“What do each of the following pair of words have in common?'
+                  'What do each of the following pair of words have in common?'
                       ' For example, what do “banana” and “orange” have in common?'
                       ' They are both fruits.',
                   style: TextStyle(

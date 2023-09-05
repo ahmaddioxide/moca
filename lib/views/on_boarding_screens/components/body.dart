@@ -6,7 +6,7 @@ import 'onboard_content.dart';
 
 const List<Map<String, String>> onboardData = [
   {
-    'text': "Welcome to CogWheel.",
+    'text': "Welcome to CogQuest.",
     'image': 'assets/illustrations/onboarding1.png',
     'heading': 'Welcome'
   },
@@ -61,34 +61,37 @@ class _BodyState extends State<Body> {
         child: Column(
           children: <Widget>[
             Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => user != null
-                                ? const HomeScreen()
-                                : const SignUpScreen(),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 20.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => user != null
+                                  ? const HomeScreen()
+                                  : const SignUpScreen(),
+                            ),
+                          );
+                        },
+                        child: const Text(
+                          'Skip',
+                          style: TextStyle(
+                            color: Colors.deepPurple,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 22,
                           ),
-                        );
-                      },
-                      child: const Text(
-                        'Skip',
-                        style: TextStyle(
-                          color: Colors.deepPurple,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 24,
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             Expanded(
@@ -123,7 +126,7 @@ class _BodyState extends State<Body> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(vertical: height * 0.02),
+                      padding: EdgeInsets.symmetric(vertical: height * 0.03),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
