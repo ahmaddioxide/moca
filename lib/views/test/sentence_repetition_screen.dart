@@ -68,7 +68,7 @@ class SentenceRepetitionScreenState extends State<SentenceRepetitionScreen> {
     isTimerStarted = false;
     if (gotoNextSentence == false) {
       goToNextSentence();
-    }else if(gotoNextSentence == true && gotoNextScreen == false){
+    } else if (gotoNextSentence == true && gotoNextScreen == false) {
       nextTest();
     }
   }
@@ -84,8 +84,8 @@ class SentenceRepetitionScreenState extends State<SentenceRepetitionScreen> {
   void nextTest() {
     gotoNextScreen = true;
     sf.setInt('nextGame', 11);
-    _controller.remainingSeconds.value = 2;
     Future.delayed(const Duration(seconds: 3), () {
+      _controller.remainingSeconds.value = 0;
       Get.offAll(() => const VocabularyScreen());
     });
   }
@@ -115,7 +115,6 @@ class SentenceRepetitionScreenState extends State<SentenceRepetitionScreen> {
     spokenSentence.value = 'Hold the button and start speaking';
     currentSentenceIndex++;
 
-
     if (secondSentence.value) {
       _controller.disableMicButton();
       secondSentence.value = false;
@@ -123,7 +122,7 @@ class SentenceRepetitionScreenState extends State<SentenceRepetitionScreen> {
         _speakSentence();
       });
     } else {
-        nextTest();
+      nextTest();
     }
   }
 
@@ -172,6 +171,7 @@ class SentenceRepetitionScreenState extends State<SentenceRepetitionScreen> {
                 debugPrint('Speech recognition is not available');
               }
             }
+            _controller.updateScore(score);
           },
           onTapUp: (details) {
             isListening.value = false;
@@ -266,10 +266,10 @@ class SentenceRepetitionScreenState extends State<SentenceRepetitionScreen> {
               padding: const EdgeInsets.all(16.0),
               child: Center(
                 child: Obx(
-                  () => Text(
+                  () => Text(starttest.value?
                     isListening.value
                         ? recognizedText.value
-                        : spokenSentence.value,
+                        : spokenSentence.value : "Double top the button to start test",
                     style: TextStyle(
                       fontSize: 18,
                       color: isListening.value

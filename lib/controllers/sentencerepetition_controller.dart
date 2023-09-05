@@ -30,13 +30,21 @@ class SentenceController extends GetxController {
 
   void incrementScore() {
     Score.value++;
-    _updateScore(Score.value);
   }
 
-  Future<void> _updateScore(int score) async {
+  Future<void> updateScore(int score) async {
     try {
-      await _scoresCollection.doc(currentUser!.uid).update({
-        "language_test_1": {'sentence_rep_test_sccore': score}
+      // await _scoresCollection.doc(currentUser!.uid).update({
+      //   "language_test_1": {'sentence_rep_test_sccore': score}
+      // });
+
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(currentUser!.uid)
+          .update({
+        'language_test_1': {
+          'score': score,
+        }
       });
     } catch (e) {
       debugPrint('Error updating score: $e');

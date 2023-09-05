@@ -20,13 +20,13 @@ class MyApp extends StatelessWidget {
     //
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'MOCA',
+      title: 'CogQuest',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
       home: const OnBoardingPage(),
-      //home: const MainTestScreen(),
+      //home: const MedicalHistoryScreen(),
     );
   }
 }

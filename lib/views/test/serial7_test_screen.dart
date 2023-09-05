@@ -228,7 +228,7 @@ class _Serial7State extends State<Serial7Screen> {
           const Padding(
             padding: EdgeInsets.only(top: 5, left: 16, right: 16),
             child: Text(
-              'Count backwards from 100 by subtracting 7. Do a total of 5 subtractions.',
+              'Count backwards from 100 by subtracting 7. Do a total of 5 subtractions. Speak the number after each subtraction.',
               style: TextStyle(
                 fontSize: 16,
                 color: Colors.deepPurple,
@@ -287,8 +287,8 @@ class _Serial7State extends State<Serial7Screen> {
                     const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                 margin: const EdgeInsets.only(bottom: 150),
                 child: Obx(
-                  () => Text(
-                    _controller.text.value,
+                  () => Text( _controller.starttest.value?
+                    _controller.text.value : "Double top the button to start test",
                     style: TextStyle(
                       fontSize: 20,
                       color: _controller.isListening.value

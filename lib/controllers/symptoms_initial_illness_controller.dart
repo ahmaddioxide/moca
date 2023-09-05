@@ -6,56 +6,60 @@ import 'package:moca/controllers/firebase_const.dart';
 class SymptomsInitialIllnessController extends GetxController {
   String fever = 'None';
   String cough = 'None';
-  String stuffyNose = 'None';
+  String runnyStuffyNose = 'None';
   String soreThroat = 'None';
+  String palpitations = 'None';
   String breathingIssues = 'None';
-  String chestPain = 'None';
-  String irregularPulse = 'None';
+  String chestPainTightness = 'None';
+  String forgetfulness = 'None';
+  String delayedthinking = 'None';
+  String poorconcentration = 'None';
   String itchyRedDryEyes = 'None';
   String headAches = 'None';
   String lossOfSmelltaste = 'None';
-  String blurredVision = 'None';
-  String hallucinations = 'None';
   String confusion = 'None';
   String difficultSleepy = 'None';
+  String difficultySpeaking = 'None';
   String depressionAnxiety = 'None';
-  String numbness = 'None';
   String fatigue = 'None';
-  String bodyPain = 'None';
-  String nausea = 'None';
-  String vomiting = 'None';
+  String muscleBodyPain = 'None';
+  String nauseaVomiting = 'None';
+  String stomachAche = 'None';
   String diarrhea = 'None';
-  String abdominalPain = 'None';
+  String ucersSores = 'None';
+  String blisters = 'None';
   String lossOfAppetite = 'None';
-  String hotFlashes = 'None';
   String rash = 'None';
+  String itchySwollenSkin = 'None';
 
   Future<bool> submitForm({
     fever,
     cough,
-    stuffyNose,
+    runnyStuffyNose,
     soreThroat,
+    palpitations,
     breathingIssues,
-    chestPain,
-    irregularPulse,
+    chestPainTightness,
+    forgetfulness,
+    delayedthinking,
+    poorconcentration,
     itchyRedDryEyes,
     headAches,
     lossOfSmelltaste,
-    blurredVision,
-    hallucinations,
     confusion,
     difficultSleepy,
+    difficultySpeaking,
     depressionAnxiety,
-    numbness,
     fatigue,
-    bodyPain,
-    nausea,
-    vomiting,
+    muscleBodyPain,
+    nauseaVomiting,
+    stomachAche,
     diarrhea,
-    abdominalPain,
+    ucersSores,
+    blisters,
     lossOfAppetite,
-    hotFlashes,
     rash,
+    itchySwollenSkin,
   }) async {
     try {
       ///storing page info if page has been used of user in firestore
@@ -74,60 +78,34 @@ class SymptomsInitialIllnessController extends GetxController {
         'symptoms_initial_illness': {
           'fever': fever,
           'cough': cough,
-          'stuffyNose': stuffyNose,
+          'runnyStuffyNose': runnyStuffyNose,
           'soreThroat': soreThroat,
+          'palpitations': palpitations,
           'breathingIssues': breathingIssues,
-          'chestPain': chestPain,
-          'irregularPulse': irregularPulse,
+          'chestPainTightness': chestPainTightness,
+          'forgetfulness': forgetfulness,
+          'delayedthinking': delayedthinking,
+          'poorconcentration': poorconcentration,
           'itchyRedDryEyes': itchyRedDryEyes,
           'headAches': headAches,
           'lossOfSmelltaste': lossOfSmelltaste,
-          'blurredVision': blurredVision,
-          'hallucinations': hallucinations,
           'confusion': confusion,
           'difficultSleepy': difficultSleepy,
+          'difficultySpeaking': difficultySpeaking,
           'depressionAnxiety': depressionAnxiety,
-          'numbness': numbness,
           'fatigue': fatigue,
-          'bodyPain': bodyPain,
-          'nausea': nausea,
-          'vomiting': vomiting,
+          'muscleBodyPain': muscleBodyPain,
+          'nauseaVomiting': nauseaVomiting,
+          'stomachAche': stomachAche,
           'diarrhea': diarrhea,
-          'abdominalPain': abdominalPain,
+          'ucersSores': ucersSores,
+          'blisters': blisters,
           'lossOfAppetite': lossOfAppetite,
-          'hotFlashes': hotFlashes,
           'rash': rash,
+          'itchySwollenSkin': itchySwollenSkin,
         }
       });
-      //     .collection('symptoms_initial_illness')
-      //     .doc('data')
-      //     .set({
-      //   'fever': fever,
-      //   'cough': cough,
-      //   'stuffyNose': stuffyNose,
-      //   'soreThroat': soreThroat,
-      //   'breathingIssues': breathingIssues,
-      //   'chestPain': chestPain,
-      //   'irregularPulse': irregularPulse,
-      //   'itchyRedDryEyes': itchyRedDryEyes,
-      //   'headAches': headAches,
-      //   'lossOfSmelltaste': lossOfSmelltaste,
-      //   'blurredVision': blurredVision,
-      //   'hallucinations': hallucinations,
-      //   'confusion': confusion,
-      //   'difficultSleepy': difficultSleepy,
-      //   'depressionAnxiety': depressionAnxiety,
-      //   'numbness': numbness,
-      //   'fatigue': fatigue,
-      //   'bodyPain': bodyPain,
-      //   'nausea': nausea,
-      //   'vomiting': vomiting,
-      //   'diarrhea': diarrhea,
-      //   'abdominalPain': abdominalPain,
-      //   'lossOfAppetite': lossOfAppetite,
-      //   'hotFlashes': hotFlashes,
-      //   'rash': rash,
-      // });
+
       return true;
     } catch (e) {
       debugPrint('LoginCalled() called Error "$e"');
@@ -145,58 +123,62 @@ class SymptomsInitialIllnessController extends GetxController {
   Future<bool> signUpMethod({
     fever,
     cough,
-    stuffyNose,
+    runnyStuffyNose,
     soreThroat,
+    palpitations,
     breathingIssues,
-    chestPain,
-    irregularPulse,
+    chestPainTightness,
+    forgetfulness,
+    delayedthinking,
+    poorconcentration,
     itchyRedDryEyes,
     headAches,
     lossOfSmelltaste,
-    blurredVision,
-    hallucinations,
     confusion,
     difficultSleepy,
+    difficultySpeaking,
     depressionAnxiety,
-    numbness,
     fatigue,
-    bodyPain,
-    nausea,
-    vomiting,
+    muscleBodyPain,
+    nauseaVomiting,
+    stomachAche,
     diarrhea,
-    abdominalPain,
+    ucersSores,
+    blisters,
     lossOfAppetite,
-    hotFlashes,
     rash,
+    itchySwollenSkin,
   }) async {
     try {
       debugPrint('submitForm() called');
       bool? check = await submitForm(
         fever: fever,
         cough: cough,
-        stuffyNose: stuffyNose,
+        runnyStuffyNose: runnyStuffyNose,
         soreThroat: soreThroat,
+        palpitations: palpitations,
         breathingIssues: breathingIssues,
-        chestPain: chestPain,
-        irregularPulse: irregularPulse,
+        chestPainTightness: chestPainTightness,
+        forgetfulness: forgetfulness,
+        delayedthinking: delayedthinking,
+        poorconcentration: poorconcentration,
         itchyRedDryEyes: itchyRedDryEyes,
         headAches: headAches,
         lossOfSmelltaste: lossOfSmelltaste,
-        blurredVision: blurredVision,
-        hallucinations: hallucinations,
         confusion: confusion,
         difficultSleepy: difficultSleepy,
+        difficultySpeaking: difficultySpeaking,
         depressionAnxiety: depressionAnxiety,
-        numbness: numbness,
         fatigue: fatigue,
-        bodyPain: bodyPain,
-        nausea: nausea,
-        vomiting: vomiting,
+        muscleBodyPain: muscleBodyPain,
+        nauseaVomiting: nauseaVomiting,
+        stomachAche: stomachAche,
         diarrhea: diarrhea,
-        abdominalPain: abdominalPain,
+        ucersSores: ucersSores,
+        blisters: blisters,
         lossOfAppetite: lossOfAppetite,
-        hotFlashes: hotFlashes,
         rash: rash,
+        itchySwollenSkin: itchySwollenSkin,
       );
       if (check == false) {
         debugPrint('ERROR is storing data!');

@@ -116,6 +116,23 @@ class _SocioDemographicScreenState extends State<SocioDemographicScreen> {
                         fontWeight: FontWeight.w500,
                       ),
                     ),
+                    Radio(
+                      value: 'Others',
+                      groupValue: _controller.gender,
+                      onChanged: (value) {
+                        setState(() {
+                          _controller.gender = value!;
+                        });
+                      },
+                    ),
+                    const Text(
+                      'Others',
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.deepPurple,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 16),
@@ -170,28 +187,24 @@ class _SocioDemographicScreenState extends State<SocioDemographicScreen> {
                       },
                       items: const [
                         DropdownMenuItem(
-                          value: '18-20 years',
-                          child: Text('18-20 years'),
+                          value: '18-25 years',
+                          child: Text('18-25 years'),
                         ),
                         DropdownMenuItem(
-                          value: '21-30 years',
-                          child: Text('21-30 years'),
+                          value: '26-35 years',
+                          child: Text('26-35 years'),
                         ),
                         DropdownMenuItem(
-                          value: '31-40 years',
-                          child: Text('31-40 years'),
+                          value: '36-45 years',
+                          child: Text('36-45 years'),
                         ),
                         DropdownMenuItem(
-                          value: '41-50 years',
-                          child: Text('41-50 years'),
+                          value: '46-55 years',
+                          child: Text('46-55 years'),
                         ),
                         DropdownMenuItem(
-                          value: '51-60 years',
-                          child: Text('51-60 years'),
-                        ),
-                        DropdownMenuItem(
-                          value: '61-65 years',
-                          child: Text('61-65 years'),
+                          value: '55-65 years',
+                          child: Text('55-65 years'),
                         ),
                       ],
                     ),
@@ -212,55 +225,67 @@ class _SocioDemographicScreenState extends State<SocioDemographicScreen> {
                 ),
                 Row(
                   children: [
-                    Radio(
-                      value: 'Rural',
-                      groupValue: _controller.residence,
-                      onChanged: (value) {
-                        setState(() {
-                          _controller.residence = value!;
-                        });
-                      },
-                    ),
-                    const Text(
-                      'Rural',
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.deepPurple,
-                        fontWeight: FontWeight.w500,
+                    Flexible(
+                      child: Radio(
+                        value: 'Rural',
+                        groupValue: _controller.residence,
+                        onChanged: (value) {
+                          setState(() {
+                            _controller.residence = value!;
+                          });
+                        },
                       ),
                     ),
-                    Radio(
-                      value: 'Semi-urban',
-                      groupValue: _controller.residence,
-                      onChanged: (value) {
-                        setState(() {
-                          _controller.residence = value!;
-                        });
-                      },
-                    ),
-                    const Text(
-                      'Semi-urban',
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.deepPurple,
-                        fontWeight: FontWeight.w500,
+                    const Flexible(
+                      child: Text(
+                        'Rural',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.deepPurple,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ),
-                    Radio(
-                      value: 'Urban',
-                      groupValue: _controller.residence,
-                      onChanged: (value) {
-                        setState(() {
-                          _controller.residence = value!;
-                        });
-                      },
+                    Flexible(
+                      child: Radio(
+                        value: 'Semi-urban',
+                        groupValue: _controller.residence,
+                        onChanged: (value) {
+                          setState(() {
+                            _controller.residence = value!;
+                          });
+                        },
+                      ),
                     ),
-                    const Text(
-                      'Urban',
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.deepPurple,
-                        fontWeight: FontWeight.w500,
+                    const Flexible(
+                      child: Text(
+                        'Semi-urban',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.deepPurple,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                    Flexible(
+                      child: Radio(
+                        value: 'Urban',
+                        groupValue: _controller.residence,
+                        onChanged: (value) {
+                          setState(() {
+                            _controller.residence = value!;
+                          });
+                        },
+                      ),
+                    ),
+                    const Flexible(
+                      child: Text(
+                        'Urban',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.deepPurple,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ),
                   ],
@@ -401,7 +426,7 @@ class _SocioDemographicScreenState extends State<SocioDemographicScreen> {
                                   Get.snackbar(
                                     'Error',
                                     'Complete the form! ',
-                                    snackPosition: SnackPosition.BOTTOM,
+                                    snackPosition: SnackPosition.TOP,
                                     backgroundColor: Colors.red,
                                     colorText: Colors.white,
                                   );
@@ -424,7 +449,7 @@ class _SocioDemographicScreenState extends State<SocioDemographicScreen> {
                               Get.snackbar(
                                 'Error',
                                 'Some Error Occured! ',
-                                snackPosition: SnackPosition.BOTTOM,
+                                snackPosition: SnackPosition.TOP,
                                 backgroundColor: Colors.red,
                                 colorText: Colors.white,
                               );
@@ -458,7 +483,7 @@ class _SocioDemographicScreenState extends State<SocioDemographicScreen> {
                                   ],
                                 )
                               : const Text(
-                                  'Submit',
+                                  'Next ',
                                   style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,

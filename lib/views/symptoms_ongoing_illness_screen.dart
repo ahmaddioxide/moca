@@ -324,12 +324,14 @@ class _SymptomsOnGoingIllnessScreenState
                 const SizedBox(height: 8),
                 Row(
                   children: [
-                    const Text(
-                      'Itechy/Red/Dry Eyes',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.deepPurple,
+                    const Flexible(
+                      child: Text(
+                        'Itechy/Red/Dry Eyes',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.deepPurple,
+                        ),
                       ),
                     ),
                     const SizedBox(width: 20),
@@ -460,12 +462,14 @@ class _SymptomsOnGoingIllnessScreenState
                 const SizedBox(height: 8),
                 Row(
                   children: [
-                    const Text(
-                      'Loss Of Smell/Taste',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.deepPurple,
+                    const Flexible(
+                      child: Text(
+                        'Loss Of Smell/Taste',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.deepPurple,
+                        ),
                       ),
                     ),
                     const SizedBox(width: 20),
@@ -868,12 +872,14 @@ class _SymptomsOnGoingIllnessScreenState
                 const SizedBox(height: 8),
                 Row(
                   children: [
-                    const Text(
-                      'Poor Concentration',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.deepPurple,
+                    const Flexible(
+                      child: Text(
+                        'Poor Concentration',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.deepPurple,
+                        ),
                       ),
                     ),
                     const SizedBox(width: 20),
@@ -1072,12 +1078,14 @@ class _SymptomsOnGoingIllnessScreenState
                 const SizedBox(height: 8),
                 Row(
                   children: [
-                    const Text(
-                      'Depression/Anxiety',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.deepPurple,
+                    const Flexible(
+                      child: Text(
+                        'Depression/Anxiety',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.deepPurple,
+                        ),
                       ),
                     ),
                     const SizedBox(width: 20),
@@ -1617,11 +1625,20 @@ class _SymptomsOnGoingIllnessScreenState
                             });
                             debugPrint('Error: $e');
                             Get.snackbar(
-                              'Error',
-                              'Error: $e',
-                              snackPosition: SnackPosition.BOTTOM,
-                              backgroundColor: Colors.red,
+                              'Attention!',
+                              'Some Error Occured!',
+                              titleText: const Text(
+                                'Attention!',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                ),
+                              ),
+                              snackPosition: SnackPosition.TOP,
+                              backgroundColor: Colors.red.shade500,
                               colorText: Colors.white,
+                              snackStyle: SnackStyle.FLOATING,
                             );
                           }
                         },
@@ -1653,7 +1670,7 @@ class _SymptomsOnGoingIllnessScreenState
                                 ],
                               )
                             : const Text(
-                                'Submit',
+                                'Next',
                                 style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.w500,

@@ -14,7 +14,7 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
   bool _isloading = false;
   // Create an instance of the controller
   final MedicalHistoryController _controller =
-  Get.put(MedicalHistoryController());
+      Get.put(MedicalHistoryController());
 
   @override
   Widget build(BuildContext context) {
@@ -22,13 +22,13 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
       appBar: AppBar(
         title: const Center(
             child: Text(
-              'Medical History Data',
-              style: TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-                color: Colors.deepPurple,
-              ),
-            )),
+          'Medical History Data',
+          style: TextStyle(
+            fontSize: 28,
+            fontWeight: FontWeight.bold,
+            color: Colors.deepPurple,
+          ),
+        )),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -41,7 +41,7 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
               children: [
                 const SizedBox(height: 16),
                 const Text(
-                  'What does your diet typically consist of? ',
+                  'What does your diet typically consist of? (you may choose multiple options)',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -54,10 +54,17 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                       children: [
                         Radio(
                           value: 'Grains: bread, cereal, rice, pasta',
-                          groupValue: _controller.diet,
+                          groupValue: _controller.diet1,
+                          toggleable: true,
                           onChanged: (value) {
                             setState(() {
-                              _controller.diet = value!;
+                              if (_controller.diet1 != value) {
+                                _controller.diet1 =
+                                    value; // Deselect if already selected
+                              } else {
+                                _controller.diet1 =
+                                    null; // Select if not selected
+                              }
                             });
                           },
                         ),
@@ -75,10 +82,17 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                       children: [
                         Radio(
                           value: 'Dairy: milk, yoghurt, cheese',
-                          groupValue: _controller.diet,
+                          groupValue: _controller.diet2,
+                          toggleable: true,
                           onChanged: (value) {
                             setState(() {
-                              _controller.diet = value!;
+                              if (_controller.diet2 != value) {
+                                _controller.diet2 =
+                                    value; // Deselect if already selected
+                              } else {
+                                _controller.diet2 =
+                                    null; // Select if not selected
+                              }
                             });
                           },
                         ),
@@ -96,10 +110,17 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                       children: [
                         Radio(
                           value: 'Vegetables and fruits',
-                          groupValue: _controller.diet,
+                          groupValue: _controller.diet3,
+                          toggleable: true,
                           onChanged: (value) {
                             setState(() {
-                              _controller.diet = value!;
+                              if (_controller.diet3 != value) {
+                                _controller.diet3 =
+                                    value; // Deselect if already selected
+                              } else {
+                                _controller.diet3 =
+                                    null; // Select if not selected
+                              }
                             });
                           },
                         ),
@@ -117,10 +138,17 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                       children: [
                         Radio(
                           value: 'Fats, oils and sugars',
-                          groupValue: _controller.diet,
+                          groupValue: _controller.diet4,
+                          toggleable: true,
                           onChanged: (value) {
                             setState(() {
-                              _controller.diet = value!;
+                              if (_controller.diet4 != value) {
+                                _controller.diet4 =
+                                    value; // Deselect if already selected
+                              } else {
+                                _controller.diet4 =
+                                    null; // Select if not selected
+                              }
                             });
                           },
                         ),
@@ -138,11 +166,18 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                       children: [
                         Radio(
                           value:
-                          'Protein: red meat, poultry, fish, eggs, beans',
-                          groupValue: _controller.diet,
+                              'Protein: red meat, poultry, fish, eggs, beans',
+                          groupValue: _controller.diet5,
+                          toggleable: true,
                           onChanged: (value) {
                             setState(() {
-                              _controller.diet = value!;
+                              if (_controller.diet5 != value) {
+                                _controller.diet5 =
+                                    value; // Deselect if already selected
+                              } else {
+                                _controller.diet5 =
+                                    null; // Select if not selected
+                              }
                             });
                           },
                         ),
@@ -202,7 +237,6 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                       children: [
                         Radio(
                           value: 'Occasional, light to moderate activity',
-
                           groupValue: _controller.physicalActivity,
                           onChanged: (value) {
                             setState(() {
@@ -324,6 +358,66 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                     ),
                   ],
                 ),
+                /////////////Alcohol
+                const SizedBox(height: 16),
+                const Divider(
+                  color: Colors.black12,
+                ),
+                const SizedBox(height: 16),
+                const Text(
+                  'Do you consume alcohol?',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.deepPurple,
+                  ),
+                ),
+                Row(
+                  children: [
+                    Row(
+                      children: [
+                        Radio(
+                          value: 'Yes',
+                          groupValue: _controller.alcohol,
+                          onChanged: (value) {
+                            setState(() {
+                              _controller.alcohol = value!;
+                            });
+                          },
+                        ),
+                        const Text(
+                          'Yes',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.deepPurple,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Radio(
+                          value: 'No',
+                          groupValue: _controller.alcohol,
+                          onChanged: (value) {
+                            setState(() {
+                              _controller.alcohol = value!;
+                            });
+                          },
+                        ),
+                        const Text(
+                          'No',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.deepPurple,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
                 /////////////Q4
                 const SizedBox(height: 16),
                 const Divider(
@@ -331,7 +425,7 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                 ),
                 const SizedBox(height: 16),
                 const Text(
-                  'Do you have any medical condition/ chronic illness?',
+                  '.Do you have any medical condition/ chronic illness? (you may choose multiple options)',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -344,10 +438,17 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                       children: [
                         Radio(
                           value: 'High blood pressure',
-                          groupValue: _controller.medicalCondition,
+                          groupValue: _controller.medicalCondition1,
+                          toggleable: true,
                           onChanged: (value) {
                             setState(() {
-                              _controller.medicalCondition = value!;
+                              if (_controller.medicalCondition1 != value) {
+                                _controller.medicalCondition1 =
+                                    value; // Deselect if already selected
+                              } else {
+                                _controller.medicalCondition1 =
+                                    null; // Select if not selected
+                              }
                             });
                           },
                         ),
@@ -365,10 +466,17 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                       children: [
                         Radio(
                           value: 'Asthma',
-                          groupValue: _controller.medicalCondition,
+                          groupValue: _controller.medicalCondition2,
+                          toggleable: true,
                           onChanged: (value) {
                             setState(() {
-                              _controller.medicalCondition = value!;
+                              if (_controller.medicalCondition2 != value) {
+                                _controller.medicalCondition2 =
+                                    value; // Deselect if already selected
+                              } else {
+                                _controller.medicalCondition2 =
+                                    null; // Select if not selected
+                              }
                             });
                           },
                         ),
@@ -386,10 +494,17 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                       children: [
                         Radio(
                           value: 'Heart disease',
-                          groupValue: _controller.medicalCondition,
+                          groupValue: _controller.medicalCondition3,
+                          toggleable: true,
                           onChanged: (value) {
                             setState(() {
-                              _controller.medicalCondition = value!;
+                              if (_controller.medicalCondition3 != value) {
+                                _controller.medicalCondition3 =
+                                    value; // Deselect if already selected
+                              } else {
+                                _controller.medicalCondition3 =
+                                    null; // Select if not selected
+                              }
                             });
                           },
                         ),
@@ -407,10 +522,17 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                       children: [
                         Radio(
                           value: 'Mental health disorder',
-                          groupValue: _controller.medicalCondition,
+                          groupValue: _controller.medicalCondition4,
+                          toggleable: true,
                           onChanged: (value) {
                             setState(() {
-                              _controller.medicalCondition = value!;
+                              if (_controller.medicalCondition4 != value) {
+                                _controller.medicalCondition4 =
+                                    value; // Deselect if already selected
+                              } else {
+                                _controller.medicalCondition4 =
+                                    null; // Select if not selected
+                              }
                             });
                           },
                         ),
@@ -428,10 +550,17 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                       children: [
                         Radio(
                           value: 'Diabetes',
-                          groupValue: _controller.medicalCondition,
+                          groupValue: _controller.medicalCondition5,
+                          toggleable: true,
                           onChanged: (value) {
                             setState(() {
-                              _controller.medicalCondition = value!;
+                              if (_controller.medicalCondition5 != value) {
+                                _controller.medicalCondition5 =
+                                    value; // Deselect if already selected
+                              } else {
+                                _controller.medicalCondition5 =
+                                    null; // Select if not selected
+                              }
                             });
                           },
                         ),
@@ -449,10 +578,17 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                       children: [
                         Radio(
                           value: 'Obesity',
-                          groupValue: _controller.medicalCondition,
+                          groupValue: _controller.medicalCondition6,
+                          toggleable: true,
                           onChanged: (value) {
                             setState(() {
-                              _controller.medicalCondition = value!;
+                              if (_controller.medicalCondition6 != value) {
+                                _controller.medicalCondition6 =
+                                    value; // Deselect if already selected
+                              } else {
+                                _controller.medicalCondition6 =
+                                    null; // Select if not selected
+                              }
                             });
                           },
                         ),
@@ -470,10 +606,17 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                       children: [
                         Radio(
                           value: 'Kidney disease',
-                          groupValue: _controller.medicalCondition,
+                          groupValue: _controller.medicalCondition7,
+                          toggleable: true,
                           onChanged: (value) {
                             setState(() {
-                              _controller.medicalCondition = value!;
+                              if (_controller.medicalCondition7 != value) {
+                                _controller.medicalCondition7 =
+                                    value; // Deselect if already selected
+                              } else {
+                                _controller.medicalCondition7 =
+                                    null; // Select if not selected
+                              }
                             });
                           },
                         ),
@@ -491,10 +634,17 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                       children: [
                         Radio(
                           value: 'None',
-                          groupValue: _controller.medicalCondition,
+                          groupValue: _controller.medicalCondition8,
+                          toggleable: true,
                           onChanged: (value) {
                             setState(() {
-                              _controller.medicalCondition = value!;
+                              if (_controller.medicalCondition8 != value) {
+                                _controller.medicalCondition8 =
+                                    value; // Deselect if already selected
+                              } else {
+                                _controller.medicalCondition8 =
+                                    null; // Select if not selected
+                              }
                             });
                           },
                         ),
@@ -512,10 +662,17 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                       children: [
                         Radio(
                           value: 'Other',
-                          groupValue: _controller.medicalCondition,
+                          groupValue: _controller.medicalCondition9,
+                          toggleable: true,
                           onChanged: (value) {
                             setState(() {
-                              _controller.medicalCondition = value!;
+                              if (_controller.medicalCondition9 != value) {
+                                _controller.medicalCondition9 =
+                                    value; // Deselect if already selected
+                              } else {
+                                _controller.medicalCondition9 =
+                                    null; // Select if not selected
+                              }
                             });
                           },
                         ),
@@ -556,25 +713,50 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                           setState(() {
                             _isloading = true;
                           });
-                          if (_controller.diet != '' &&
+                          if ((_controller.diet5 != '' ||
+                                  _controller.diet4 != '' ||
+                                  _controller.diet3 != '' ||
+                                  _controller.diet1 != '' ||
+                                  _controller.diet2 != '') &&
                               _controller.physicalActivity != '' &&
                               _controller.smoke != '' &&
-                              _controller.medicalCondition != '') {
+                              _controller.alcohol != '' &&
+                              (_controller.medicalCondition1 != '' ||
+                                  _controller.medicalCondition2 != '' ||
+                                  _controller.medicalCondition3 != '' ||
+                                  _controller.medicalCondition4 != '' ||
+                                  _controller.medicalCondition5 != '' ||
+                                  _controller.medicalCondition6 != '' ||
+                                  _controller.medicalCondition7 != '' ||
+                                  _controller.medicalCondition8 != '' ||
+                                  _controller.medicalCondition9 != '')) {
                             _controller
                                 .submitForm(
-                                diet: _controller.diet,
-                                physicalActivity:
-                                _controller.physicalActivity,
-                                smoke: _controller.smoke,
-                                medicalCondition:
-                                _controller.medicalCondition)
+                              diet1: _controller.diet1,
+                              diet2: _controller.diet2,
+                              diet3: _controller.diet3,
+                              diet4: _controller.diet4,
+                              diet5: _controller.diet5,
+                              physicalActivity: _controller.physicalActivity,
+                              smoke: _controller.smoke,
+                              alcohol: _controller.alcohol,
+                              medicalCondition1: _controller.medicalCondition1,
+                              medicalCondition2: _controller.medicalCondition2,
+                              medicalCondition3: _controller.medicalCondition3,
+                              medicalCondition4: _controller.medicalCondition4,
+                              medicalCondition5: _controller.medicalCondition5,
+                              medicalCondition6: _controller.medicalCondition6,
+                              medicalCondition7: _controller.medicalCondition7,
+                              medicalCondition8: _controller.medicalCondition8,
+                              medicalCondition9: _controller.medicalCondition9,
+                            )
                                 .then((value) {
                               if (value == true) {
                                 setState(() {
                                   _isloading = false;
                                 });
                                 Get.offAll(
-                                      () => const CovidExperienceScreen(),
+                                  () => const CovidExperienceScreen(),
                                 );
                               }
                             });
@@ -583,49 +765,58 @@ class _MedicalHistoryScreenState extends State<MedicalHistoryScreen> {
                               _isloading = false;
                             });
                             Get.snackbar(
-                              'Missing Fields',
-                              'Please answer all the questions',
-                              snackPosition: SnackPosition.BOTTOM,
-                              backgroundColor: Colors.red,
+                              'Missing Fields!',
+                              'Please complete the form!',
+                              titleText: const Text(
+                                'Attention!',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                ),
+                              ),
+                              snackPosition: SnackPosition.TOP,
+                              backgroundColor: Colors.red.shade500,
                               colorText: Colors.white,
+                              snackStyle: SnackStyle.FLOATING,
                             );
                           }
                         },
                         child: _isloading == true
                             ? const Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              "Loading",
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            SizedBox(
-                              height: 20,
-                              width: 20,
-                              child: CircularProgressIndicator(
-                                valueColor:
-                                AlwaysStoppedAnimation(Colors.white),
-                                backgroundColor: Colors.blue,
-                                strokeWidth: 4,
-                              ),
-                            )
-                          ],
-                        )
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    "Loading",
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  SizedBox(
+                                    height: 20,
+                                    width: 20,
+                                    child: CircularProgressIndicator(
+                                      valueColor:
+                                          AlwaysStoppedAnimation(Colors.white),
+                                      backgroundColor: Colors.blue,
+                                      strokeWidth: 4,
+                                    ),
+                                  )
+                                ],
+                              )
                             : const Text(
-                          'Submit',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
+                                'Next ',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
+                              ),
                       ),
                     ),
                   ),

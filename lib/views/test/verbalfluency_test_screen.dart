@@ -75,14 +75,14 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
               right: 10,
             ),
             child: Text(
-              '''Tell as many words as you can think of that begin with a given letter in 60 second. You can say any kind of Grammatical word you want.''',
+              '''Tell as many words as you can think of that begin with a certain letter of the alphabet that you will be told once you click on the 60 second timer. You can say any kind of word you want, except for proper nouns, numbers, or words that begin with the same sound but have a different suffix, for example, love, lover, loving.''',
               style: TextStyle(
                 fontSize: 18,
                 color: Colors.deepPurple,
               ),
             ),
           ),
-          SizedBox(height: MediaQuery.sizeOf(context).height * 0.03),
+          SizedBox(height: MediaQuery.sizeOf(context).height * 0.015),
           const Divider(
             height: 1,
             thickness: 1,
@@ -113,7 +113,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
               ],
             ),
           ),
-          SizedBox(height: MediaQuery.sizeOf(context).height * 0.2),
+          SizedBox(height: MediaQuery.sizeOf(context).height * 0.1),
           Center(
             child: Padding(
               padding: const EdgeInsets.only(left: 16, right: 16),
@@ -128,7 +128,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
               ),
             ),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.only(left: 16, right: 16),
             child: Center(
@@ -274,8 +274,8 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
   }
 
   void _speakRandomLetter() async {
-    var alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    var randomLetter = alphabet[DateTime.now().second % 26];
+    // var alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    var randomLetter = 'F';
     setState(() {
       currentLetter = randomLetter;
     });

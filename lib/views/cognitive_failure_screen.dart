@@ -53,17 +53,17 @@ class _CognitiveFailureState extends State<CognitiveFailure> {
             Row(
               children: [
                 Text(
-                  '1 = Never',
+                  '0 = Never',
                   style: TextStyle(fontSize: screenWidth * 0.04),
                 ),
                 SizedBox(width: screenWidth * 0.02),
                 Text(
-                  '2 = Rarely',
+                  '1 = Rarely',
                   style: TextStyle(fontSize: screenWidth * 0.04),
                 ),
                 SizedBox(width: screenWidth * 0.02),
                 Text(
-                  '3 = Sometimes',
+                  '2 = Sometimes',
                   style: TextStyle(fontSize: screenWidth * 0.04),
                 ),
                 SizedBox(width: screenWidth * 0.02),
@@ -72,12 +72,12 @@ class _CognitiveFailureState extends State<CognitiveFailure> {
             Row(
               children: [
                 Text(
-                  '4 = Often',
+                  '3 = Often',
                   style: TextStyle(fontSize: screenWidth * 0.04),
                 ),
                 SizedBox(width: screenWidth * 0.02),
                 Text(
-                  '5 = Very Often',
+                  '4 = Very Often',
                   style: TextStyle(fontSize: screenWidth * 0.04),
                 ),
               ],
@@ -159,11 +159,20 @@ class _CognitiveFailureState extends State<CognitiveFailure> {
                                 _isloading = false;
                               });
                               Get.snackbar(
-                                'Error',
-                                'Something went wrong',
-                                snackPosition: SnackPosition.BOTTOM,
-                                backgroundColor: Colors.red,
+                                'Attention!',
+                                'Some Error Occured!',
+                                titleText: const Text(
+                                  'Attention!',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                                snackPosition: SnackPosition.TOP,
+                                backgroundColor: Colors.red.shade500,
                                 colorText: Colors.white,
+                                snackStyle: SnackStyle.FLOATING,
                               );
                             }
                           },

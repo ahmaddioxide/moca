@@ -92,9 +92,9 @@ class DelayRecallScreenState extends State<DelayRecallScreen> {
           actions: [
             TextButton(
               onPressed: () {
-                sf.setInt('nextGame', 14);
                 Navigator.of(context).pop();
-                Get.offAll(() => OrientationScreen());
+                Get.offAll(() => const OrientationScreen());
+                sf.setInt('nextGame', 14);
               },
               child: const Text('Next'),
             ),

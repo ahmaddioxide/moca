@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:moca/views/home_screen.dart';
+import 'package:moca/views/on_boarding_screens/on_boarding_screen.dart';
 import '../controllers/signup_controller.dart';
 import 'login_screen.dart';
 
@@ -191,13 +192,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         },
                         validator: (value) {
                           if (value == null || value.isEmpty) {
+                            setState(() {
+                              _isloading = false;
+                            });
                             return 'Please enter password';
                           } else if (_controller.repassword !=
                               _controller.password) {
+                            setState(() {
+                              _isloading = false;
+                            });
                             return 'Password MisMatched';
                           } else if (value.length < 6) {
+                            setState(() {
+                              _isloading = false;
+                            });
                             return 'Password must be at least 6 characters!';
                           } else if (value.contains(' ')) {
+                            setState(() {
+                              _isloading = false;
+                            });
                             return 'Password must not contain space!';
                           }
                           return null;
@@ -218,28 +231,58 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             setState(() {
                               _isloading = true;
                             });
-                            if (_formKey.currentState!.validate()) {
-                              _controller
-                                  .signup(
-                                name: _controller.name.trim(),
-                                password: _controller.password.trim(),
-                                email: _controller.email.trim(),
-                              )
-                                  .then((value) {
-                                if (value == true) {
-                                  setState(() {
-                                    _isloading = false;
-                                  });
-                                  Get.offAll(
-                                    () => const HomeScreen(),
-                                  );
-                                }
-                              });
-                            } else {
-                              setState(() {
-                                _isloading = false;
-                              });
-                            }
+
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) => AlertDialog(
+                                title: const Text('Before you start....'),
+                                content: const SingleChildScrollView(
+                                  child: ListBody(
+                                    children: <Widget>[
+                                      Text(
+                                          'This self-assessment tool consists of a set of 25 short questions (Cognitive Failures Questionnaire) followed by a series of interactive brain games (Montreal Cognitive Assessment). You will also be asked to provide your name, age, gender, residence, education, profession as well as your personal health information and experience with COVID-19 illness. The whole study should run in under 20 minutes. For accurate results, you are encouraged to complete it in one sitting. On completion, you will receive feedback on your performance, and personalised tips to strengthen your brain. Please note: Your participation in this study is entirely voluntary. You may refuse to take part, or discontinue at any time without any consequences. However, by participating, you are consenting to your data being used to assist in the latest research into neurocognitive science. The information we collect will be analysed anonymously. Personally identifiable information will be kept confidential and will not be shared with any third party. You will not benefit directly from participating in this study, but your contribution will help us gain a better understanding of post-COVID cognitive impairment, ultimately leading to improved prevention, screening, and treatment strategies. Taking part in this study has no anticipated risks. If you agree to these terms, click \'I Agree\' to continue. DISCLAIMER: CogQuest results are only indicative. They, in no case, can legally replace or question the diagnosis made by a physician.'),
+                                    ],
+                                  ),
+                                ),
+                                actions: <Widget>[
+                                  TextButton(
+                                    child: const Text('I Agree'),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                      if (_formKey.currentState!.validate()) {
+                                        _controller
+                                            .signup(
+                                          name: _controller.name.trim(),
+                                          password: _controller.password.trim(),
+                                          email: _controller.email.trim(),
+                                        )
+                                            .then((value) {
+                                          if (value == true) {
+                                            setState(() {
+                                              _isloading = false;
+                                            });
+                                            Get.offAll(
+                                              () => const HomeScreen(),
+                                            );
+                                          }
+                                        });
+                                      } else {
+                                        setState(() {
+                                          _isloading = false;
+                                        });
+                                      }
+                                    },
+                                  ),
+                                  TextButton(
+                                    child: const Text('Don\'t Agree'),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                      Get.offAll(() => const OnBoardingPage());
+                                    },
+                                  ),
+                                ],
+                              ),
+                            );
                           },
                           child: _isloading == true
                               ? const Row(

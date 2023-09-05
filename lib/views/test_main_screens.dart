@@ -26,7 +26,7 @@ class MainTestScreen extends StatefulWidget {
 
 class _MainTestScreenState extends State<MainTestScreen> {
   late int gameNumber;
-  late int _unlockedGames = 1;
+
   @override
   void initState() {
     super.initState();
@@ -36,6 +36,8 @@ class _MainTestScreenState extends State<MainTestScreen> {
       });
     });
   }
+
+  late int _unlockedGames = 1;
 
   void _playGame(gameNumber) {
     if (gameNumber == _unlockedGames) {
@@ -78,7 +80,7 @@ class _MainTestScreenState extends State<MainTestScreen> {
         case 13:
           Get.offAll(() => const DelayRecallScreen());
         case 14:
-          Get.offAll(() => OrientationScreen());
+          Get.offAll(() => const OrientationScreen());
           break;
 
         // default:
@@ -135,7 +137,7 @@ class _MainTestScreenState extends State<MainTestScreen> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16.0),
                 ),
-                textStyle: const TextStyle(fontSize: 25.0, color: Colors.white),
+                textStyle: const TextStyle(fontSize: 20, color: Colors.white),
                 backgroundColor: isLocked ? Colors.grey : Colors.deepPurple,
                 minimumSize: const Size(100, 120),
               ),
