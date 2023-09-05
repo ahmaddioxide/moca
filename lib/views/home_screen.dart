@@ -6,7 +6,7 @@ import 'package:moca/views/covidexperience_sceen.dart';
 import 'package:moca/views/medicalhistory_sceen.dart';
 import 'package:moca/views/sociodemographic_sceen.dart';
 import 'package:moca/views/symptoms_initial_illness_screen.dart';
-import 'package:moca/views/symptoms_ongoing_illness_screen.dart';
+// import 'package:moca/views/symptoms_ongoing_illness_screen.dart';
 import 'package:moca/views/test_main_screens.dart';
 
 import 'cognitive_failure_screen.dart';

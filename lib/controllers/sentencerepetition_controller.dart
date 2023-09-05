@@ -4,8 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:moca/controllers/firebase_const.dart';
 
 class SentenceController extends GetxController {
-  final CollectionReference _scoresCollection =
-      FirebaseFirestore.instance.collection('users');
+  // final CollectionReference _scoresCollection =
+  //     FirebaseFirestore.instance.collection('users');
 
   RxInt Score = 0.obs;
   RxBool isMicEnabled = false.obs;

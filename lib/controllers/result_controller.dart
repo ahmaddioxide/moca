@@ -276,7 +276,7 @@ class ResultController extends GetxController {
               }
             });
           } catch (e) {
-            print(e);
+            debugPrint(e.toString());
             Get.snackbar('Error', "Task results could not be saved.",
                 backgroundColor: Colors.red,
                 colorText: Colors.white,
