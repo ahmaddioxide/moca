@@ -228,7 +228,7 @@ class _DrawingScreenState extends State<DrawingScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Draw a Cube Below',
+                  "Draw a Cube Below, and Don't Lift Your Finger while Drawing",
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 Text(
