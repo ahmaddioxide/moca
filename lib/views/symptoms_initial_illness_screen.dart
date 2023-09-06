@@ -191,12 +191,14 @@ class _SymptomsInitialIllnessScreenState
                 ////Runny/Stuffy Nose
                 Row(
                   children: [
-                    const Text(
-                      'Runny/Stuffy Nose',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.deepPurple,
+                    const Flexible(
+                      child: Text(
+                        'Runny/Stuffy Nose',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.deepPurple,
+                        ),
                       ),
                     ),
                     const SizedBox(width: 20),
@@ -398,12 +400,14 @@ class _SymptomsInitialIllnessScreenState
                 const SizedBox(height: 8),
                 Row(
                   children: [
-                    const Text(
-                      'Chest Pain/Tightness',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.deepPurple,
+                    const Flexible(
+                      child: Text(
+                        'Chest Pain/Tightness',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.deepPurple,
+                        ),
                       ),
                     ),
                     const SizedBox(width: 20),
@@ -536,12 +540,14 @@ class _SymptomsInitialIllnessScreenState
                 //////Itchy/Red/Dry Eyes
                 Row(
                   children: [
-                    const Text(
-                      'Itchy/Red/Dry Eyes',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.deepPurple,
+                    const Flexible(
+                      child: Text(
+                        'Itchy/Red/Dry Eyes',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.deepPurple,
+                        ),
                       ),
                     ),
                     const SizedBox(width: 10),
