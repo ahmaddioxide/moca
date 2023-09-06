@@ -252,7 +252,7 @@ class _ForwardDigitState extends State<ForwardDigitSpan> {
                 child: Obx(
                   () => Text(
                     _controller.starttest.value
-                        ? "Double top the button to start test"
+                        ? "Double tap the button to start test"
                         : _controller.text.value,
                     style: TextStyle(
                       fontSize: 20,

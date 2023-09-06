@@ -119,7 +119,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
               padding: const EdgeInsets.only(left: 16, right: 16),
               child: Text(
                 starttest
-                    ? "Double top the button to start test"
+                    ? "Double tap the button to start test"
                     : "Hold the button and start speaking",
                 style: const TextStyle(
                   fontSize: 18,

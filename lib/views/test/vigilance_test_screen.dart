@@ -169,7 +169,7 @@ class VigilanceScreenState extends State<VigilanceScreen> {
               () => Text(
                 _controller.startTest.value
                     ? "Tap the button when Letter 'A' is said"
-                    : "Double top the button to start test",
+                    : "Double tap the button to start test",
                 style: const TextStyle(fontSize: 18, color: Colors.deepPurple),
               ),
             ),

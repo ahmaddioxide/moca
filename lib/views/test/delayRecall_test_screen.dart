@@ -238,7 +238,7 @@ class DelayRecallScreenState extends State<DelayRecallScreen> {
             Obx(
               () => Text(
                 _controller.starttest.value
-                    ? "Double top the button to start test"
+                    ? "Double tap the button to start test"
                     : _controller.isListening.value
                         ? _controller.recognizedText.value
                         : _controller.spokenSentence.value,
