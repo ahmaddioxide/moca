@@ -9,9 +9,10 @@ const animalsPicList = [
 ];
 const animalsNameList = [
   camel,
-  rihno,
+  rhino,
   lion,
 ];
+
 const gameNameList = [
   'Connecting Dots',
   'Drawing Test',
