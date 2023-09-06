@@ -233,12 +233,12 @@ class ResultController extends GetxController {
           }
         }
         ////memorytest
-        Map<String, dynamic>? memorytest =
-            userData['memory_test'] as Map<String, dynamic>?;
+        // Map<String, dynamic>? memorytest =
+        //     userData['memory_test'] as Map<String, dynamic>?;
 
-        if (memorytest != null && memorytest.containsKey('score')) {
-          totalScore = totalScore + (memorytest['score'] as int);
-        }
+        // if (memorytest != null && memorytest.containsKey('score')) {
+        //   totalScore = totalScore + (memorytest['score'] as int);
+        // }
         ////visuospatial_draw_clock
         Map<String, dynamic>? visuospatialdrawclock =
             userData['visuospatial_draw_clock'] as Map<String, dynamic>?;
@@ -280,7 +280,7 @@ class ResultController extends GetxController {
                 'languagetest1': (languagetest1?['score'] as int?),
                 'languagetest2':
                     (languagetest2?['fluency_test_sccore'] as int?),
-                'memorytest': (memorytest?['score'] as int?),
+                
                 'visuospatialdrawclock':
                     (visuospatialdrawclock?['score'] as int?),
                 'id': currentUser!.uid,
