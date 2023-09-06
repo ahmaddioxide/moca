@@ -280,7 +280,7 @@ class ResultController extends GetxController {
                 'languagetest1': (languagetest1?['score'] as int?),
                 'languagetest2':
                     (languagetest2?['fluency_test_sccore'] as int?),
-                
+                //'memorytest': (memorytest?['score'] as int?),
                 'visuospatialdrawclock':
                     (visuospatialdrawclock?['score'] as int?),
                 'id': currentUser!.uid,
