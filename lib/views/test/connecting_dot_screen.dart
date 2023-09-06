@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:moca/views/test/cube_drawing_test_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:math';
 
 import '../../controllers/connecting_dots_controller.dart';
+import 'cube_drawing_test_screen.dart';
 
 class ConnectingDotsScreen extends StatefulWidget {
   const ConnectingDotsScreen({super.key});
@@ -14,8 +14,7 @@ class ConnectingDotsScreen extends StatefulWidget {
 }
 
 class _DotScreenState extends State<ConnectingDotsScreen> {
-  final ConnectingDotsController _controller =
-      Get.put(ConnectingDotsController());
+  final ConnectingDotsController _controller = Get.put(ConnectingDotsController());
   List<int> selectedIndices = [];
   late SharedPreferences sf;
   @override
@@ -49,7 +48,20 @@ class _DotScreenState extends State<ConnectingDotsScreen> {
   bool randomizeDots = true;
   int score = 0;
 
-  List<Offset> dotPositions = [];
+  List<Offset> dotPositions = [
+    Offset(150.0, 410.0),
+    Offset(170.0, 200.0),
+    Offset(300.0, 320.0),
+    Offset(250.0, 430.0),
+    Offset(200.0, 100.0),
+    Offset(300.0, 200.0),
+    Offset(100.0, 80.0),
+    Offset(230.0, 290.0),
+    Offset(100.0, 300.0),
+    Offset(300.0, 100.0),
+
+  ];
+
   List<dynamic> selectedValues = [];
   bool isTimerStarted = false;
 
@@ -64,18 +76,13 @@ class _DotScreenState extends State<ConnectingDotsScreen> {
         if (selectedValues.contains(patternSequence[index])) {
         } else {
           selectedIndices.add(index);
-          selectedValues
-              .add(patternSequence[index]); // Store the selected dot value
-          // print(selectedValues);
-          // print(selectedValues.length);
+          selectedValues.add(patternSequence[index]); // Store the selected dot value
         }
       }
       if (selectedValues.length == patternSequence.length) {
         _validatePattern();
         nextText();
       }
-
-      // isPatternCorrect.add(());
     });
   }
 
@@ -83,41 +90,11 @@ class _DotScreenState extends State<ConnectingDotsScreen> {
     for (int i = 0; i < patternSequence.length; i++) {
       if (selectedValues[i] == patternSequence[i]) {
         score++;
-        // print("score: $score");
       } else {
         return;
       }
     }
-
     return;
-  }
-
-  Offset getRandomDotPosition(
-      Size containerSize, List<Offset> existingPositions) {
-    final random = Random();
-    const dotSize = 50.0;
-
-    const minX = dotSize;
-    const minY = dotSize;
-    final maxX = containerSize.width - dotSize;
-    final maxY = containerSize.height - dotSize;
-
-    Offset newPosition;
-    bool isOverlapping = false;
-
-    do {
-      final x = minX + random.nextDouble() * (maxX - minX);
-      final y = minY + random.nextDouble() * (maxY - minY);
-      newPosition = Offset(x, y);
-
-      isOverlapping = existingPositions.any((position) {
-        final distance = (position - newPosition).distance;
-        return distance <
-            dotSize * 2; // Check if dots are too close to each other
-      });
-    } while (isOverlapping);
-
-    return newPosition;
   }
 
   void _countdownTimer() async {
@@ -189,7 +166,7 @@ class _DotScreenState extends State<ConnectingDotsScreen> {
             ),
             SizedBox(height: MediaQuery.sizeOf(context).height * 0.01),
             Obx(
-              () => Text(
+                  () => Text(
                 "Remaining Time: ${_controller.remainingSeconds} sec",
                 style: const TextStyle(
                   color: Colors.deepPurple,
@@ -205,31 +182,25 @@ class _DotScreenState extends State<ConnectingDotsScreen> {
               child: LayoutBuilder(
                 builder: (context, constraints) {
                   final containerSize =
-                      Size(constraints.maxWidth, constraints.maxHeight);
-
-                  dotPositions.clear();
-                  for (int i = 0; i < patternSequence.length; i++) {
-                    final newPosition =
-                        getRandomDotPosition(containerSize, dotPositions);
-                    dotPositions.add(newPosition);
-                  }
+                  Size(constraints.maxWidth, constraints.maxHeight);
 
                   return Stack(
                     children: [
                       for (var i = 0; i < patternSequence.length; i++)
-                        Positioned(
-                          left: dotPositions[i].dx - 25,
-                          top: dotPositions[i].dy - 25,
-                          child: GestureDetector(
-                            onTap: () {
-                              selectDot(i);
-                            },
-                            child: Dot(
-                              index: patternSequence[i],
-                              isSelected: selectedIndices.contains(i),
+                        if (i < dotPositions.length) // Check if the index is valid
+                          Positioned(
+                            left: dotPositions[i].dx - 25,
+                            top: dotPositions[i].dy - 25,
+                            child: GestureDetector(
+                              onTap: () {
+                                selectDot(i);
+                              },
+                              child: Dot(
+                                index: patternSequence[i],
+                                isSelected: selectedIndices.contains(i),
+                              ),
                             ),
                           ),
-                        ),
                     ],
                   );
                 },

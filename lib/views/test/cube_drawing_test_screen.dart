@@ -222,18 +222,22 @@ class _DrawingScreenState extends State<DrawingScreen> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(
+           Padding(
             padding: EdgeInsets.only(top: 5, right: 16, left: 16, bottom: 16),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  "Draw a Cube Below, and Don't Lift Your Finger while Drawing",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  child: const Text(
+                    "Draw a Cube Below, and Don't lift your Finger while Drawing",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, overflow: TextOverflow.visible),
+                  ),
                 ),
-                Text(
-                  "60",
-                ),
+                // Text(
+                //   "60",
+                //   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                // ),
               ],
             ),
           ),
