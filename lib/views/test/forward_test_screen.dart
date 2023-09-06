@@ -60,10 +60,11 @@ class _ForwardDigitState extends State<ForwardDigitSpan> {
   }
 
   void nextTest() {
+    int score = _controller.getScore();
     sf.setInt('nextGame', 7);
     innNextScreen = true;
     _controller.remainingSeconds.value = 0;
-    Get.offAll(() => const BackwardDigitSpan());
+    Get.offAll(() =>  BackwardDigitSpan(ForwardScore: score));
   }
 
   void _speakNumbers() async {
