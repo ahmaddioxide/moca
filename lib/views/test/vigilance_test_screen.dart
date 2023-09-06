@@ -102,7 +102,7 @@ class VigilanceScreenState extends State<VigilanceScreen> {
   }
 
   Future<void> _calculateScore() async {
-    if (errors <= 1) {
+    if (errors <= 3) {
       score = 1;
     } else {
       score = 0;
