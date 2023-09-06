@@ -103,7 +103,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       right: 16.0,
                     ),
                     child: ElevatedButton(
+
                       style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),
@@ -151,7 +153,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         }
                       },
                       child: Container(
-                        height: height * .25,
+                        height: height * .22,
                         decoration: BoxDecoration(
                           border: Border.all(
                             color: Colors.white,
@@ -159,7 +161,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.deepPurple.withOpacity(0.4),
+                              color: Colors.deepPurple.withOpacity(0.9),
                               spreadRadius: 2,
                               blurRadius: 2,
                               offset: const Offset(
@@ -222,6 +224,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),
@@ -289,7 +292,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         }
                       },
                       child: Container(
-                        height: height * .25,
+                        height: height * .22,
                         decoration: BoxDecoration(
                           border: Border.all(
                             color: Colors.white,
@@ -297,7 +300,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.orangeAccent.withOpacity(0.4),
+                              color: Colors.orangeAccent.withOpacity(0.9),
                               spreadRadius: 2,
                               blurRadius: 2,
                               offset: const Offset(
@@ -362,6 +365,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),
@@ -420,7 +424,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         }
                       },
                       child: Container(
-                        height: height * .25,
+                        height: height * .22,
                         decoration: BoxDecoration(
                           border: Border.all(
                             color: Colors.white,
@@ -428,7 +432,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.deepOrange.withOpacity(0.4),
+                              color: Colors.deepOrange.withOpacity(0.9),
                               spreadRadius: 2,
                               blurRadius: 2,
                               offset: const Offset(
@@ -493,6 +497,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),
@@ -532,7 +537,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         }
                       },
                       child: Container(
-                        height: height * .25,
+                        height: height * .22,
                         decoration: BoxDecoration(
                           border: Border.all(
                             color: Colors.white,
@@ -540,7 +545,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.pink.withOpacity(0.4),
+                              color: Colors.pink.withOpacity(0.9),
                               spreadRadius: 2,
                               blurRadius: 2,
                               offset: const Offset(

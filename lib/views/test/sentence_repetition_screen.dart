@@ -269,7 +269,7 @@ class SentenceRepetitionScreenState extends State<SentenceRepetitionScreen> {
                   () => Text(starttest.value?
                     isListening.value
                         ? recognizedText.value
-                        : spokenSentence.value : "Double top the button to start test",
+                        : spokenSentence.value : "Double tap the button to start test",
                     style: TextStyle(
                       fontSize: 18,
                       color: isListening.value
