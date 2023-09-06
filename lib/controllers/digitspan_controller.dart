@@ -26,10 +26,15 @@ class DigitSpanController extends GetxController {
 
   void incrementScore() {
     score.value++;
-    _updateScore(score.value);
+    // _updateScore(score.value);
   }
 
-  Future<void> _updateScore(int score) async {
+  int getScore() {
+    return score.value;
+  }
+
+  Future<void> updateScore(int score) async {
+    print('Updating score...$score');
     try {
       await _scoresCollection.doc(currentUser!.uid).update({
         "attention_test_1": {'digit_span_score': score}

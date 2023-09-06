@@ -28,7 +28,7 @@ class SentenceRepetitionScreenState extends State<SentenceRepetitionScreen> {
   RxString spokenSentence = 'Hold the button and start speaking'.obs;
   var sentences = [
     'I only know that John is the one to help today',
-    'The cat always hides under the couch when dogs are in the room',
+    'The cat always hid under the couch when dogs were in the room',
   ];
   int currentSentenceIndex = 0;
   RxString recognizedText = 'Hold the button and start speaking'.obs;

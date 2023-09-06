@@ -8,7 +8,10 @@ import 'package:flutter_tts/flutter_tts.dart';
 import 'vigilance_test_screen.dart';
 
 class BackwardDigitSpan extends StatefulWidget {
-  const BackwardDigitSpan({Key? key}) : super(key: key);
+  int? ForwardScore;
+   BackwardDigitSpan({Key? key,
+     this.ForwardScore,
+   }) : super(key: key);
 
   @override
   State<BackwardDigitSpan> createState() => _BackDigitState();
@@ -67,7 +70,11 @@ class _BackDigitState extends State<BackwardDigitSpan> {
     _controller.isReading.value = false;
   }
 
-  void nextTest() {
+  Future<void> nextTest() async {
+    int score = _controller.getScore();
+    score = score + widget.ForwardScore!;
+    print('Score: $score');
+    await _controller.updateScore(score);
     sf.setInt('nextGame', 8);
     innNextScreen = true;
     _controller.remainingSeconds.value = 0;

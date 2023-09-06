@@ -61,7 +61,7 @@ class _MainTestScreenState extends State<MainTestScreen> {
           Get.offAll(() => const ForwardDigitSpan());
           break;
         case 7:
-          Get.offAll(() => const BackwardDigitSpan());
+          Get.offAll(() =>  BackwardDigitSpan());
           break;
         case 8:
           Get.offAll(() => const VigilanceScreen());
