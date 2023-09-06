@@ -36,11 +36,11 @@ class OreientationController extends GetxController {
         if (isDayCorrect.value) {
           score = 4;
         }
-        if (isPlaceCorrect.value) {
-          score = score++;
+        if (isPlaceCorrect.value == true) {
+          score = score + 1;
         }
-        if (isCityCorrect.value) {
-          score = score++;
+        if (isCityCorrect.value == true) {
+          score = score + 1;
         }
         await userDoc.update({
           'date_verification_results': {
@@ -88,11 +88,24 @@ class OreientationController extends GetxController {
     try {
       isDayCorrect.value = dayController.text ==
           "${currentDateTime.day} / ${currentDateTime.month} /${currentDateTime.year}";
-      isPlaceCorrect.value =
-          placeController.text.toLowerCase() == 'islamabad' ||
-              placeController.text == 'rawalpindi';
-      isCityCorrect.value = cityController.text.toLowerCase() == 'islamabad' ||
-          cityController.text == 'rawalpindi';
+      // isPlaceCorrect.value =
+      //     (placeController.text.toLowerCase() == 'islamabad') ||
+      //         (placeController.text.toLowerCase() == 'rawalpindi');
+      if (cityController.text.toLowerCase() == 'islamabad' ||
+          cityController.text.toLowerCase() == 'rawalpindi') {
+        isCityCorrect.value = true;
+      } else {
+        isCityCorrect.value = false;
+      }
+      if (placeController.text.toLowerCase() == 'islamabad' ||
+          placeController.text.toLowerCase() == 'rawalpindi') {
+        isPlaceCorrect.value = true;
+      } else {
+        isPlaceCorrect.value = false;
+      }
+      // isCityCorrect.value =
+      //     (cityController.text.toLowerCase() == 'islamabad') ||
+      //         (cityController.text.toLowerCase() == 'rawalpindi');
 
       saveResultsToFirestore();
       Get.offAll(() => const ResultScreen());

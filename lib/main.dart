@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:moca/views/animal_name_screen.dart';
 import 'package:moca/views/on_boarding_screens/on_boarding_screen.dart';
 import 'package:moca/views/signup_screen.dart';
+import 'package:moca/views/test/orientation_screen.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
       ),
       home: const OnBoardingPage(),
 
-      //home: const AnimalNameGuessScreen(),
+      //home: const OrientationScreen(),
     );
   }
 }
