@@ -6,6 +6,7 @@ import 'package:moca/controllers/firebase_const.dart';
 //import 'package:moca/controllers/firebase_const.dart';
 int totalScore = 0;
 int cfq = 0;
+int cfqScore = 0;
 
 class ResultController extends GetxController {
   Future<int?> fetchUserAge() async {
@@ -222,6 +223,15 @@ class ResultController extends GetxController {
           totalScore =
               totalScore + (languagetest2['fluency_test_sccore'] as int);
         }
+        ////language_test_2
+        Map<String, dynamic>? surveyresults =
+            userData['survey_results'] as Map<String, dynamic>?;
+
+        for (var e in surveyresults!.entries) {
+          if (e.value != null && e.value.containsKey('rating')) {
+            cfqScore = (cfqScore + e.value['rating'] as int?)!;
+          }
+        }
         ////memorytest
         Map<String, dynamic>? memorytest =
             userData['memory_test'] as Map<String, dynamic>?;
@@ -249,6 +259,7 @@ class ResultController extends GetxController {
                 .doc(currentUser!.uid)
                 .update({
               'results': {
+                'cfqScore': cfqScore,
                 'totalscore': totalScore,
                 'delayedRecalltest':
                     (delayedRecalltest?['DelayRecall_test_score'] as int?),

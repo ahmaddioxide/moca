@@ -28,8 +28,6 @@ class MyApp extends StatelessWidget {
       ),
       // home: const CovidExperienceScreen(),
       home: const OnBoardingPage(),
-
-
     );
   }
 }
