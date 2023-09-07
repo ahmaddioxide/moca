@@ -48,7 +48,6 @@ class _Serial7State extends State<Serial7Screen> {
     sf = await SharedPreferences.getInstance();
   }
 
-
   void _startTest() {
     if (isTimerStarted == false) {
       isTimerStarted = true;
@@ -92,7 +91,7 @@ class _Serial7State extends State<Serial7Screen> {
         } else {
           _speakTarget();
         }
-        target -= 7;
+        target = target - 7;
       } else {
         attempts++;
         _showSnackbar("Wrong Input! Try Again");
@@ -113,7 +112,6 @@ class _Serial7State extends State<Serial7Screen> {
   }
 
   void _showPopup() {
-
     alert = true;
     showDialog(
       context: context,
@@ -249,13 +247,14 @@ class _Serial7State extends State<Serial7Screen> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(16.0),
-                child: Obx(() => Text(
-                  'Attempts Left: ${maxAttempts.value - attempts.value}',
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+                child: Obx(
+                  () => Text(
+                    'Attempts Left: ${maxAttempts.value - attempts.value}',
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
                 ),
               ),
               Padding(
@@ -287,8 +286,10 @@ class _Serial7State extends State<Serial7Screen> {
                     const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                 margin: const EdgeInsets.only(bottom: 150),
                 child: Obx(
-                  () => Text( _controller.starttest.value?
-                    _controller.text.value : "Double tap the button to start test",
+                  () => Text(
+                    _controller.starttest.value
+                        ? _controller.text.value
+                        : "Double tap the button to start test",
                     style: TextStyle(
                       fontSize: 20,
                       color: _controller.isListening.value

@@ -82,9 +82,12 @@ class _ClockTestScreenState extends State<ClockTestScreen> {
                           onPressed: () async {
                             if (_controller.selectedTime != null) {
                               _controller.increaseScore();
-                              if (_controller.selectedTime!.hour == 11) {
+
+                              if (_controller.selectedTime!.hour == 23 ||
+                                  _controller.selectedTime!.hour == 11) {
                                 _controller.increaseScore();
                               }
+
                               if (_controller.selectedTime!.minute == 10) {
                                 _controller.increaseScore();
                               }

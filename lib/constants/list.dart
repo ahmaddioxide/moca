@@ -9,7 +9,7 @@ const animalsPicList = [
 ];
 const animalsNameList = [
   camel,
-  rhino,
+  rhinoceros,
   lion,
 ];
 
