@@ -51,7 +51,7 @@ class _OrientationScreenState extends State<OrientationScreen> {
                 child: TextField(
                   controller: controller.dayController,
                   decoration: const InputDecoration(
-                    labelText: 'Date-Month-Year',
+                    labelText: 'Current Date-Month-Year',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(12.0)),
                     ),
