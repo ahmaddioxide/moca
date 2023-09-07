@@ -233,6 +233,17 @@ class _Serial7State extends State<Serial7Screen> {
               ),
             ),
           ),
+          const Padding(
+            padding: EdgeInsets.only(top: 5, left: 16, right: 16),
+            child: Text(
+              'Example: 50 - 5 = 45 (You just have to speak the Answer into the mic).',
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.deepPurple,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.03,
           ),
