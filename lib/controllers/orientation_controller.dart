@@ -13,8 +13,8 @@ class OreientationController extends GetxController {
   final TextEditingController yearController = TextEditingController();
 
   RxBool isDayCorrect = false.obs;
-  RxBool isPlaceCorrect = false.obs;
-  RxBool isCityCorrect = false.obs;
+  RxBool isPlaceCorrect = RxBool(false);
+  RxBool isCityCorrect = RxBool(false);
 
   late DateTime selectedDayMonthYear;
   DateTime currentDateTime = DateTime.now();
@@ -42,6 +42,7 @@ class OreientationController extends GetxController {
         if (isCityCorrect.value == true) {
           score = score + 1;
         }
+
         await userDoc.update({
           'date_verification_results': {
             'orientation_score': score,
@@ -88,21 +89,19 @@ class OreientationController extends GetxController {
     try {
       isDayCorrect.value = dayController.text ==
           "${currentDateTime.day} / ${currentDateTime.month} /${currentDateTime.year}";
-      // isPlaceCorrect.value =
-      //     (placeController.text.toLowerCase() == 'islamabad') ||
-      //         (placeController.text.toLowerCase() == 'rawalpindi');
-      if (cityController.text.toLowerCase() == 'islamabad' ||
-          cityController.text.toLowerCase() == 'rawalpindi') {
+      isPlaceCorrect.value =
+          (placeController.text.toLowerCase().contains('islamabad')) ||
+              (placeController.text.toLowerCase().contains('rawalpindi'));
+
+      if ((cityController.text.toLowerCase().contains('islamabad')) ||
+          (cityController.text.toLowerCase().contains('rawalpindi'))) {
         isCityCorrect.value = true;
-      } else {
-        isCityCorrect.value = false;
       }
-      if (placeController.text.toLowerCase() == 'islamabad' ||
-          placeController.text.toLowerCase() == 'rawalpindi') {
-        isPlaceCorrect.value = true;
-      } else {
-        isPlaceCorrect.value = false;
-      }
+
+      // if ((placeController.text.toLowerCase() == "islamabad") ||
+      //     (placeController.text.toLowerCase() == "rawalpindi")) {
+      //   isPlaceCorrect.value = true;
+      // }
       // isCityCorrect.value =
       //     (cityController.text.toLowerCase() == 'islamabad') ||
       //         (cityController.text.toLowerCase() == 'rawalpindi');
