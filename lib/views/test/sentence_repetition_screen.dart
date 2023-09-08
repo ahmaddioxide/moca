@@ -154,10 +154,24 @@ class SentenceRepetitionScreenState extends State<SentenceRepetitionScreen> {
                     if (result.finalResult) {
                       spokenSentence.value = result.recognizedWords.trim();
                       var targetSentence = sentences[currentSentenceIndex];
+                      // Split the target sentence and spoken sentence into words
+                      var targetWords = targetSentence.toLowerCase().split(' ');
+                      var spokenWords = spokenSentence.toLowerCase().split(' ');
+                      // Initialize a variable to keep track of the number of correct words
+                      int correctWordCount = 0;
+
+                      // Compare each word in the target sentence with the spoken sentence
+                      for (int i = 0;
+                          i < targetWords.length && i < spokenWords.length;
+                          i++) {
+                        if (targetWords[i] == spokenWords[i]) {
+                          correctWordCount++;
+                        }
+                      }
                       if (spokenSentence.toLowerCase() ==
-                          targetSentence.toLowerCase()) {
+                          targetSentence.toLowerCase() || correctWordCount >= 10) {
                         score++;
-                        _controller.incrementScore();
+                        // _controller.incrementScore();
                       }
                       Future.delayed(const Duration(seconds: 3), () {
                         goToNextSentence();
@@ -237,6 +251,17 @@ class SentenceRepetitionScreenState extends State<SentenceRepetitionScreen> {
                 ),
               ),
             ),
+            const Padding(
+              padding: EdgeInsets.only(left: 16, right: 16),
+              child: Text(
+                "Try to speak clearly and slowly into the microphone",
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.deepPurple,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
             SizedBox(height: height * 0.03),
             const Divider(
               color: Colors.deepPurple,
@@ -266,10 +291,12 @@ class SentenceRepetitionScreenState extends State<SentenceRepetitionScreen> {
               padding: const EdgeInsets.all(16.0),
               child: Center(
                 child: Obx(
-                  () => Text(starttest.value?
-                    isListening.value
-                        ? recognizedText.value
-                        : spokenSentence.value : "Double tap the button to start test",
+                  () => Text(
+                    starttest.value
+                        ? isListening.value
+                            ? recognizedText.value
+                            : spokenSentence.value
+                        : "Double tap the button to start test",
                     style: TextStyle(
                       fontSize: 18,
                       color: isListening.value

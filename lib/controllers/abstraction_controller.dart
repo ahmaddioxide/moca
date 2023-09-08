@@ -36,26 +36,26 @@ class AbstractionController extends GetxController {
       await userDoc.update({
         'abstraction_results': {'taskResults': result}
       }).then((value) {
-        Get.snackbar('Success', "Task results saved successfully.",
-            backgroundColor: Colors.green,
-            colorText: Colors.white,
-            snackPosition: SnackPosition.BOTTOM);
+        // Get.snackbar('Success', "Task results saved successfully.",
+        //     backgroundColor: Colors.green,
+        //     colorText: Colors.white,
+        //     snackPosition: SnackPosition.BOTTOM);
         Get.offAll(() => const DelayRecallScreen());
       }, onError: (error) {
-        Get.snackbar('Error', "Task results could not be saved.",
-            backgroundColor: Colors.red,
-            colorText: Colors.white,
-            snackPosition: SnackPosition.BOTTOM);
+        // Get.snackbar('Error', "Task results could not be saved.",
+        //     backgroundColor: Colors.red,
+        //     colorText: Colors.white,
+        //     snackPosition: SnackPosition.BOTTOM);
       });
 
       // Process the results or navigate to the next screen
       debugPrint('Task Results: $taskResults');
     } else {
       // Handle user not signed in
-      Get.snackbar('Error', "User is not signed in.",
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-          snackPosition: SnackPosition.BOTTOM);
+      // Get.snackbar('Error', "User is not signed in.",
+      //     backgroundColor: Colors.red,
+      //     colorText: Colors.white,
+      //     snackPosition: SnackPosition.BOTTOM);
       debugPrint('User is not signed in.');
     }
   }

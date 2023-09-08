@@ -32,7 +32,7 @@ class SentenceController extends GetxController {
     Score.value++;
   }
 
-  Future<void> updateScore(int score) async {
+  Future<void> updateScore(int Score) async {
     try {
       // await _scoresCollection.doc(currentUser!.uid).update({
       //   "language_test_1": {'sentence_rep_test_sccore': score}
@@ -43,7 +43,7 @@ class SentenceController extends GetxController {
           .doc(currentUser!.uid)
           .update({
         'language_test_1': {
-          'score': score,
+          'score': Score,
         }
       });
     } catch (e) {
