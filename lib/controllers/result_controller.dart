@@ -9,6 +9,12 @@ int cfq = 0;
 int cfqScore = 0;
 
 class ResultController extends GetxController {
+  void setZero() async {
+    totalScore = 0;
+    cfq = 0;
+    cfqScore = 0;
+  }
+
   Future<int?> fetchUserAge() async {
     try {
       DocumentSnapshot userDoc = await FirebaseFirestore.instance

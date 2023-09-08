@@ -76,9 +76,12 @@ class _ResultScreenState extends State<ResultScreen> {
     } else if (totalScore! <= 17 && totalScore! >= 10) {
       message = ' Moderate Cognitive Impairment';
       src = "assets/illustrations/moderatesick.png";
+    } else if (totalScore! <= 9 && totalScore! >= 0) {
+      message = ' Moderate Cognitive Impairment';
+      src = "assets/illustrations/moderatesick.png";
     } else {
-      message = 'Severe Cognitive Impairment';
-      src = "assets/illustrations/severesick.png";
+      message = 'ERROR! Please Try Again';
+      src = "assets/illustrations/errpr.jpg";
     }
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
@@ -90,6 +93,7 @@ class _ResultScreenState extends State<ResultScreen> {
           borderRadius: BorderRadius.circular(18),
         ),
         onPressed: () {
+          _controller.setZero();
           Get.offAll(() => const HomeScreen());
         },
         icon: const Icon(Icons.home, color: Colors.white),
@@ -271,7 +275,6 @@ class _ResultScreenState extends State<ResultScreen> {
                               ),
                             ),
                           ),
-
 
                           SizedBox(
                             height: height * 0.02,

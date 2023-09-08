@@ -94,7 +94,7 @@ class _Serial7State extends State<Serial7Screen> {
         target = target - 7;
       } else {
         attempts++;
-        _showSnackbar("Wrong Input! Try Again");
+        //_showSnackbar("Wrong Input! Try Again");
         if (attempts.value == maxAttempts.value) {
           await finalScore();
           Future.delayed(const Duration(seconds: 3), () {
@@ -133,11 +133,6 @@ class _Serial7State extends State<Serial7Screen> {
         );
       },
     );
-  }
-
-  void _showSnackbar(String message) {
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(message)));
   }
 
   @override

@@ -9,9 +9,10 @@ import 'vigilance_test_screen.dart';
 
 class BackwardDigitSpan extends StatefulWidget {
   int? ForwardScore;
-   BackwardDigitSpan({Key? key,
-     this.ForwardScore,
-   }) : super(key: key);
+  BackwardDigitSpan({
+    Key? key,
+    this.ForwardScore,
+  }) : super(key: key);
 
   @override
   State<BackwardDigitSpan> createState() => _BackDigitState();
@@ -33,9 +34,11 @@ class _BackDigitState extends State<BackwardDigitSpan> {
     super.initState();
     initalizeSharedPref();
   }
+
   void initalizeSharedPref() async {
     sf = await SharedPreferences.getInstance();
   }
+
   void _startTest() {
     isTimerStarted = true;
     _controller.timeDuration();
@@ -73,7 +76,7 @@ class _BackDigitState extends State<BackwardDigitSpan> {
   Future<void> nextTest() async {
     int score = _controller.getScore();
     score = score + widget.ForwardScore!;
-    print('Score: $score');
+
     await _controller.updateScore(score);
     sf.setInt('nextGame', 8);
     innNextScreen = true;
@@ -167,7 +170,7 @@ class _BackDigitState extends State<BackwardDigitSpan> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-           Padding(
+          Padding(
             padding: const EdgeInsets.only(top: 5.0, left: 16.0, right: 16),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -180,7 +183,7 @@ class _BackDigitState extends State<BackwardDigitSpan> {
                   ),
                 ),
                 Obx(
-                      () => Text(
+                  () => Text(
                     '${_controller.remainingSeconds}',
                     style: const TextStyle(
                       fontSize: 18,
@@ -196,7 +199,7 @@ class _BackDigitState extends State<BackwardDigitSpan> {
             padding: EdgeInsets.only(
                 top: 5.0, left: 16.0, bottom: 16.0, right: 12.0),
             child: Text(
-              'A list of numbers will be read to you. Please repeat them exactly in the same order.',
+              'Now another list of numbers will be read to you, but this time you must repeat them in the backwards order.',
               style: TextStyle(
                 fontSize: 18,
                 color: Colors.deepPurple,
