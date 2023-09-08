@@ -220,7 +220,7 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
 
   Future<void> _calculateScore() async {
     var score = 0;
-    if (words.length >= 5) {
+    if (words.length >= 11) {
       score = 1;
       await _controller.updateScore(score);
     } else {
