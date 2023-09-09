@@ -1,9 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:moca/views/animal_name_screen.dart';
 import 'package:moca/views/on_boarding_screens/on_boarding_screen.dart';
-import 'package:moca/views/test/backward_test_screen.dart';
-import 'package:moca/views/test/orientation_screen.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -27,8 +26,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const OnBoardingPage(),
-      //home: const OrientationScreen(),
+      home: const AnimalNameGuessScreen(),
+      //home: const ResultScreen(),
     );
   }
 }

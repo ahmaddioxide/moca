@@ -49,14 +49,16 @@ class _ResultScreenState extends State<ResultScreen> {
   }
 
   String getRecommendations(int totalScore) {
-    if (totalScore >= 26) {
+    if (totalScore >= 26 && totalScore <= 30) {
       return "- Do regular exercise\n- Engage in brain stimulating activities\n- Stick to a healthy sleep schedule\n- Eat a Mediterranean style diet";
-    } else if (totalScore >= 18) {
+    } else if (totalScore >= 18 && totalScore <= 25) {
       return "- Consult a doctor\n- Do regular exercise\n- Engage in brain stimulating activities\n- Stick to a healthy sleep schedule\n- Eat a Mediterranean style diet";
-    } else if (totalScore >= 10) {
+    } else if (totalScore >= 10 && totalScore <= 17) {
       return "- Consult a doctor as soon as possible\n- Do regular exercise\n- Engage in brain stimulating activities\n- Stick to a healthy sleep schedule\n- Eat a Mediterranean style diet";
-    } else {
+    } else if (totalScore >= 0 && totalScore <= 9) {
       return "- Consult a doctor at your earliest";
+    } else {
+      return "ERROR! Please Try Again";
     }
   }
 
@@ -81,7 +83,7 @@ class _ResultScreenState extends State<ResultScreen> {
       src = "assets/illustrations/moderatesick.png";
     } else {
       message = 'ERROR! Please Try Again';
-      src = "assets/illustrations/errpr.jpg";
+      src = "assets/illustrations/error.jpg";
     }
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(

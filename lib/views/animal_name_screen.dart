@@ -33,6 +33,8 @@ class _AnimalNameGuessScreenState extends State<AnimalNameGuessScreen> {
   void checkAnswer(String guess) {
     String answer = animalsNameList[currentPictureIndex];
     if (guess.toLowerCase() == answer.toLowerCase()) {
+      print(answer);
+      print(guess);
       setState(() {
         score++;
         guessController.clear();
