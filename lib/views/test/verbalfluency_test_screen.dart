@@ -82,6 +82,20 @@ class _VocabularyScreenState extends State<VocabularyScreen> {
               ),
             ),
           ),
+          const Padding(
+            padding: EdgeInsets.only(
+              left: 16,
+              right: 10,
+            ),
+            child: Text(
+              "Try to at least speak 2 or more words at a time for better detection.",
+              style: TextStyle(
+                fontSize: 18,
+                color: Colors.deepPurple,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
           SizedBox(height: MediaQuery.sizeOf(context).height * 0.015),
           const Divider(
             height: 1,
