@@ -111,8 +111,8 @@ class _BackDigitState extends State<BackwardDigitSpan> {
                     _controller.text.value = result.recognizedWords;
                     var recognizedWords =
                         _controller.text.replaceAll('', ' ').split(' ');
-                    var numbersJoined = numbers.join('');
-                    if (recognizedWords.join('') == numbersJoined) {
+                    var numbersJoined = numbers;
+                    if (recognizedWords.join('') == numbersJoined.reversed.join('')) {
                       score++;
                       _controller.incrementScore();
                     }
