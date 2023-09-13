@@ -32,11 +32,10 @@ class _AnimalNameGuessScreenState extends State<AnimalNameGuessScreen> {
 
   void checkAnswer(String guess) {
     String answer = animalsNameList[currentPictureIndex];
-    if (guess.toLowerCase() == answer.toLowerCase()) {
-      print(answer);
-      print(guess);
+    if (guess.toLowerCase().trim() == answer.toLowerCase()) {
       setState(() {
         score++;
+        print(score);
         guessController.clear();
         if (currentPictureIndex < animalsPicList.length - 1) {
           currentPictureIndex++;
@@ -78,9 +77,9 @@ class _AnimalNameGuessScreenState extends State<AnimalNameGuessScreen> {
                         .then((value) async {
                       if (value == true) {
                         await sf.setInt('animalGameScore', score);
-                        int scoredata = sf.getInt('animalGameScore') ?? 0;
-                        debugPrint('scoredata:');
-                        debugPrint(scoredata.toString());
+                        //int scoredata = sf.getInt('animalGameScore') ?? 0;
+                        // debugPrint('scoredata:');
+                        // debugPrint(scoredata.toString());
                         setState(() {
                           currentPictureIndex = 0;
                           score = 0;
